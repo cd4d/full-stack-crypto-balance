@@ -1,0 +1,33 @@
+POST http://127.0.0.1:8000/api/register/
+Content-Type: application/json
+
+{
+    "username":"test666",
+    "password": "12345",
+    "email": "test666@test.com"
+}
+
+
+### login
+POST http://127.0.0.1:8000/api/token/
+Content-Type: application/json
+
+{
+    "username":"test2",
+    "password": "12345"
+}
+### access token
+GET  http://127.0.0.1:8000/balances/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxMDQ5MDMzLCJqdGkiOiI0M2NlODA4N2Y5OGU0ZDJmYmNiZjc2MDkwZjUzOGQ1OCIsInVzZXJfaWQiOjN9.TaneAS2PlwUCfbsrkq_3W10lQF6U_zWB0BocOvT0KzA
+
+### post balance
+
+POST  http://127.0.0.1:8000/balances/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxMDQ5Mzk5LCJqdGkiOiJiOGQxY2NhMTExMTU0MDJlYTg0M2NhODliNTc3YWQ0NSIsInVzZXJfaWQiOjN9.sLMoDLUXJ39AYFNm7dsD-0yWqCYmeU-qdc8COqz4IZw
+Content-Type: application/json
+
+{
+    "coin":"1",
+    "quantity": "2",
+    "updated_on":"2019-10-19T00:00:00Z"
+}
