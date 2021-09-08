@@ -13,7 +13,7 @@ class BalanceList(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 class BalanceDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryst = Balance.objects.all()
+    queryset = Balance.objects.all()
     serializer_class = BalanceSerializer
     permission_classes = [permissions.IsAuthenticated]
 
