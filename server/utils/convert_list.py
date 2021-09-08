@@ -25,7 +25,7 @@ def connect():
         print("Connected.\nServer version is ", row)
 
         cursor.execute(
-            "CREATE TABLE IF NOT EXISTS coins_coin (name text,ticker text,rateusd numeric(8,2),image text)"
+            "CREATE TABLE IF NOT EXISTS coins_coin (id serial PRIMARY KEY,name text,ticker text,rateusd numeric(8,2),image text)"
         )
 
         # Table coins_coin already exists. The fields in json file are: symbol (will be ticker), id (will be name), current_price (will be rateusd), image
