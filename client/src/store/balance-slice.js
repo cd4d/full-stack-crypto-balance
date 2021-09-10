@@ -47,7 +47,7 @@ const initialBalance = {
 };
 const balanceSlice = createSlice({
   name: "balance",
-  
+
   initialState: initialBalance,
   reducers: {
     updateBalance(state, action) {
@@ -87,25 +87,25 @@ const balanceSlice = createSlice({
   extraReducers: {
     [fetchRatesAction.fulfilled]: (state, action) => {
       // console.log(action.payload);
-     
+
       //   console.log("DONE fetching rates");
-        let formattedResponse;
-        formattedResponse = action.payload.rates;
-        state.balance.map((coin) => {
-          const responseKeys = Object.keys(formattedResponse);
-          for (let i = 0; i < responseKeys.length; i++) {
-            let key = responseKeys[i];
-            if (key === coin.name.toLowerCase()) {
-              coin.rate =
-                formattedResponse[key][
-                  action.payload.currency ? action.payload.currency : "usd"
-                ];
-              break;
-            }
+      let formattedResponse;
+      formattedResponse = action.payload.rates;
+      state.balance.map((coin) => {
+        const responseKeys = Object.keys(formattedResponse);
+        for (let i = 0; i < responseKeys.length; i++) {
+          let key = responseKeys[i];
+          if (key === coin.name.toLowerCase()) {
+            coin.rate =
+              formattedResponse[key][
+              action.payload.currency ? action.payload.currency : "usd"
+              ];
+            break;
           }
-          return coin;
-        });
-      
+        }
+        return coin;
+      });
+
     },
   },
 });

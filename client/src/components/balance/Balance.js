@@ -29,7 +29,7 @@ export default function Balance() {
       })
     );
 
-    // disabling coinsList check to avoir infinite lop
+    // disabling coinsList check to avoir infinite loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currencyCtx, dispatch]);
 

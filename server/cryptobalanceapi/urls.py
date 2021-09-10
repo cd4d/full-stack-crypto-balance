@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from users.views import UserList,UserDetail,Register
+from users.views import UserList,UserDetail #, Register
 from balances.views import BalanceDetail, BalanceList
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -27,9 +27,8 @@ urlpatterns = [
     path('balances/', BalanceList.as_view()),
     path('users/', UserList.as_view()),
     path('users/<int:pk>/', UserDetail.as_view()),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/register/', Register.as_view()),
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('', include('coins.urls')),
 ]
 
