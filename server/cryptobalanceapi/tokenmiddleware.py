@@ -7,6 +7,7 @@ class MoveJWTRefreshCookieIntoTheBody(MiddlewareMixin):
     """
     For Django Rest Framework JWT's POST "/token-refresh" endpoint. Check
     for a 'refresh' in the request.COOKIES and if there, move it to the body payload.
+    See: https://medium.com/geekculture/jwt-authentication-in-django-part-1-implementing-the-backend-b7c58ab9431b
     """
 
     def __init__(self, get_response):
@@ -23,6 +24,7 @@ class MoveJWTRefreshCookieIntoTheBody(MiddlewareMixin):
                 data['refresh'] = request.COOKIES[JWT_AUTH_REFRESH_COOKIE]
                 request._body = json.dumps(data).encode('utf-8')
             else:
-                LOG.info("The incoming request body must be set to an empty object.")
+                print(
+                    "The incoming request body must be set to an empty object.")
 
         return None

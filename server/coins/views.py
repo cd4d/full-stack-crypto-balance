@@ -9,7 +9,7 @@ from coins.serializers import CoinSerializer
 
 class CoinList(APIView):
     """
-    List all coins, or create a new coin.
+    List all coins, or create a new coin. Verbose method.
     """
 
     def get(self, request, format=None):

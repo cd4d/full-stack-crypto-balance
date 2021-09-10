@@ -1,48 +1,53 @@
-POST http://127.0.0.1:8000/api/register/
+POST http://127.0.0.1:8000/dj-rest-auth/register/
 Content-Type: application/json
 
 {
     "username":"test666",
-    "password": "12345",
+    "password1": "12345",
+    "password2": "12345",
     "email": "test666@test.com"
 }
 
 
 ### login
-POST http://127.0.0.1:8000/api/token/
+POST http://127.0.0.1:8000/dj-rest-auth/login/
 Content-Type: application/json
 
 {
-    "username":"test2",
+    "username":"test4",
     "password": "12345"
 }
 
+### logout
+POST http://127.0.0.1:8000/dj-rest-auth/logout/
+Content-Type: application/json
+
 
 ### refresh token
-POST  http://127.0.0.1:8000/api/token/refresh/
+POST  http://127.0.0.1:8000/dj-rest-auth/token/refresh/
 Content-Type: application/json 
 
 {
-    "refresh":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTYzMTIxMzE4MiwianRpIjoiMjg4MzZjNzZlYzQwNDI5YWI4YjhiNWU2NWRhNzdhNzkiLCJ1c2VyX2lkIjozfQ.wGU3GBNdn8uziOZRE17jS6nnhMLbJgfKrtwwLX_hfuc"
+    "refresh":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTYzMTM4ODkyMSwianRpIjoiYzRhNmE1Mzk1ZTgzNDRlZGI2ZDBiZTFhZTFiOWQyZDIiLCJ1c2VyX2lkIjozfQ.xYsIPfVk3YH2IAmsDNMfyb_TzecxyBwcG1m6fi8FMqo"
 }
 
 ### list all coins
 
 GET  http://127.0.0.1:8000/coins/
-
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxMzA1MjY5LCJqdGkiOiJjZGU5YjFhMmM2MDE0NzNlODJhOWJmOTYxMDM0YjYzNiIsInVzZXJfaWQiOjN9._uCXBEBOwXWCV_HjO-qJqH0gBirGGxvEhRnVw2HdsnI
 
 
 ### get balances of user
 GET  http://127.0.0.1:8000/balances/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxMTI3MTY1LCJqdGkiOiI3NWVmYmNiNmZhZTg0NjNhYmVlZDBiNGY3MTFlZWZkZSIsInVzZXJfaWQiOjN9.sizwgnCBjN8as1YneNpEyDg_O_6kPi8bxYPMf6uCZF8
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxMzA4ODI1LCJqdGkiOiI2MGYzYjk0NjQ0ZDc0YjBiYmFiZTE5OGQ4ZTFkYzgwYyIsInVzZXJfaWQiOjV9.PnF1dNydIvu5vt8E4y4AQiLyKnxUQWiZfVkCqpNSWpw
 
 ### add coin to balance
 POST  http://127.0.0.1:8000/balances/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxMTI3MTY1LCJqdGkiOiI3NWVmYmNiNmZhZTg0NjNhYmVlZDBiNGY3MTFlZWZkZSIsInVzZXJfaWQiOjN9.sizwgnCBjN8as1YneNpEyDg_O_6kPi8bxYPMf6uCZF8
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxMzA2MDg4LCJqdGkiOiI4ZDlmMDE0ZWM1ZjE0MTU4YmE3MTJjMTFiMGViYmEwOSIsInVzZXJfaWQiOjN9.zhN6HXKsRU1U1ETTo65iLY71ScPTlGIxAckjw68zGBM
 Content-Type: application/json
 
 {
-    "coin":"234",
+    "coin":"1",
     "quantity": "978",
     "updated_on":"2019-01-19T00:00:00Z"
 }
