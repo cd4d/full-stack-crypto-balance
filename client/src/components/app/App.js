@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import Header from "../header/Header";
-import Balance from "../balance/Balance";
-import  CurrencyContext  from "../../store/currency-context";
-import "./App.css";
+import React, { useState } from 'react';
+import Header from '../header/Header';
+import Balance from '../balance/Balance';
+import  CurrencyContext  from '../../store/currency-context';
+import './App.css';
 
 function App() {
-  // replace this with context?
-  const [selectedCurrency, setSelectedCurrency] = useState("usd");
+  const [selectedCurrency, setSelectedCurrency] = useState('usd');
 
   function changeCurrency(newCurrency) {
     setSelectedCurrency(newCurrency);

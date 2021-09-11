@@ -1,13 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { fetchRatesAction } from "./balance-actions";
-import { fetchNewsAction } from "./news-slice";
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchRatesAction } from './balance-actions';
+import { fetchNewsAction } from './news-slice';
 
 const uiSlice = createSlice({
-  name: "uiSlice",
+  name: 'uiSlice',
   initialState: {
     error: { rates: null, news: null, addCoin: null },
     isLoading: { rates: false, news: false },
     addCoinDisplayed: false,
+    displayLoginModal:false
   },
   reducers: {
     changeIsLoading(state, action) {
@@ -18,6 +19,9 @@ const uiSlice = createSlice({
     },
     toggleAddCoinDisplayed(state) {
       state.addCoinDisplayed = !state.addCoinDisplayed;
+    },
+    displayLoginModal(state, action) {
+      state.displayLoginModal = action.payload;
     },
   },
   extraReducers: {
@@ -31,7 +35,7 @@ const uiSlice = createSlice({
     },
     [fetchRatesAction.rejected]: (state) => {
       state.isLoading.rates = false;
-      state.error.rates = "Error fetching rates!";
+      state.error.rates = 'Error fetching rates!';
     },
     [fetchNewsAction.pending]: (state) => {
       state.isLoading.news = true;
@@ -43,7 +47,7 @@ const uiSlice = createSlice({
     },
     [fetchNewsAction.rejected]: (state) => {
       state.isLoading.news = false;
-      state.error.news = "Error fetching news.";
+      state.error.news = 'Error fetching news.';
     },
   },
 });

@@ -1,15 +1,15 @@
-import { React, useContext } from "react";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import { Button } from "primereact/button";
-import AddCoin from "./add-coin/addCoin";
-import { formatCurrency } from "../../../utils/utils";
-import CurrencyContext from "../../../store/currency-context";
+import { React, useContext } from 'react';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { Button } from 'primereact/button';
+import AddCoin from './add-coin/addCoin';
+import { formatCurrency } from '../../../utils/utils';
+import CurrencyContext from '../../../store/currency-context';
 
-import "./balance-list.css";
-import { useSelector, useDispatch } from "react-redux";
+import './balance-list.css';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchAndCalculate } from "../../../store/balance-slice";
+import { fetchAndCalculate } from '../../../store/balance-slice';
 
 export default function BalanceList({
   onUpdateBalance
@@ -33,11 +33,11 @@ export default function BalanceList({
   const amountEditor = (tableProps) => {
     return (
       <input
-        type="number"
-        value={tableProps.rowData["amount"]}
+        type='number'
+        value={tableProps.rowData['amount']}
         onChange={(event) => onEditorAmountChange(tableProps, event)}
         min={0}
-        className="amount-input"
+        className='amount-input'
       />
     );
   };
@@ -54,7 +54,7 @@ export default function BalanceList({
 
   function deleteButton(coinClicked) {
     return (
-      <Button onClick={() => onDeleteCoin(coinClicked)} icon="pi pi-times" />
+      <Button onClick={() => onDeleteCoin(coinClicked)} icon='pi pi-times' />
     );
   }
 
@@ -65,7 +65,7 @@ export default function BalanceList({
 
       {isBalanceLoading && (
         <div>
-          <i className="pi pi-spin pi-spinner" style={{ fontSize: "2rem" }}></i>
+          <i className='pi pi-spin pi-spinner' style={{ fontSize: '2rem' }}></i>
         </div>
       )}
 
@@ -75,25 +75,25 @@ export default function BalanceList({
           {/* Refresh rates button  */}
           {!addCoinInputDisplayed && (
             <button
-              type="button"
-              className="btn btn-secondary mt-1 me-1 btn-sm float-end"
+              type='button'
+              className='btn btn-secondary mt-1 me-1 btn-sm float-end'
               onClick={onRefreshRates}
             >
-              <i className="pi pi-refresh" aria-hidden="true"></i>
-              <span className="d-sm-none d-lg-inline"> Refresh rates</span>
+              <i className='pi pi-refresh' aria-hidden='true'></i>
+              <span className='d-sm-none d-lg-inline'> Refresh rates</span>
             </button>
           )}
         </>
       )}
       {/* Alert message if fetching rates unsuccessful  */}
       {error && (
-        <div className="alert alert-danger">
+        <div className='alert alert-danger'>
           Error fetching rates. Using default rates instead.
         </div>
       )}
 
       {<div>
-        <div className="card">
+        <div className='card'>
           <DataTable
             lazy={false}
             value={balance}
@@ -101,43 +101,43 @@ export default function BalanceList({
             autoLayout={false}
             paginator={true}
             rows={pageSize}
-            sortField="value"
+            sortField='value'
             sortOrder={-1}
-            className="balance-list-table"
+            className='balance-list-table'
           >
-            <Column field="name" header="Name" sortable></Column>
+            <Column field='name' header='Name' sortable></Column>
             <Column
-              field="symbol"
-              header="Symbol"
+              field='symbol'
+              header='Symbol'
               sortable
-              className="d-none d-sm-none d-lg-table-cell"
+              className='d-none d-sm-none d-lg-table-cell'
             ></Column>
             <Column
-              field="rate"
-              header="Rate"
+              field='rate'
+              header='Rate'
               body={(coin) =>
-                formatCurrency(coin.rate, currencyCtx ? currencyCtx : "usd")
+                formatCurrency(coin.rate, currencyCtx ? currencyCtx : 'usd')
               }
               sortable
-              className={error ? "table-text-error" : ""}
+              className={error ? 'table-text-error' : ''}
             ></Column>
             <Column
-              field="amount"
-              header="Amount"
+              field='amount'
+              header='Amount'
               sortable
               editor={(props) => amountEditor(props)}
             ></Column>
             <Column
-              field="value"
-              header="Value"
+              field='value'
+              header='Value'
               sortable
               body={(coin) =>
-                formatCurrency(coin.value, currencyCtx ? currencyCtx : "usd")
+                formatCurrency(coin.value, currencyCtx ? currencyCtx : 'usd')
               }
             ></Column>
             <Column
               body={(coinClicked) => deleteButton(coinClicked)}
-              header="Delete"
+              header='Delete'
             ></Column>
           </DataTable>
         </div>

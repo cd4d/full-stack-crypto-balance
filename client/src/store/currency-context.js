@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 
-const CurrencyContext = createContext("usd");
+const CurrencyContext = createContext('usd');
 export default CurrencyContext;

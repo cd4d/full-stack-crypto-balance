@@ -1,7 +1,7 @@
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 from coins.models import Coin
 from coins.serializers import CoinSerializer
 # Create your views here.
@@ -11,6 +11,7 @@ class CoinList(APIView):
     """
     List all coins, or create a new coin. Verbose method.
     """
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request, format=None):
         coins = Coin.objects.all()

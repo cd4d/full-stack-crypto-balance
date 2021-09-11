@@ -34,31 +34,31 @@ Content-Type: application/json
 ### list all coins
 
 GET  http://127.0.0.1:8000/coins/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxMzA1MjY5LCJqdGkiOiJjZGU5YjFhMmM2MDE0NzNlODJhOWJmOTYxMDM0YjYzNiIsInVzZXJfaWQiOjN9._uCXBEBOwXWCV_HjO-qJqH0gBirGGxvEhRnVw2HdsnI
+
 
 
 ### get balances of user
 GET  http://127.0.0.1:8000/balances/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxMzA4ODI1LCJqdGkiOiI2MGYzYjk0NjQ0ZDc0YjBiYmFiZTE5OGQ4ZTFkYzgwYyIsInVzZXJfaWQiOjV9.PnF1dNydIvu5vt8E4y4AQiLyKnxUQWiZfVkCqpNSWpw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxMzg3NjcxLCJqdGkiOiI1YTM5ZDlkOTAxNGM0YWE1YjMxMzNlYjdmZTBmZTI5MiIsInVzZXJfaWQiOjV9.KTuTxTY0imC3knubT8htwVHmO3lsdiNJHi2oaEBjxYs
 
 ### add coin to balance
 POST  http://127.0.0.1:8000/balances/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxMzA2MDg4LCJqdGkiOiI4ZDlmMDE0ZWM1ZjE0MTU4YmE3MTJjMTFiMGViYmEwOSIsInVzZXJfaWQiOjN9.zhN6HXKsRU1U1ETTo65iLY71ScPTlGIxAckjw68zGBM
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxMzg3NjcxLCJqdGkiOiI1YTM5ZDlkOTAxNGM0YWE1YjMxMzNlYjdmZTBmZTI5MiIsInVzZXJfaWQiOjV9.KTuTxTY0imC3knubT8htwVHmO3lsdiNJHi2oaEBjxYs
 Content-Type: application/json
 
 {
-    "coin":"1",
+    "coin":"3",
     "quantity": "978",
     "updated_on":"2019-01-19T00:00:00Z"
 }
 
 ### update balance
 
-PUT  http://127.0.0.1:8000/balances/1/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxMTI2NzIxLCJqdGkiOiJhMzVkNzgyN2E2Mjc0YTI4YjNhYmVhMGQ4Nzk4MTA1OSIsInVzZXJfaWQiOjN9.aS1Ll63AGBNAPpmxnGLSv9rdh7sHXRp6tUK6SqbeuKY
+PUT  http://127.0.0.1:8000/balances/3/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxMzg4MjM2LCJqdGkiOiJlODhkYzA2YzRkNmM0NDgyOTNlM2EyMmQ1MjVkN2FkNyIsInVzZXJfaWQiOjV9.WPRLqCMO4D0o719Q19OyW1n9pI9FjcPvIgqXAj1aWhc
 Content-Type: application/json
 
 {
-    "quantity": "3",
+    "quantity": "33",
     "updated_on":"2019-10-20T00:00:00Z"
 }

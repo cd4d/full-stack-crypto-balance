@@ -1,19 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const addCoinSlice = createSlice({
-  name: "addCoinSlice",
+  name: 'addCoinSlice',
   initialState: {
-    searchInput: "",
+    searchInput: '',
     resultSearch: [],
-    selectedCoin: { id: "", amount: 0 },
+    selectedCoin: { id: '', amount: 0 },
   },
   reducers: {
     setStateReducer(state, action) {
       //console.log(state, action);
-      if (action.payload.type === "replaceState") {
+      if (action.payload.type === 'replaceState') {
         state[action.payload.field] = action.payload.data;
       }
-      if (action.payload.type === "replaceProperty") {
+      if (action.payload.type === 'replaceProperty') {
         state[action.payload.field][action.payload.property] =
           action.payload.data;
       }

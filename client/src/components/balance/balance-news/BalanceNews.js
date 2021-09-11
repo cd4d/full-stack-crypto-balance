@@ -1,9 +1,9 @@
-import { React, useState } from "react";
-import { Paginator } from "primereact/paginator";
-import { Button } from "primereact/button";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchNewsAction } from "../../../store/news-slice";
-import { uiActions } from "../../../store/ui-slice";
+import { React, useState } from 'react';
+import { Paginator } from 'primereact/paginator';
+import { Button } from 'primereact/button';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchNewsAction } from '../../../store/news-slice';
+import { uiActions } from '../../../store/ui-slice';
 export default function BalanceNews() {
   const newsPerPage = 5;
 
@@ -18,7 +18,7 @@ export default function BalanceNews() {
   async function refreshNews() {
     // setIsNewsLoading(true);
     if (coinsList) {
-      console.log("fetching news for: ", coinsList);
+      console.log('fetching news for: ', coinsList);
 
       dispatch(fetchNewsAction(coinsList));
     }
@@ -27,7 +27,7 @@ export default function BalanceNews() {
     // setError(null);
     dispatch(
       uiActions.changeError({
-        type: "news",
+        type: 'news',
         value: null,
       })
     );
@@ -39,15 +39,15 @@ export default function BalanceNews() {
   return (
     <>
       <p>Balance News</p>
-      <div className="row">
-        <div className="col-md-5">
+      <div className='row'>
+        <div className='col-md-4'>
           <h3>News</h3>
         </div>
         {/* Refresh news button */}
-        <div className="col-md-2">
+        <div className='col-md-2'>
           <Button
-            icon="pi pi-refresh"
-            className="p-button-sm"
+            icon='pi pi-refresh'
+            className='p-button-sm'
             onClick={refreshNews}
           ></Button>
         </div>
@@ -55,14 +55,14 @@ export default function BalanceNews() {
       {/* Loading spinner */}
       {isNewsLoading && !error && (
         <div>
-          <i className="pi pi-spin pi-spinner" style={{ fontSize: "2rem" }}></i>
+          <i className='pi pi-spin pi-spinner' style={{ fontSize: '2rem' }}></i>
         </div>
       )}
       {/* Error message */}
       {error && (
-        <div className="alert alert-danger mt-3">
+        <div className='alert alert-danger mt-3'>
           <p>{error}</p>
-          <button className="btn btn-danger" onClick={onCloseError}>
+          <button className='btn btn-danger' onClick={onCloseError}>
             Close
           </button>
         </div>
@@ -72,9 +72,9 @@ export default function BalanceNews() {
           {newsData.value
             .slice(indexFirstNews, indexLastNews)
             .map((element, idx) => (
-              <div key={idx} className="list-group">
+              <div key={idx} className='list-group'>
                 <a href={element.url}>{element.title}</a>
-                <p className="news-description">{}</p>
+                <p className='news-description'>{}</p>
               </div>
             ))}
           <Paginator

@@ -1,12 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { fetchRatesAction } from "./balance-actions";
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchRatesAction } from './balance-actions';
 const initialChartData = {
-  labels: ["a", "b", "c"],
+  labels: ['a', 'b', 'c'],
   datasets: [
     {
-      data: ["1000", "2000", "3000"],
-      backgroundColor: ["#42A5F5", "#66BB6A", "#FFA726"],
-      hoverBackgroundColor: ["#64B5F6", "#81C784", "#FFB74D"],
+      data: ['1000', '2000', '3000'],
+      backgroundColor: ['#42A5F5', '#66BB6A', '#FFA726'],
+      hoverBackgroundColor: ['#64B5F6', '#81C784', '#FFB74D'],
     },
   ],
 };
@@ -15,29 +15,29 @@ const initialBalance = {
   total: 0,
   balance: [
     {
-      name: "Bitcoin",
-      id: "bitcoin",
-      symbol: "BTC",
+      name: 'Bitcoin',
+      id: 'bitcoin',
+      symbol: 'BTC',
       rate: 30000,
       amount: 0.5,
-      subUnit: "Satoshi",
+      subUnit: 'Satoshi',
       subUnitToUnit: 100000000,
       value: 0,
     },
     {
-      name: "Ethereum",
-      id: "ethereum",
-      symbol: "ETH",
+      name: 'Ethereum',
+      id: 'ethereum',
+      symbol: 'ETH',
       rate: 2000,
       amount: 3,
-      subUnit: "GWei",
+      subUnit: 'GWei',
       subUnitToUnit: 1000000000,
       value: 0,
     },
     {
-      name: "Tether",
-      id: "tether",
-      symbol: "USDT",
+      name: 'Tether',
+      id: 'tether',
+      symbol: 'USDT',
       rate: 1,
       amount: 3000,
       value: 0,
@@ -46,18 +46,18 @@ const initialBalance = {
   formattedData: initialChartData,
 };
 const balanceSlice = createSlice({
-  name: "balance",
+  name: 'balance',
 
   initialState: initialBalance,
   reducers: {
     updateBalance(state, action) {
       state.balance = action.payload;
     },
-    calculateBalance(state, action) {
+
+    calculateBalance(state) {
       //console.log(state.balance);
       state.total = 0;
       state.balance.map((coin) => {
-        //console.log(coin);
         if (coin.rate && coin.amount) {
           coin.value = +coin.rate * +coin.amount;
         }
@@ -73,6 +73,7 @@ const balanceSlice = createSlice({
         return coin;
       });
     },
+
     formatData(state) {
       let tempData = { coinNames: [], coinValues: [] };
       state.balance.map((coin) => {
@@ -86,9 +87,6 @@ const balanceSlice = createSlice({
   },
   extraReducers: {
     [fetchRatesAction.fulfilled]: (state, action) => {
-      // console.log(action.payload);
-
-      //   console.log("DONE fetching rates");
       let formattedResponse;
       formattedResponse = action.payload.rates;
       state.balance.map((coin) => {
@@ -98,7 +96,7 @@ const balanceSlice = createSlice({
           if (key === coin.name.toLowerCase()) {
             coin.rate =
               formattedResponse[key][
-              action.payload.currency ? action.payload.currency : "usd"
+              action.payload.currency ? action.payload.currency : 'usd'
               ];
             break;
           }

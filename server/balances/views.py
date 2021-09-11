@@ -11,10 +11,10 @@ class BalanceList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        """
+        '''
         This view should return a list of all the coins
         for the currently authenticated user.
-        """
+        '''
         user = self.request.user
         return Balance.objects.filter(owner=user)
 
@@ -23,6 +23,8 @@ class BalanceList(generics.ListCreateAPIView):
 
 
 class BalanceDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Balance.objects.all()
     serializer_class = BalanceSerializer
     permission_classes = [permissions.IsAuthenticated]
+    def get_queryset(self):
+        user = self.request.user
+        return Balance.objects.filter(owner=user)

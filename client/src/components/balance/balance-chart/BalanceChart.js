@@ -1,10 +1,10 @@
-import { React, useEffect, useContext } from "react";
-import { Chart } from "primereact/chart";
-import { formatCurrency } from "../../../utils/utils";
-import CurrencyContext from "../../../store/currency-context";
-import { useSelector, useDispatch } from "react-redux";
-import { balanceActions } from "../../../store/balance-slice";
-export default function BalanceChart() {
+import React, { useEffect, useContext } from 'react';
+import { Chart } from 'primereact/chart';
+import { formatCurrency } from '../../../utils/utils';
+import CurrencyContext from '../../../store/currency-context';
+import { useSelector, useDispatch } from 'react-redux';
+import { balanceActions } from '../../../store/balance-slice';
+const BalanceChart = React.memo(() => {
   const dispatch = useDispatch();
   const balance = useSelector((state) => state.balanceReducer.balance);
   const total = useSelector((state) => state.balanceReducer.total);
@@ -24,9 +24,9 @@ export default function BalanceChart() {
     responsive: false,
     plugins: {
       legend: {
-        position: "bottom",
+        position: 'bottom',
         labels: {
-          color: "#495057",
+          color: '#495057',
         },
       },
     },
@@ -35,23 +35,24 @@ export default function BalanceChart() {
     <>
       {/* {props.isBalanceLoading && (
         <div>
-          <i className="pi pi-spin pi-spinner" style={{ fontSize: "2rem" }}></i>
+          <i className='pi pi-spin pi-spinner' style={{ fontSize: '2rem' }}></i>
         </div>
       )} */}
 
-      <div className="">
+      <div className=''>
         <h4>Total: {formatCurrency(total, currencyCtx)}</h4>
         <Chart
-          type="doughnut"
+          type='doughnut'
           // need to pass a copy, or gives a bug
-          data={{...formattedData}}
+          data={{ ...formattedData }}
           options={chartOptions}
-          style={isBalanceLoading ? { display: "none" } : {}}
+          style={isBalanceLoading ? { display: 'none' } : {}}
 
-          // style={{ minWidth:"20vw",maxWidth:"23vw"}}
-          // style={{position: "relative", height:"45vh", width:"23vw"}}
+        // style={{ minWidth:'20vw',maxWidth:'23vw'}}
+        // style={{position: 'relative', height:'45vh', width:'23vw'}}
         />
       </div>
     </>
   );
-}
+})
+export default BalanceChart
