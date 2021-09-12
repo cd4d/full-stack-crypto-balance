@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'dj_rest_auth.registration',
     'sslserver',
+    'corsheaders',
     # custom
     'users',
     'coins',
@@ -65,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'cryptobalanceapi.tokenmiddleware.MoveJWTRefreshCookieIntoTheBody'
 ]
 
@@ -167,4 +169,4 @@ JWT_AUTH_COOKIE = 'token'
 JWT_AUTH_REFRESH_COOKIE = 'refresh-token'
 JWT_AUTH_SECURE = True
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ['https://127.0.0.1']
+CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']

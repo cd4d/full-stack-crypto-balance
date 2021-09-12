@@ -1,18 +1,24 @@
 import React from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { uiActions } from '../../store/ui-slice';
+import { loginAction } from '../../store/user-slice';
+
 
 import { Dialog } from 'primereact/dialog';
 export default function Login() {
     const displayLoginModal = useSelector(state => state.uiReducer.displayLoginModal)
+    const error = useSelector(state => state.uiReducer.error.login)
     const dispatch = useDispatch()
 
     const closeModal = () => {
         dispatch(uiActions.displayLoginModal(false))
     }
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
-        console.log(e)
+        await dispatch(loginAction({ "username": e.target[0].value, "password": e.target[1].value }))
+        if (!error) {
+            closeModal()
+        }
     }
     return (
 

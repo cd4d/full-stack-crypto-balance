@@ -11,7 +11,6 @@ export default function Balance() {
   const currencyCtx = useContext(CurrencyContext);
 
   const balance = useSelector((state) => state.balanceReducer.balance);
-  const displayLoginModal = useSelector(state => state.uiReducer.displayLoginModal)
   const dispatch = useDispatch();
   // console.log(balance);
 

@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { uiActions } from '../../store/ui-slice';
-import { Dialog } from 'primereact/dialog';
 export default function Header(props) {
   const CURRENCIES_LIST = [
     'usd',

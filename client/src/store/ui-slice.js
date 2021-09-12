@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchRatesAction } from './balance-actions';
 import { fetchNewsAction } from './news-slice';
+import { loginAction } from './user-slice';
 
 const uiSlice = createSlice({
   name: 'uiSlice',
   initialState: {
-    error: { rates: null, news: null, addCoin: null },
-    isLoading: { rates: false, news: false },
+    error: { rates: null, news: null, addCoin: null,login:null },
+    isLoading: { rates: false, news: false,login:false },
     addCoinDisplayed: false,
     displayLoginModal:false
   },
@@ -48,6 +49,18 @@ const uiSlice = createSlice({
     [fetchNewsAction.rejected]: (state) => {
       state.isLoading.news = false;
       state.error.news = 'Error fetching news.';
+    },
+    [loginAction.pending]: (state) => {
+      state.isLoading.login = true;
+      state.error.login = null;
+    },
+    [loginAction.fulfilled]: (state) => {
+      state.isLoading.login = false;
+      state.error.login = null;
+    },
+    [loginAction.rejected]: (state) => {
+      state.isLoading.login = false;
+      state.error.login = 'Error at login';
     },
   },
 });

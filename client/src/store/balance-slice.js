@@ -55,7 +55,6 @@ const balanceSlice = createSlice({
     },
 
     calculateBalance(state) {
-      //console.log(state.balance);
       state.total = 0;
       state.balance.map((coin) => {
         if (coin.rate && coin.amount) {
