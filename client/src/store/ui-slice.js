@@ -59,7 +59,7 @@ const uiSlice = createSlice({
       state.error.login = null;
       state.displayLoginModal = false
     },
-    [loginAction.rejected]: (state) => {
+    [loginAction.rejected]: (state,action) => {
       state.isLoading.login = false;
       state.error.login = 'Error at login';
     },

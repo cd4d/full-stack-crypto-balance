@@ -7,7 +7,6 @@ from coins.models import Coin
 
 
 class Balance(models.Model):
-
     id = models.BigAutoField(primary_key=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, null=True,
                               related_name='balances', on_delete=models.CASCADE)
