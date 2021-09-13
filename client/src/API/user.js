@@ -25,6 +25,18 @@ export async function login(credentials) {
         console.log(error);
         return error
     }
+}
 
-
+export async function logout() {
+    try {
+        const response = await fetch(DB_AUTH + 'logout/',
+            { method: 'POST' })
+        if (response.status >= 200 && response.status <= 299) {
+            console.log('logged out', response);
+            return response;
+        }
+    } catch (error) {
+        console.log(error);
+        return error
+    }
 }

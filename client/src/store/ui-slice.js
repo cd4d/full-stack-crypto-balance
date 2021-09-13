@@ -57,6 +57,7 @@ const uiSlice = createSlice({
     [loginAction.fulfilled]: (state) => {
       state.isLoading.login = false;
       state.error.login = null;
+      state.displayLoginModal = false
     },
     [loginAction.rejected]: (state) => {
       state.isLoading.login = false;
