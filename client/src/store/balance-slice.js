@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchRatesAction } from './balance-actions';
+import { fetchRatesAction,fetchBalanceAction } from './balance-actions';
 const initialChartData = {
   labels: ['a', 'b', 'c'],
   datasets: [
@@ -104,6 +104,9 @@ const balanceSlice = createSlice({
       });
 
     },
+    [fetchBalanceAction.fulfilled]:(state,action) =>{
+      console.log('got balance:', action);
+    }
   },
 });
 

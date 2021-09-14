@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiActions } from '../../store/ui-slice';
 import { logoutAction } from '../../store/user-slice'
+import {fetchBalanceAction} from '../../store/balance-actions'
 export default function Header(props) {
   const CURRENCIES_LIST = [
     'usd',
@@ -22,6 +23,9 @@ export default function Header(props) {
   function handleLogout() {
     dispatch(logoutAction())
   }
+  function handleFetchBalance(){
+    dispatch(fetchBalanceAction({token: user.access_token}))
+  }
   function handleChange(e) {
     props.changeCurrency(e.target.value.toString());
   }
@@ -37,7 +41,9 @@ export default function Header(props) {
           <div className='col-md-4'>
             <div className='float-end me-3'>
               {user.username
-                ? <><span className='me-2'>{user.username}</span>  <button onClick={handleLogout} type="button" className="btn btn-outline-dark me-2 btn-sm">Logout</button></>
+                ? <><span className='me-2'>{user.username}</span> 
+                 <button onClick={handleFetchBalance} type="button" className="btn btn-outline-dark me-2 btn-sm">test</button>
+                <button onClick={handleLogout} type="button" className="btn btn-outline-dark me-2 btn-sm">Logout</button></>
 
                 : <><span className='me-2'>Guest</span><button onClick={toggleLogin} type="button" className="btn btn-outline-dark me-2 btn-sm">Login</button><button type="button" className="btn btn-outline-primary btn-sm">Register</button></>}
               <select
