@@ -1,7 +1,9 @@
 from rest_framework import generics, permissions
 from rest_framework.exceptions import ValidationError
 from balances.models import Balance
+from coins.models import Coin
 from balances.serializers import BalanceSerializer
+from coins.serializers import CoinSerializer
 # Create your views here.
 
 
@@ -25,7 +27,8 @@ class BalanceList(generics.ListCreateAPIView):
             return None
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        newCoin = Coin.objects.all().filter(id=self.request.data['coinID']).first()
+        serializer.save(coin=newCoin, owner=self.request.user)
 
 
 class BalanceDetail(generics.RetrieveUpdateDestroyAPIView):

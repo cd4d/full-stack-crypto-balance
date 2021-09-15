@@ -1,4 +1,5 @@
 from balances.models import Balance
+from coins.models import Coin
 from rest_framework import serializers
 from coins.serializers import CoinSerializer
 
@@ -11,9 +12,6 @@ class BalanceSerializer(serializers.ModelSerializer):
         model = Balance
         owner = serializers.ReadOnlyField(source='owner.id')
         fields = ['id', 'owner',
-                  'quantity', 'added_on', 'updated_on', 'coin']
+                  'quantity', 'added_on', 'updated_on','coin']
 
-    def create(self, validated_data):
-        
-        balance = Balance.objects.create( **validated_data)
-        return balance
+

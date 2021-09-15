@@ -162,7 +162,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated'
     ],
-    'EXCEPTION_HANDLER': 'cryptobalanceapi.exceptions.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'cryptobalanceapi.exceptions.custom_exception_handler',
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ]
 }
 REST_SESSION_LOGIN = False
 REST_USE_JWT = True
