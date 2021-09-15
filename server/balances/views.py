@@ -1,4 +1,5 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status
+from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from balances.models import Balance
 from coins.models import Coin
@@ -27,8 +28,17 @@ class BalanceList(generics.ListCreateAPIView):
             return None
 
     def perform_create(self, serializer):
-        newCoin = Coin.objects.all().filter(id=self.request.data['coinID']).first()
-        serializer.save(coin=newCoin, owner=self.request.user)
+        try:
+            newCoin = Coin.objects.all().filter(
+                id=self.request.data['coinID']).first()
+            if not newCoin:
+                raise ValueError('coin id is invalid')
+                return None
+            else:
+                serializer.save(coin=newCoin, owner=self.request.user)
+        except Exception as err:
+            print(err)
+            return Response(serializer.data,status=status.HTTP_404_NOT_FOUND)
 
 
 class BalanceDetail(generics.RetrieveUpdateDestroyAPIView):

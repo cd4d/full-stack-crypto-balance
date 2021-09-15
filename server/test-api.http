@@ -47,7 +47,7 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiY
 Content-Type: application/json
 
 {
-    "coinID":79,
+    "coinID":7349,
     "quantity": "25",
     "updated_on":"2019-01-19T00:00:00Z"
 }
