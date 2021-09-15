@@ -14,8 +14,8 @@ POST http://127.0.0.1:8000/dj-rest-auth/login/
 Content-Type: application/json
 
 {
-    "username":"test4",
-    "password": "12345"
+    "username":"test2",
+    "password": "123456"
 }
 
 ### logout
@@ -39,16 +39,16 @@ GET  http://127.0.0.1:8000/coins/
 
 ### get balances of user
 GET  http://127.0.0.1:8000/balances/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxODI3NTIzLCJqdGkiOiI4M2Y1NjNmMzgwNjQ0MzU4YmM2NGE1ODMxZjVhZWVlNCIsInVzZXJfaWQiOjV9.nI1aadduicebyd8laG5L4EqRWk8vEUgUTlgfSFTMIaw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMyMTQ4OTE4LCJqdGkiOiJmMGVmYzRkM2RhMGE0ZjdiODFiMDg2YTJkMmM4OWFmMiIsInVzZXJfaWQiOjF9.qBPQ6CYLVQ2nHPuN3Q4aG22vLwPbLEockCMDx1thdB4
 
 ### add coin to balance
 POST  http://127.0.0.1:8000/balances/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxODI3NTIzLCJqdGkiOiI4M2Y1NjNmMzgwNjQ0MzU4YmM2NGE1ODMxZjVhZWVlNCIsInVzZXJfaWQiOjV9.nI1aadduicebyd8laG5L4EqRWk8vEUgUTlgfSFTMIaw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMyMTQ4OTE4LCJqdGkiOiJmMGVmYzRkM2RhMGE0ZjdiODFiMDg2YTJkMmM4OWFmMiIsInVzZXJfaWQiOjF9.qBPQ6CYLVQ2nHPuN3Q4aG22vLwPbLEockCMDx1thdB4
 Content-Type: application/json
 
 {
-    "coin":{"id":"6"},
-    "quantity": "1",
+    "coin":{"id":"18"},
+    "quantity": "23",
     "updated_on":"2019-01-19T00:00:00Z"
 }
 

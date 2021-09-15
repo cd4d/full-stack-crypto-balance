@@ -161,7 +161,8 @@ REST_FRAMEWORK = {
 
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated'
-    ]
+    ],
+    'EXCEPTION_HANDLER': 'cryptobalanceapi.exceptions.custom_exception_handler'
 }
 REST_SESSION_LOGIN = False
 REST_USE_JWT = True
@@ -172,5 +173,5 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=2),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
 }
