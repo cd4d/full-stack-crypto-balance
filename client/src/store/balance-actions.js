@@ -14,7 +14,7 @@ export const fetchRatesAction = createAsyncThunk(
 export const fetchBalanceAction = createAsyncThunk('balance/fetchBalance',
 async(action)=>{
   console.log('action', action)
-  const response = await fetchBalance(action.token)
+  const response = await fetchBalance(action.access_token)
   const data = await response.json();
   return data
 })

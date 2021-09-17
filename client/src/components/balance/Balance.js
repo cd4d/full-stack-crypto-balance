@@ -15,6 +15,7 @@ export default function Balance() {
   // console.log(balance);
 
   useEffect(() => {
+    
     dispatch(balanceActions.calculateBalance());
   }, [dispatch]);
 

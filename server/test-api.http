@@ -15,7 +15,7 @@ Content-Type: application/json
 
 {
     "username":"test2",
-    "password": "12345"
+    "password": "123456"
 }
 
 ### logout
@@ -28,7 +28,7 @@ POST  http://127.0.0.1:8000/dj-rest-auth/token/refresh/
 Content-Type: application/json 
 
 {
-    "refresh":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTYzMTM4ODkyMSwianRpIjoiYzRhNmE1Mzk1ZTgzNDRlZGI2ZDBiZTFhZTFiOWQyZDIiLCJ1c2VyX2lkIjozfQ.xYsIPfVk3YH2IAmsDNMfyb_TzecxyBwcG1m6fi8FMqo"
+    "refresh":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTYzMTk4MjI5NSwianRpIjoiMjM4OTNkMDQxOTA0NDY1MGFiZmUxMmM0NDI1NWNlMGYiLCJ1c2VyX2lkIjoxfQ.z_JfLmzWhbxGc-HVHZr2mqLW1okzxGzCvWxfCTwJSN4"
 }
 
 ### list all coins
@@ -39,15 +39,15 @@ GET  http://127.0.0.1:8000/coins/
 
 ### get balances of user
 GET  http://127.0.0.1:8000/balances/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMyMTY4NTU2LCJqdGkiOiI0OGJhYTk0ZmI2NDQ0NDIwOGM0OTg5YTU1MjJiZGY1NiIsInVzZXJfaWQiOjN9.TsrbamjlKZO7X0nZqgz2voWal62HN-lrC3-_FaDOh-I
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMyMTc3OTM2LCJqdGkiOiI1OTBlNDBiZjMwYzk0MzY5YWI5YjcyYmRiNzA0YTNjMCIsInVzZXJfaWQiOjF9.DhoooB15uH2lKSEulNSKLAuZgqL7LU2UiPsfys2szW4
 
 ### add coin to balance
 POST  http://127.0.0.1:8000/balances/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMyMTY4NTU2LCJqdGkiOiI0OGJhYTk0ZmI2NDQ0NDIwOGM0OTg5YTU1MjJiZGY1NiIsInVzZXJfaWQiOjN9.TsrbamjlKZO7X0nZqgz2voWal62HN-lrC3-_FaDOh-I
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMyMTc3OTM2LCJqdGkiOiI1OTBlNDBiZjMwYzk0MzY5YWI5YjcyYmRiNzA0YTNjMCIsInVzZXJfaWQiOjF9.DhoooB15uH2lKSEulNSKLAuZgqL7LU2UiPsfys2szW4
 Content-Type: application/json
 
 {
-    "coinID":7349,
+    "coinID":7,
     "quantity": "25",
     "updated_on":"2019-01-19T00:00:00Z"
 }
