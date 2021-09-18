@@ -28,16 +28,10 @@ class BalanceList(generics.ListCreateAPIView):
             return None
 
     def perform_create(self, serializer):
-        try:
-            newCoin = Coin.objects.all().filter(id=self.request.data['coinID']).first()
-            if not newCoin:
-                raise ValueError('coin id is invalid')
-                return None
-            else:
-                serializer.save(coin=newCoin, owner=self.request.user)
-        except Exception as err:
-            print(err)
-            return Response(serializer.data, status=status.HTTP_404_NOT_FOUND)
+        newCoin = Coin.objects.all().filter(id=self.request.data['coinID']).first()
+        if serializer.is_valid():
+            serializer.save(coin=newCoin, owner=self.request.user)
+
 
 
 class BalanceDetail(generics.RetrieveUpdateDestroyAPIView):

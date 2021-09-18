@@ -11,7 +11,7 @@ class Balance(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, null=True,
                               related_name='balances', on_delete=models.CASCADE)
     coin = models.ForeignKey(
-        Coin, null=True, related_name='coin', on_delete=models.SET_NULL)
+        Coin, null=False, related_name='coin', on_delete=models.CASCADE,default=0)
     quantity = models.DecimalField(
         decimal_places=6, max_digits=12, default=0, validators=[MinValueValidator(0)])
     added_on = models.DateTimeField(auto_now_add=True)

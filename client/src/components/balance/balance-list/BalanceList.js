@@ -25,6 +25,7 @@ export default function BalanceList({
   const dispatch = useDispatch();
   // editing amount
   const onEditorAmountChange = (tableProps, event) => {
+    console.log(tableProps);
     let updatedBalance = [...tableProps.value];
     // props is the table event
     updatedBalance[tableProps.rowIndex][tableProps.field] = event.target.value;
@@ -124,6 +125,7 @@ export default function BalanceList({
             <Column
               field='amount'
               header='Amount'
+              readOnly={false}
               sortable
               editor={(props) => amountEditor(props)}
             ></Column>
