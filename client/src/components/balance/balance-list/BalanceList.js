@@ -1,11 +1,11 @@
-import { React, useContext } from "react";
+import { React, useContext, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import AddCoin from "./add-coin/addCoin";
 import { formatCurrency } from "../../../utils/utils";
 import CurrencyContext from "../../../store/currency-context";
-import { InputNumber } from "primereact/inputnumber";
+import { cloneDeep } from "lodash";
 import "./balance-list.css";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAndCalculate } from "../../../store/balance-slice";
@@ -25,10 +25,9 @@ export default function BalanceList({ onUpdateBalance }) {
   const dispatch = useDispatch();
   // editing amount
   const onEditorAmountChange = (tableProps, event) => {
-    console.log('tableprops', tableProps);
-    let updatedBalance = [...tableProps.value];
-    // props is the table event
-    updatedBalance[tableProps.rowIndex][tableProps.field] = event.target.value;
+    // let updatedBalance = [...tableProps.value] does NOT work, need deep cloning
+    let updatedBalance = cloneDeep(tableProps.value)
+    updatedBalance[tableProps.rowIndex][tableProps.field] = +event.target.value;
     onUpdateBalance(updatedBalance);
   };
   const amountEditor = (tableProps) => {
@@ -104,6 +103,7 @@ export default function BalanceList({ onUpdateBalance }) {
               sortField="value"
               sortOrder={-1}
               className="balance-list-table"
+              editing={true}
             >
               <Column field="name" header="Name" sortable></Column>
               <Column
