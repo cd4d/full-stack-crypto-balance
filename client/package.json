@@ -45,7 +45,6 @@
   },
   "devDependencies": {
     "@welldone-software/why-did-you-render": "^6.2.0",
-    "canvas": "^2.8.0",
     "eslint-plugin-react-hooks": "^4.2.0"
   },
   "optionalDependencies": {
