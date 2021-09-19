@@ -1,11 +1,11 @@
-import { React, useEffect, useContext } from 'react';
-import BalanceList from './balance-list/BalanceList';
-import BalanceChart from './balance-chart/BalanceChart';
-import BalanceNews from './balance-news/BalanceNews';
-import Login from '../user/Login';
-import { useSelector, useDispatch } from 'react-redux';
-import CurrencyContext from '../../store/currency-context';
-import { balanceActions, fetchAndCalculate } from '../../store/balance-slice';
+import { React, useEffect, useContext } from "react";
+import BalanceList from "./balance-list/BalanceList";
+import BalanceChart from "./balance-chart/BalanceChart";
+import BalanceNews from "./balance-news/BalanceNews";
+import Login from "../user/Login";
+import { useSelector, useDispatch } from "react-redux";
+import CurrencyContext from "../../store/currency-context";
+import { balanceActions, fetchAndCalculate } from "../../store/balance-slice";
 
 export default function Balance() {
   const currencyCtx = useContext(CurrencyContext);
@@ -15,7 +15,6 @@ export default function Balance() {
   // console.log(balance);
 
   useEffect(() => {
-    
     dispatch(balanceActions.calculateBalance());
   }, [dispatch]);
 
@@ -34,22 +33,22 @@ export default function Balance() {
   }, [currencyCtx, dispatch]);
 
   const updateBalance = (newBalance) => {
-    // console.log(newBalance);
+    console.log("newBalance", newBalance);
     dispatch(balanceActions.updateBalance(newBalance));
 
-    // console.log('updating balance');
+    console.log("updating balance");
     dispatch(balanceActions.calculateBalance());
   };
   return (
-    <div className='container'>
-   <Login/>
-      <div className='row'>
-        <div className='col-md-8 col-sm-12'>
+    <div className="container">
+      <Login />
+      <div className="row">
+        <div className="col-md-8 col-sm-12">
           <BalanceList
             onUpdateBalance={(newBalance) => updateBalance(newBalance)}
           ></BalanceList>
         </div>
-        <div className='col-md-4 col-sm-12 '>
+        <div className="col-md-4 col-sm-12 ">
           <BalanceChart></BalanceChart>
 
           <BalanceNews></BalanceNews>

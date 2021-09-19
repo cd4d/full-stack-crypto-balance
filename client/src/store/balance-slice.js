@@ -51,7 +51,7 @@ const balanceSlice = createSlice({
   initialState: initialBalance,
   reducers: {
     updateBalance(state, action) {
-      state.balance = action.payload;
+      return { ...state, balance: action.payload };
     },
 
     calculateBalance(state) {
