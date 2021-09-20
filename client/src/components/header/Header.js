@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
-import { logoutAction } from "../../store/user-slice";
+import { logoutAction, refreshAction } from "../../store/user-slice";
 import { fetchBalanceAction } from "../../store/balance-actions";
-import { refresh } from "../../API/user";
+
 export default function Header(props) {
   const CURRENCIES_LIST = [
     "usd",
@@ -31,7 +31,7 @@ export default function Header(props) {
     props.changeCurrency(e.target.value.toString());
   }
   function handleRefresh() {
-    refresh(JSON.parse(localStorage.getItem("refreshToken")));
+    dispatch(refreshAction(JSON.parse(localStorage.getItem("refreshToken"))))
   }
   return (
     <header className="p-3 mb-4 border-bottom">
