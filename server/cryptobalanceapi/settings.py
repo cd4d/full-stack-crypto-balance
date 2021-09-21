@@ -177,7 +177,7 @@ JWT_AUTH_SECURE = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(seconds=7),
 }
 JWT_AUTH_COOKIE_USE_CSRF = False
 CSRF_TRUSTED_ORIGINS = [

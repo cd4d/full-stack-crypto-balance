@@ -61,23 +61,28 @@ instance.interceptors.response.use(
         // }
 
         try {
+          let newToken = null
           const response = await callRefreshToken(refreshToken);
-          const newToken = await response.data.access;
-          console.log("new token", await response.data.access);
-          // TODO not sending refreshed token
-          if (newToken) {
+          console.log('response', await response);
+          if (response && response.data.access) {
             const updatedConfig = {
               ...originalConfig,
               headers: {
                 ...originalConfig.headers,
-                Authorization: "Bearer " + newToken,
+                Authorization: "Bearer " + response.data.access,
               },
             };
-            console.log("updatedConfig", updatedConfig);
-            // instance.defaults.headers["Authorization"] = "Bearer " + newToken;
-            originalConfig.headers["Authorization"] = "Bearer " + newToken;
-            return instance(originalConfig);
+            console.log('error.config', error.config);
+            error.config.headers['Authorization'] = "Bearer " + response.data.access
+            return error.config;
+
           }
+          console.log("new token", newToken);
+          console.log("typeof token", typeof newToken);
+          // TODO not sending refreshed token
+
+          // instance.defaults.headers["Authorization"] = "Bearer " + newToken;
+
 
           //   {
           //     "url": "http://127.0.0.1:8000/balances/",
@@ -104,12 +109,11 @@ instance.interceptors.response.use(
           //     },
           //     "alreadyTried": true
           // }
-          throw error;
         } catch (err) {
           return Promise.reject(err);
         }
       }
-      return Promise.reject(error);
+      // return Promise.reject(error);
     }
   }
 );
