@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { login, logout, callRefreshToken } from "../API/user";
-
+import { fetchBalance } from "../API/balance";
 export const loginAction = createAsyncThunk(
   "user/loginUser",
   async (action) => {
@@ -21,15 +21,12 @@ export const refreshAction = createAsyncThunk(
     return data;
   }
 );
-export const logoutAction = createAsyncThunk(
-  "user/logoutUser",
-  async () => {
-    const response = await logout();
-    const data = await response.data;
-    console.log("logout response:", data);
-    return data;
-  }
-);
+export const logoutAction = createAsyncThunk("user/logoutUser", async () => {
+  const response = await logout();
+  const data = await response.data;
+  console.log("logout response:", data);
+  return data;
+});
 const emptyUser = {
   id: null, // "pk" in response
   username: null,

@@ -86,6 +86,7 @@ const balanceSlice = createSlice({
   },
   extraReducers: {
     [fetchRatesAction.fulfilled]: (state, action) => {
+      console.log("fetchrates fulfilled", action);
       let formattedResponse;
       formattedResponse = action.payload.rates;
       state.balance.map((coin) => {
@@ -104,7 +105,12 @@ const balanceSlice = createSlice({
       });
     },
     [fetchBalanceAction.fulfilled]: (state, action) => {
-      console.log("got balance:", action);
+      console.log("got balance fulfilled:", action);
+      state.balance = action.payload
+    },
+    [fetchBalanceAction.rejected]: (state, action) => {
+      console.log("error balance:", action);
+      
     },
   },
 });

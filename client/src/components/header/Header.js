@@ -31,7 +31,7 @@ export default function Header(props) {
     props.changeCurrency(e.target.value.toString());
   }
   function handleRefresh() {
-    dispatch(refreshAction(JSON.parse(localStorage.getItem("refreshToken"))))
+    dispatch(refreshAction(JSON.parse(localStorage.getItem("refreshToken"))));
   }
   return (
     <header className="p-3 mb-4 border-bottom">
@@ -39,7 +39,7 @@ export default function Header(props) {
         <div className="container-fluid">
           <div className="navbar-header">
             <a href="#top" className="navbar-brand">
-              Crypto Balance React:
+              Crypto Balance Redux
             </a>
           </div>
           <div className="col-md-4">
