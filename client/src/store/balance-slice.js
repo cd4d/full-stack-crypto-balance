@@ -96,7 +96,7 @@ const balanceSlice = createSlice({
           if (key === coin.name.toLowerCase()) {
             coin.rate =
               formattedResponse[key][
-                action.payload.currency ? action.payload.currency : "usd"
+              action.payload.currency ? action.payload.currency : "usd"
               ];
             break;
           }
@@ -110,7 +110,7 @@ const balanceSlice = createSlice({
     },
     [fetchBalanceAction.rejected]: (state, action) => {
       console.log("error balance:", action);
-      
+
     },
   },
 });

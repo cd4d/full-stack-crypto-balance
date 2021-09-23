@@ -13,3 +13,11 @@ class BalanceSerializer(serializers.ModelSerializer):
         owner = serializers.ReadOnlyField(source='owner.id')
         fields = ['id', 'owner',
                   'quantity', 'added_on', 'updated_on', 'coin']
+    
+    def to_representation(self,obj):
+        representation = super().to_representation(obj)
+        coin_representation = representation.pop('coin')
+        for key in coin_representation:
+            representation[key] = coin_representation[key]
+        return representation
+            

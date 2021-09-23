@@ -15,7 +15,7 @@ Content-Type: application/json
 
 {
     "username":"test2",
-    "password": "123456"
+    "password": "12345"
 }
 
 ### logout
@@ -39,7 +39,7 @@ GET  http://127.0.0.1:8000/coins/
 
 ### get balances of user
 GET  http://127.0.0.1:8000/balances/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMyNDI0NjcxLCJqdGkiOiIxMTNlMjgxNjIwNDc0MTk4ODkyMTBiYzFlOTUxNTVlMyIsInVzZXJfaWQiOjN9.wMxK4QeXQNCR898oyvu53rXgjWwUEdpLQUvtTVrxth4
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMyNDMwMDI1LCJqdGkiOiIyNzRkOGRkMmQ3Mjk0OWEzYTA2ZDk2NTdkNDQzODYwYyIsInVzZXJfaWQiOjN9.WyDtzS8X5pwzDCjGrO2kjOVebeFfEHdM_phOrcsiUMs
 
 ### add coin to balance
 POST  http://127.0.0.1:8000/balances/
