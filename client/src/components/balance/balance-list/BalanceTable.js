@@ -14,8 +14,8 @@ export default function BalanceTable(props) {
   const isBalanceLoading = useSelector(
     (state) => state.uiReducer.isLoading.rates
   );
-  
-  const {  onUpdateBalance } = props;
+
+  const { onUpdateBalance } = props;
   const currencyCtx = useContext(CurrencyContext);
   const error = useSelector((state) => state.uiReducer.error.rates);
   function deleteButton(coinClicked) {
@@ -23,25 +23,30 @@ export default function BalanceTable(props) {
       <Button onClick={() => onDeleteCoin(coinClicked)} icon="pi pi-times" />
     );
   }
- 
+
   function onDeleteCoin(coin) {
     const updatedBalance = balance.filter((el) => el.id !== coin.id);
     onUpdateBalance(updatedBalance);
   }
-  function onEditorAmountChange(tableProps, event) {
+  function onEditorQuantityChange(tableProps, event) {
+    console.log("tableProps", tableProps);
     // let updatedBalance = [...tableProps.value] does NOT work, need deep cloning
     let updatedBalance = cloneDeep(tableProps.value);
     updatedBalance[tableProps.rowIndex][tableProps.field] = +event.target.value;
-    onUpdateBalance(updatedBalance);
+    onUpdateBalance({
+      updatedBalance: updatedBalance,
+      entryId: tableProps.rowData?.entryId,
+      quantity: +event.target.value,
+    });
   }
-  const amountEditor = (tableProps) => {
+  const quantityEditor = (tableProps) => {
     return (
       <input
         type="number"
-        value={tableProps.rowData["amount"]}
-        onChange={(event) => onEditorAmountChange(tableProps, event)}
+        value={tableProps.rowData["quantity"]}
+        onChange={(event) => onEditorQuantityChange(tableProps, event)}
         min={0}
-        className="amount-input"
+        className="quantity-input"
       />
     );
   };
@@ -62,8 +67,8 @@ export default function BalanceTable(props) {
         >
           <Column field="name" header="Name" sortable></Column>
           <Column
-            field="symbol"
-            header="Symbol"
+            field="ticker"
+            header="ticker"
             sortable
             className="d-none d-sm-none d-lg-table-cell"
           ></Column>
@@ -77,10 +82,10 @@ export default function BalanceTable(props) {
             className={error ? "table-text-error" : ""}
           ></Column>
           <Column
-            field="amount"
-            header="Amount"
+            field="quantity"
+            header="quantity"
             sortable
-            editor={(props) => amountEditor(props)}
+            editor={(props) => quantityEditor(props)}
           ></Column>
           <Column
             field="value"

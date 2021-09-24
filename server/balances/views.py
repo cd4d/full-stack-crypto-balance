@@ -7,9 +7,11 @@ from balances.serializers import BalanceSerializer
 from coins.serializers import CoinSerializer
 # Create your views here.
 
+#  TODO listapiview with delete?
+
 
 class BalanceList(generics.ListCreateAPIView):
-    # queryset = Balance.objects.all()
+    #queryset = Balance.objects.all()
     serializer_class = BalanceSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -28,10 +30,10 @@ class BalanceList(generics.ListCreateAPIView):
             return None
 
     def perform_create(self, serializer):
-        newCoin = Coin.objects.all().filter(id=self.request.data['coinID']).first()
+        newCoin = Coin.objects.all().filter(
+            id=self.request.data['coinID']).first()
         if serializer.is_valid():
             serializer.save(coin=newCoin, owner=self.request.user)
-
 
 
 class BalanceDetail(generics.RetrieveUpdateDestroyAPIView):

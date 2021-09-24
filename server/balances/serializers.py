@@ -5,19 +5,15 @@ from coins.serializers import CoinSerializer
 
 
 class BalanceSerializer(serializers.ModelSerializer):
-    # name = serializers.ReadOnlyField(source='coin.name')
-    coin = CoinSerializer(read_only=True, allow_null=False)
+    coinId = serializers.ReadOnlyField(source='coin.id')
+    name = serializers.ReadOnlyField(source='coin.name')
+    ticker = serializers.ReadOnlyField(source='coin.ticker')
+    image = serializers.ReadOnlyField(source='coin.image')
+    # coin = CoinSerializer(read_only=True, allow_null=False)
+    entryId = serializers.ReadOnlyField(source='id')
 
     class Meta:
         model = Balance
         owner = serializers.ReadOnlyField(source='owner.id')
-        fields = ['id', 'owner',
-                  'quantity', 'added_on', 'updated_on', 'coin']
-    
-    def to_representation(self,obj):
-        representation = super().to_representation(obj)
-        coin_representation = representation.pop('coin')
-        for key in coin_representation:
-            representation[key] = coin_representation[key]
-        return representation
-            
+        fields = ['entryId', 'owner',
+                  'quantity', 'added_on', 'updated_on', 'coinId', 'name', 'ticker', 'image']

@@ -118,7 +118,7 @@ axiosApiInstance.interceptors.request.use(
 // );
 export async function fetchBalance() {
   try {
-    const response = await axiosApiInstance.get(DB_URL + "balances/", {
+    const response = await axiosApiInstance.get(`${DB_URL}balances/`, {
       headers: { Authorization: "Bearer " + accessToken },
     });
     if (response.statusText !== "OK") {
@@ -130,6 +130,34 @@ export async function fetchBalance() {
     }
     if (response.status >= 200 && response.status <= 299) {
       console.log("got balance", response);
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+export async function updateBalance(entryId, quantity) {
+  try {
+    if (isNaN(entryId) || isNaN(quantity)) throw new Error("Invalid data");
+    const response = await axiosApiInstance.put(
+      `${DB_URL}balances/${entryId}/`,
+      {
+        quantity,
+      },
+      {
+        headers: { Authorization: "Bearer " + accessToken },
+      }
+    );
+    if (response.statusText !== "OK") {
+      let err = new Error();
+      err.message = `An error has occurred: ${response.data}`;
+      err.status = response.status;
+
+      throw err;
+    }
+    if (response.status >= 200 && response.status <= 299) {
+      console.log("updated balance", response);
       return response;
     }
   } catch (error) {

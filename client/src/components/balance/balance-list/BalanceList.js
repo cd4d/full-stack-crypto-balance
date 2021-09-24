@@ -1,35 +1,32 @@
-import { React, useContext } from "react";
-
-import AddCoin from "./add-coin/AddCoin";
-import RefreshRatesBtn from "./add-coin/RefreshRatesBtn";
+import { React } from "react";
 import BalanceTable from "./BalanceTable";
-import CurrencyContext from "../../../store/currency-context";
 import "./balance-list.css";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  balanceActions,
-  fetchAndCalculate,
-} from "../../../store/balance-slice";
+import { balanceActions } from "../../../store/balance-slice";
+import { updateRemoteBalanceAction } from "../../../store/balance-async-thunks";
 import EmptyBalance from "../EmptyBalance";
 
 export default function BalanceList() {
-  const currencyCtx = useContext(CurrencyContext);
-
   const isBalanceLoading = useSelector(
     (state) => state.uiReducer.isLoading.rates
   );
   const error = useSelector((state) => state.uiReducer.error.rates);
   const balance = useSelector((state) => state.balanceReducer.balance);
-  const addCoinInputDisplayed = useSelector(
-    (state) => state.uiReducer.addCoinDisplayed
-  );
+  const user = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
-  
-  function updateBalance(newBalance) {
-    console.log("newBalance", newBalance);
-    dispatch(balanceActions.updateBalance(newBalance));
-
+  // updatedBalance, entryId,quantity
+  function updateBalance(args) {
+    console.log("updatedBalance", args.updatedBalance);
+    console.log("entryId", args.entryId);
+    dispatch(balanceActions.updateLocalBalance(args.updatedBalance));
+    if (user.id)
+      dispatch(
+        updateRemoteBalanceAction({
+          entryId: args.entryId,
+          quantity: args.quantity,
+        })
+      );
     console.log("updating balance");
     dispatch(balanceActions.calculateBalance());
   }
@@ -40,8 +37,7 @@ export default function BalanceList() {
         <div>
           <i className="pi pi-spin pi-spinner" style={{ fontSize: "2rem" }}></i>
         </div>
-      ) 
-      }
+      )}
       {/* Alert message if fetching rates unsuccessful  */}
       {error && (
         <div className="alert alert-danger">
@@ -51,7 +47,9 @@ export default function BalanceList() {
 
       {balance.length ? (
         <BalanceTable
-          onUpdateBalance={(newBalance) => updateBalance(newBalance)}
+          onUpdateBalance={(newBalance, entryId) =>
+            updateBalance(newBalance, entryId)
+          }
         />
       ) : (
         <EmptyBalance />

@@ -114,16 +114,15 @@ export default function AddCoin({ balance, updateBalance }) {
   useEffect(() => {
     async function getRates() {
       let currentRate = 1;
+      const coinSearched = addCoinState.selectedCoin.name.toLowerCase()
       const response = await fetchRates(
-        [addCoinState.selectedCoin.id],
+        [coinSearched],
         currencyCtx
       );
 
       //ex. {'cardano': {'usd': 1.31 }}
-      if (response.status >= 200 && response.status <= 299) {
-        const formattedResponse = await response.json();
-        console.log(formattedResponse);
-        currentRate = await formattedResponse[addCoinState.selectedCoin.id][
+      if (Object.keys(response).length > 0) {
+        currentRate = response[coinSearched][
           currencyCtx
         ];
       } else {
@@ -137,10 +136,10 @@ export default function AddCoin({ balance, updateBalance }) {
       inputCoin(+currentRate, "rate");
     }
     // prevents launching at first render
-    if (addCoinState.selectedCoin.id) {
+    if (addCoinState.selectedCoin.name) {
       getRates();
     }
-  }, [addCoinState.selectedCoin.id, currencyCtx, dispatch, inputCoin]);
+  }, [addCoinState.selectedCoin.name, currencyCtx, dispatch, inputCoin]);
 
   function toggleAddCoin() {
     dispatch(uiActions.toggleAddCoinDisplayed());

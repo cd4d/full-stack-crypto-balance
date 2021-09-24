@@ -1,28 +1,27 @@
 /* Remove sort icon from tlist */
 
-.p-sortable-column-icon  {
-    display: none !important;
+.p-sortable-column-icon {
+  display: none !important;
 }
 
-.alert-danger{
-  padding:0.3rem 0rem;
-  margin-top:1rem;
+.alert-danger {
+  padding: 0.3rem 0rem;
+  margin-top: 1rem;
   text-align: center;
 }
 
 /* Change color of rate if there's an error */
-.table-text-error{
-  color:crimson
+.table-text-error {
+  color: crimson;
 }
-.amount-input {
+.quantity-input {
   width: 5rem;
 }
 /* Media queries */
 @media screen and (max-width: 500px) {
-    .balance-list-table {
-      width: 100%;
-    
-      font-size: small !important;
-    }
-    
+  .balance-list-table {
+    width: 100%;
+
+    font-size: small !important;
   }
+}

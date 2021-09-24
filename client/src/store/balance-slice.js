@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchRatesAction, fetchBalanceAction } from "./balance-actions";
+import { fetchRatesAction, fetchRemoteBalanceAction } from "./balance-async-thunks";
 const initialChartData = {
   labels: ["a", "b", "c"],
   datasets: [
@@ -16,31 +16,34 @@ const initialBalance = {
   balance: [
     {
       name: "Bitcoin",
-      id: "bitcoin",
-      symbol: "BTC",
+      entryId: 1,
+      ticker: "BTC",
       rate: 30000,
-      amount: 0.5,
+      quantity: 0.5,
       subUnit: "Satoshi",
       subUnitToUnit: 100000000,
       value: 0,
+      coinId: 1,
     },
     {
       name: "Ethereum",
-      id: "ethereum",
-      symbol: "ETH",
+      entryId: 2,
+      ticker: "ETH",
       rate: 2000,
-      amount: 3,
+      quantity: 3,
       subUnit: "GWei",
       subUnitToUnit: 1000000000,
       value: 0,
+      coinId: 4,
     },
     {
       name: "Tether",
-      id: "tether",
-      symbol: "USDT",
+      entryId: 3,
+      ticker: "USDT",
       rate: 1,
-      amount: 3000,
+      quantity: 3000,
       value: 0,
+      coinId: 79,
     },
   ],
   formattedData: initialChartData,
@@ -50,15 +53,15 @@ const balanceSlice = createSlice({
 
   initialState: initialBalance,
   reducers: {
-    updateBalance(state, action) {
+    updateLocalBalance(state, action) {
       return { ...state, balance: action.payload };
     },
 
     calculateBalance(state) {
       state.total = 0;
       state.balance.map((coin) => {
-        if (coin.rate && coin.amount) {
-          coin.value = +coin.rate * +coin.amount;
+        if (coin.rate && coin.quantity) {
+          coin.value = +coin.rate * +coin.quantity;
         }
         if (coin.value) {
           state.total += coin.value;
@@ -96,7 +99,7 @@ const balanceSlice = createSlice({
           if (key === coin.name.toLowerCase()) {
             coin.rate =
               formattedResponse[key][
-              action.payload.currency ? action.payload.currency : "usd"
+                action.payload.currency ? action.payload.currency : "usd"
               ];
             break;
           }
@@ -104,13 +107,12 @@ const balanceSlice = createSlice({
         return coin;
       });
     },
-    [fetchBalanceAction.fulfilled]: (state, action) => {
+    [fetchRemoteBalanceAction.fulfilled]: (state, action) => {
       console.log("got balance fulfilled:", action);
-      state.balance = action.payload
+      state.balance = action.payload;
     },
-    [fetchBalanceAction.rejected]: (state, action) => {
+    [fetchRemoteBalanceAction.rejected]: (state, action) => {
       console.log("error balance:", action);
-
     },
   },
 });

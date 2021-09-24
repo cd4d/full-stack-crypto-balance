@@ -15,7 +15,7 @@ Content-Type: application/json
 
 {
     "username":"test2",
-    "password": "12345"
+    "password": "123456"
 }
 
 ### logout
@@ -39,26 +39,44 @@ GET  http://127.0.0.1:8000/coins/
 
 ### get balances of user
 GET  http://127.0.0.1:8000/balances/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMyNDMwMDI1LCJqdGkiOiIyNzRkOGRkMmQ3Mjk0OWEzYTA2ZDk2NTdkNDQzODYwYyIsInVzZXJfaWQiOjN9.WyDtzS8X5pwzDCjGrO2kjOVebeFfEHdM_phOrcsiUMs
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMzMDQ3ODMyLCJqdGkiOiI3NjJiZDE5NDQwZDU0N2IzODE2YWYzNDc2ZDU5YjQzOCIsInVzZXJfaWQiOjF9.I_yn3InhNuBBHjLVZtPKHW-QWHcwfho_1YF9-aJlx0U
 
 ### add coin to balance
 POST  http://127.0.0.1:8000/balances/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMyNDI0NjcxLCJqdGkiOiIxMTNlMjgxNjIwNDc0MTk4ODkyMTBiYzFlOTUxNTVlMyIsInVzZXJfaWQiOjN9.wMxK4QeXQNCR898oyvu53rXgjWwUEdpLQUvtTVrxth4
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMzMDQ3ODMyLCJqdGkiOiI3NjJiZDE5NDQwZDU0N2IzODE2YWYzNDc2ZDU5YjQzOCIsInVzZXJfaWQiOjF9.I_yn3InhNuBBHjLVZtPKHW-QWHcwfho_1YF9-aJlx0U
 Content-Type: application/json
 
 {
-    "coinID":5247,
+    "coinID":52,
+    "quantity": "25",
+    "updated_on":"2019-01-19T00:00:00Z"
+}
+### delete coin to balance
+DELETE  http://127.0.0.1:8000/balances/17/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMzMDQ3ODMyLCJqdGkiOiI3NjJiZDE5NDQwZDU0N2IzODE2YWYzNDc2ZDU5YjQzOCIsInVzZXJfaWQiOjF9.I_yn3InhNuBBHjLVZtPKHW-QWHcwfho_1YF9-aJlx0U
+Content-Type: application/json
+
+{
+    "coinID":52,
+   
+}
+### edit coin to balance
+POST  http://127.0.0.1:8000/balances/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMzMDQ3ODMyLCJqdGkiOiI3NjJiZDE5NDQwZDU0N2IzODE2YWYzNDc2ZDU5YjQzOCIsInVzZXJfaWQiOjF9.I_yn3InhNuBBHjLVZtPKHW-QWHcwfho_1YF9-aJlx0U
+Content-Type: application/json
+
+{
+    "coinID":57,
     "quantity": "25",
     "updated_on":"2019-01-19T00:00:00Z"
 }
 
 ### update balance
 
-PUT  http://127.0.0.1:8000/balances/4/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMxNjQ3NTU3LCJqdGkiOiJiNjJiMTRiNDkwMDU0MDFjYWNiNTRiZmU3NmQ5YjkzMCIsInVzZXJfaWQiOjN9.iLh__JAuXOt6jMKEGIJf619qy6uOyVDAZZ-FkEEwEic
+PUT  http://127.0.0.1:8000/balances/18/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjMzMDQ3ODMyLCJqdGkiOiI3NjJiZDE5NDQwZDU0N2IzODE2YWYzNDc2ZDU5YjQzOCIsInVzZXJfaWQiOjF9.I_yn3InhNuBBHjLVZtPKHW-QWHcwfho_1YF9-aJlx0U
 Content-Type: application/json
 
 {
-    "quantity": "33",
-    "updated_on":"2019-10-20T00:00:00Z"
+    "quantity": "33"
 }

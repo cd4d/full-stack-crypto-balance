@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchRatesAction } from './balance-actions';
+import { fetchRatesAction } from './balance-async-thunks';
 import { fetchNewsAction } from './news-slice';
 import { loginAction } from './user-slice';
 

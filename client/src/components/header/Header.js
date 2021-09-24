@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
 import { logoutAction, refreshAction } from "../../store/user-slice";
-import { fetchBalanceAction } from "../../store/balance-actions";
+import { fetchRemoteBalanceAction } from "../../store/balance-async-thunks";
 
 export default function Header(props) {
   const CURRENCIES_LIST = [
@@ -25,7 +25,7 @@ export default function Header(props) {
     dispatch(logoutAction());
   }
   function handleFetchBalance() {
-    dispatch(fetchBalanceAction({ access_token: user.access_token }));
+    dispatch(fetchRemoteBalanceAction({ access_token: user.access_token }));
   }
   function handleChange(e) {
     props.changeCurrency(e.target.value.toString());

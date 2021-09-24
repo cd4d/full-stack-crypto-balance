@@ -7,6 +7,8 @@ class CoinSerializer(serializers.ModelSerializer):
         model = Coin
         fields = ['id','name','ticker','image','rateusd']
 
+    
+
 # class CoinSerializer(serializers.Serializer):
 #     id = serializers.IntegerField(read_only=True)
 #     name = serializers.CharField(allow_blank=True, allow_null=True)
