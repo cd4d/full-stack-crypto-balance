@@ -23,7 +23,7 @@ export default function Balance() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(balanceActions.calculateBalance());
+    dispatch(balanceActions.calculateLocalBalance());
   }, [dispatch]);
 
   // recalculate balance when currency changes
@@ -63,7 +63,7 @@ export default function Balance() {
     dispatch(balanceActions.updateBalance(newBalance));
 
     console.log("updating balance");
-    dispatch(balanceActions.calculateBalance());
+    dispatch(balanceActions.calculateLocalBalance());
   }
 
   return (

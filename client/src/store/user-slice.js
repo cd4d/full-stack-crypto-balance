@@ -3,30 +3,47 @@ import { login, logout, callRefreshToken } from "../API/user";
 import { fetchBalance } from "../API/balance";
 export const loginAction = createAsyncThunk(
   "user/loginUser",
-  async (action) => {
+  async (payload, thunkAPI) => {
     console.log("login user");
-    const response = await login(action);
-    const data = await response.data;
-    console.log("login response:", data);
-    return data;
+    try {
+      const response = await login(payload);
+      console.log("login response:", response);
+      if (response instanceof Error) throw new Error(response);
+      const data = await response.data;
+      return data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.message);
+    }
   }
 );
 export const refreshAction = createAsyncThunk(
   "user/refreshUser",
-  async (action) => {
-    console.log("refresh user");
-    const response = await callRefreshToken(action);
-    const data = await response.data;
-    console.log("refresh response:", data);
-    return data;
+  async (payload, thunkAPI) => {
+    try {
+      console.log("refresh user");
+      const response = await callRefreshToken(payload);
+      if (response instanceof Error) throw response;
+      const data = await response.data;
+      console.log("refresh response:", data);
+      return data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.message);
+    }
   }
 );
-export const logoutAction = createAsyncThunk("user/logoutUser", async () => {
-  const response = await logout();
-  const data = await response.data;
-  console.log("logout response:", data);
-  return data;
-});
+export const logoutAction = createAsyncThunk(
+  "user/logoutUser",
+  async (payload, thunkAPI) => {
+    try {
+      const response = await logout();
+      const data = await response.data;
+      if (response instanceof Error) throw response;
+      return data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
 const emptyUser = {
   id: null, // "pk" in response
   username: null,
@@ -55,6 +72,9 @@ const userSlice = createSlice({
         "refreshToken",
         JSON.stringify(action.payload.refresh_token)
       );
+    },
+    [loginAction.rejected]: () => {
+      console.log("loginaction rejected");
     },
     [refreshAction.fulfilled]: (state, action) => {
       state.accessToken = action.payload.access_token;

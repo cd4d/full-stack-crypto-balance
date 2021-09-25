@@ -25,8 +25,8 @@ export default function BalanceTable(props) {
   }
 
   function onDeleteCoin(coin) {
-    const updatedBalance = balance.filter((el) => el.id !== coin.id);
-    onUpdateBalance(updatedBalance);
+    const updatedBalance = balance.filter((el) => el.entryId !== coin.entryId);
+    onUpdateBalance({updatedBalance, entryId:coin.entryId});
   }
   function onEditorQuantityChange(tableProps, event) {
     console.log("tableProps", tableProps);

@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchRatesAction, fetchRemoteBalanceAction } from "./balance-async-thunks";
+import {
+  fetchRatesAction,
+  fetchRemoteBalanceAction,
+} from "./balance-async-thunks";
+import { calculateBalance, formatData,formatResponse } from "./balance-functions";
 const initialChartData = {
   labels: ["a", "b", "c"],
   datasets: [
@@ -57,55 +61,16 @@ const balanceSlice = createSlice({
       return { ...state, balance: action.payload };
     },
 
-    calculateBalance(state) {
-      state.total = 0;
-      state.balance.map((coin) => {
-        if (coin.rate && coin.quantity) {
-          coin.value = +coin.rate * +coin.quantity;
-        }
-        if (coin.value) {
-          state.total += coin.value;
-        }
-        // get the weight of each
-        if (state.total && state.total > 0) {
-          if (coin.value) {
-            coin.weight = coin.value / state.total;
-          }
-        }
-        return coin;
-      });
+    calculateLocalBalance(state) {
+      return calculateBalance(state);
     },
-
-    formatData(state) {
-      let tempData = { coinNames: [], coinValues: [] };
-      state.balance.map((coin) => {
-        tempData.coinNames.push(coin.name);
-        tempData.coinValues.push(coin.value);
-        return coin;
-      });
-      state.formattedData.labels = tempData.coinNames;
-      state.formattedData.datasets[0].data = tempData.coinValues;
+    formatLocalData(state) {
+      return formatData(state);
     },
   },
   extraReducers: {
     [fetchRatesAction.fulfilled]: (state, action) => {
-      console.log("fetchrates fulfilled", action);
-      let formattedResponse;
-      formattedResponse = action.payload.rates;
-      state.balance.map((coin) => {
-        const responseKeys = Object.keys(formattedResponse);
-        for (let i = 0; i < responseKeys.length; i++) {
-          let key = responseKeys[i];
-          if (key === coin.name.toLowerCase()) {
-            coin.rate =
-              formattedResponse[key][
-                action.payload.currency ? action.payload.currency : "usd"
-              ];
-            break;
-          }
-        }
-        return coin;
-      });
+      return formatResponse(state,action)
     },
     [fetchRemoteBalanceAction.fulfilled]: (state, action) => {
       console.log("got balance fulfilled:", action);
@@ -117,11 +82,11 @@ const balanceSlice = createSlice({
   },
 });
 
-/* Thunk that combines fetching rates and calculatebalance so that calculate balance is loaded right after fetching rates
+/* Thunk that combines fetching rates and calculateLocalBalance so that calculate balance is loaded right after fetching rates
 https://stackoverflow.com/questions/63516716/redux-toolkit-is-it-possible-to-dispatch-other-actions-from-the-same-slice-in-o  */
 export const fetchAndCalculate = (params) => async (dispatch) => {
   await dispatch(fetchRatesAction(params));
-  dispatch(balanceActions.calculateBalance());
+  dispatch(balanceActions.calculateLocalBalance());
 };
 export const balanceActions = balanceSlice.actions;
 

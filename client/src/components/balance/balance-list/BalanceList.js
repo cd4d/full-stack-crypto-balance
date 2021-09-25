@@ -28,7 +28,7 @@ export default function BalanceList() {
         })
       );
     console.log("updating balance");
-    dispatch(balanceActions.calculateBalance());
+    dispatch(balanceActions.calculateLocalBalance());
   }
 
   return (

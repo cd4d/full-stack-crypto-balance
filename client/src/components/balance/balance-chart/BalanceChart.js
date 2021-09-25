@@ -17,7 +17,7 @@ const BalanceChart = React.memo(() => {
 
 
   useEffect(() => {
-    dispatch(balanceActions.formatData());
+    dispatch(balanceActions.formatLocalData());
   }, [balance, dispatch]);
 
   const chartOptions = {
