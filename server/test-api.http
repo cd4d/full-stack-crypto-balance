@@ -15,7 +15,7 @@ Content-Type: application/json
 
 {
     "username":"test2",
-    "password": "12345"
+    "password": "123456"
 }
 
 ### logout
