@@ -11,7 +11,7 @@ import { uiActions } from "../../../../store/ui-slice";
 import { fetchAndCalculate } from "../../../../store/balance-slice";
 import RefreshRatesBtn from "./RefreshRatesBtn";
 
-export default function AddCoin({ balance, updateBalance }) {
+export default function AddCoin({ balance, addCoin }) {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const currencyCtx = useContext(CurrencyContext);
@@ -114,17 +114,12 @@ export default function AddCoin({ balance, updateBalance }) {
   useEffect(() => {
     async function getRates() {
       let currentRate = 1;
-      const coinSearched = addCoinState.selectedCoin.name.toLowerCase()
-      const response = await fetchRates(
-        [coinSearched],
-        currencyCtx
-      );
+      const coinSearched = addCoinState.selectedCoin.name.toLowerCase();
+      const response = await fetchRates([coinSearched], currencyCtx);
 
       //ex. {'cardano': {'usd': 1.31 }}
       if (Object.keys(response).length > 0) {
-        currentRate = response[coinSearched][
-          currencyCtx
-        ];
+        currentRate = response[coinSearched][currencyCtx];
       } else {
         dispatch(
           uiActions.changeError({
@@ -145,12 +140,12 @@ export default function AddCoin({ balance, updateBalance }) {
     dispatch(uiActions.toggleAddCoinDisplayed());
   }
 
-  function addCoin(coin) {
+  function onAddCoin(coin) {
     if (coin && coin.id && coin.amount) {
       // Need to destructure balance to update list
       const updatedBalance = [...balance, coin];
       console.log("updating balance: ", updatedBalance);
-      updateBalance(updatedBalance);
+      addCoin(updatedBalance);
       closeInput();
     }
   }
@@ -254,7 +249,7 @@ export default function AddCoin({ balance, updateBalance }) {
             {addCoinState.selectedCoin.id && addCoinState.selectedCoin.amount && (
               <span
                 style={{ cursor: "pointer" }}
-                onClick={() => addCoin(addCoinState.selectedCoin)}
+                onClick={() => onAddCoin(addCoinState.selectedCoin)}
               >
                 <span className="pi pi-check"></span>
               </span>

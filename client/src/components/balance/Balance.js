@@ -58,11 +58,11 @@ export default function Balance() {
     }
   }, [user.accessToken, dispatch]);
 
-  function updateBalance(newBalance) {
-    console.log("newBalance", newBalance);
-    dispatch(balanceActions.updateBalance(newBalance));
+  function addCoin(payload) {
+    console.log("newBalance", payload);
+    dispatch(balanceActions.updateLocalBalance(payload));
 
-    console.log("updating balance");
+    console.log("Updating balance...");
     dispatch(balanceActions.calculateLocalBalance());
   }
 
@@ -70,7 +70,7 @@ export default function Balance() {
     <div className="container">
       <Login />
       <div className="row">
-        <AddCoin balance={balance} updateBalance={updateBalance} />
+        <AddCoin balance={balance} addCoin={addCoin} />
         {balance.length ? (
           <>
             <div className="col-md-8 col-sm-12">

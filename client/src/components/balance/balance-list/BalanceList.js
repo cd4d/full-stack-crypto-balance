@@ -16,7 +16,8 @@ export default function BalanceList() {
   const dispatch = useDispatch();
 
   // updatedBalance, entryId,quantity
-  function updateBalance(args) {
+  function onUpdateBalance(args) {
+    console.log("args updatedBalance", args);
     console.log("updatedBalance", args.updatedBalance);
     console.log("entryId", args.entryId);
     dispatch(balanceActions.updateLocalBalance(args.updatedBalance));
@@ -48,7 +49,7 @@ export default function BalanceList() {
       {balance.length ? (
         <BalanceTable
           onUpdateBalance={(newBalance, entryId) =>
-            updateBalance(newBalance, entryId)
+            onUpdateBalance(newBalance, entryId)
           }
         />
       ) : (

@@ -3,7 +3,7 @@ import {
   fetchRatesAction,
   fetchRemoteBalanceAction,
 } from "./balance-async-thunks";
-import { calculateBalance, formatData,formatResponse } from "./balance-functions";
+import {updateBalanceSwitch, calculateBalance, formatData,formatResponse } from "./balance-functions";
 const initialChartData = {
   labels: ["a", "b", "c"],
   datasets: [
@@ -57,10 +57,12 @@ const balanceSlice = createSlice({
 
   initialState: initialBalance,
   reducers: {
-    updateLocalBalance(state, action) {
-      return { ...state, balance: action.payload };
+    // updateLocalBalance(state, action) {
+    //   return { ...state, balance: action.payload };
+    // },
+    updateLocalBalance(state,action){
+      return updateBalanceSwitch(state,action)
     },
-
     calculateLocalBalance(state) {
       return calculateBalance(state);
     },
