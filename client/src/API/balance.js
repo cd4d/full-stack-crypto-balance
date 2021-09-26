@@ -137,7 +137,7 @@ export async function fetchBalance() {
     return error;
   }
 }
-export async function updateBalance(entryId, quantity) {
+export async function updateQuantity(entryId, quantity) {
   try {
     if (isNaN(entryId) || isNaN(quantity)) throw new Error("Invalid data");
     const response = await axiosApiInstance.put(
@@ -149,16 +149,35 @@ export async function updateBalance(entryId, quantity) {
         headers: { Authorization: "Bearer " + accessToken },
       }
     );
-    if (response.statusText !== "OK") {
-      let err = new Error();
-      err.message = `An error has occurred: ${response.data}`;
-      err.status = response.status;
 
-      throw err;
-    }
     if (response.status >= 200 && response.status <= 299) {
       console.log("updated balance", response);
       return response;
+    } else {
+      throw new Error({ message: `An error has occurred: ${response.data}`, status: response.status })
+
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+export async function deleteCoin(entryId) {
+  try {
+    if (isNaN(entryId)) throw new Error("Invalid data");
+    const response = await axiosApiInstance.delete(
+      `${DB_URL}balances/${entryId}/`,
+
+      {
+        headers: { Authorization: "Bearer " + accessToken },
+      }
+    );
+    if (response.status >= 200 && response.status <= 299) {
+      console.log("updated balance", response);
+      return response;
+    } else {
+      throw new Error({ message: `An error has occurred: ${response.data}`, status: response.status })
+
     }
   } catch (error) {
     console.log(error);

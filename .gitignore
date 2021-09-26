@@ -1,6 +1,7 @@
 # custom
 .env
 .vscode/
+server/test-api.http
 # react
 
 # dependencies
