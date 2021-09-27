@@ -8,7 +8,7 @@ export function updateLocalBalanceSwitch(state, action) {
   let updatedBalance = {}
   switch (action.payload.changeRequested) {
     case UPDATE_QUANTITY:
-       updatedBalance = state.balance.map((el) =>
+      updatedBalance = state.balance.map((el) =>
         el.entryId === action.payload.entryId
           ? { ...el, quantity: action.payload.quantity }
           : el
@@ -17,7 +17,7 @@ export function updateLocalBalanceSwitch(state, action) {
     case ADD_COIN:
       return { ...state, balance: action.payload.newBalance };
     case DELETE_COIN:
-       updatedBalance = state.balance.filter(
+      updatedBalance = state.balance.filter(
         (el) => el.entryId !== action.payload.entryId
       );
       return { ...state, balance: updatedBalance };
@@ -26,10 +26,11 @@ export function updateLocalBalanceSwitch(state, action) {
   }
 }
 
-export function calculateBalance(currentBalance) {
-  console.log("calculating balance", currentBalance);
-  currentBalance.total = 0;
-  currentBalance.balance.map((coin) => {
+export function calculateBalance(state) {
+  let currentBalance = state.balance
+  console.log("calculating balance:", state);
+  state.total = 0;
+  [...state.balance].map((coin) => {
     if (coin.rate && coin.quantity) {
       coin.value = +coin.rate * +coin.quantity;
     }
@@ -67,7 +68,7 @@ export function formatResponse(state, action) {
       if (key === coin.name.toLowerCase()) {
         coin.rate =
           formattedResponse[key][
-            action.payload.currency ? action.payload.currency : "usd"
+          action.payload.currency ? action.payload.currency : "usd"
           ];
         break;
       }

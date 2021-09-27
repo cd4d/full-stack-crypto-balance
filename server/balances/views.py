@@ -31,7 +31,7 @@ class BalanceList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         newCoin = Coin.objects.all().filter(
-            id=self.request.data['coinID']).first()
+            id=self.request.data['coinId']).first()
         if serializer.is_valid():
             serializer.save(coin=newCoin, owner=self.request.user)
 

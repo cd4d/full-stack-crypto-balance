@@ -1,7 +1,10 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 import {
+  addCoinRemoteAction,
+  deleteCoinRemoteAction,
   fetchRatesAction,
   fetchRemoteBalanceAction,
+  updateQuantityRemoteAction,
 } from "./balance-async-thunks";
 import {
   updateLocalBalanceSwitch,
@@ -20,7 +23,7 @@ const initialChartData = {
   ],
 };
 const initialBalance = {
-  isChanged: false,
+  remoteChanges: 0,
   total: 0,
   balance: [
     {
@@ -65,8 +68,9 @@ const balanceSlice = createSlice({
     updateLocalBalance(state, action) {
       return updateLocalBalanceSwitch(state, action);
     },
-    calculateLocalBalance(state) {
-      return calculateBalance(state);
+    calculateLocalBalance(state, action) {
+      console.log('in dispatch calc balance', state);
+      return  calculateBalance({...state});
     },
     formatLocalData(state) {
       return formatData(state);
@@ -81,17 +85,32 @@ const balanceSlice = createSlice({
       state.balance = action.payload;
     },
     [fetchRemoteBalanceAction.rejected]: (state, action) => {
-      console.log("error balance:", action);
+      console.log("error fetching balance:", action);
     },
+    [deleteCoinRemoteAction.fulfilled]: (state) => {
+      state.remoteChanges++
+    },
+    [addCoinRemoteAction.fulfilled]: (state) => {
+      state.remoteChanges++
+    },
+    [updateQuantityRemoteAction.fulfilled]: (state) => {
+      state.remoteChanges++
+    }
+
   },
 });
 
 /* Thunk that combines fetching rates and calculateLocalBalance so that calculate balance is loaded right after fetching rates
-https://stackoverflow.com/questions/63516716/redux-toolkit-is-it-possible-to-dispatch-other-actions-from-the-same-slice-in-o  */
+https://stackoverflow.com/questions/63516716/redux-toolkit-is-it-possible-to-dispatch-other-actions-from-the-same-slice-in-o
+https://blog.jscrambler.com/async-dispatch-chaining-with-redux-thunk/  */
 export const fetchAndCalculate = (params) => async (dispatch) => {
-  await dispatch(fetchRatesAction(params));
-  dispatch(balanceActions.calculateLocalBalance());
+  await Promise.all([dispatch(fetchRatesAction(params)),
+  dispatch(balanceActions.calculateLocalBalance())])
+
 };
+
+export const o = 0
+
 export const balanceActions = balanceSlice.actions;
 
 export default balanceSlice.reducer;

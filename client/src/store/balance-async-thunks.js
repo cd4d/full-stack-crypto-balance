@@ -29,25 +29,32 @@ export const fetchRemoteBalanceAction = createAsyncThunk(
 
 export const updateQuantityRemoteAction = createAsyncThunk(
   "balance/updateBalance",
-  async (payload) => {
+  async (payload, thunkAPI) => {
     console.log("payload", payload);
     const response = await updateQuantity(payload.entryId, payload.quantity);
-    return response.data;
+    if (response.status >= 200 && response.status <= 299) {
+      return await thunkAPI.dispatch(fetchRemoteBalanceAction())
+    }
+    // return response.data;
   }
 );
 export const addCoinRemoteAction = createAsyncThunk(
   "balance/updateBalance",
-  async (payload) => {
+  async (payload, thunkAPI) => {
     console.log("payload", payload);
     const response = await addCoin(payload);
-    return response.data;
+    return await thunkAPI.dispatch(fetchRemoteBalanceAction())
+
+    // return response.data;
   }
 );
 export const deleteCoinRemoteAction = createAsyncThunk(
   "balance/updateBalance",
-  async (payload) => {
+  async (payload, thunkAPI) => {
     console.log("payload", payload);
-    const response = await deleteCoin(payload.entryId);
-    return response;
+    await deleteCoin(payload.entryId)
+    return await thunkAPI.dispatch(fetchRemoteBalanceAction())
+
+
   }
 );
