@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { login, logout, callRefreshToken } from "../API/user";
-import { fetchBalance } from "../API/balance";
 export const loginAction = createAsyncThunk(
   "user/loginUser",
   async (payload, thunkAPI) => {

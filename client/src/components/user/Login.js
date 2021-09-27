@@ -4,7 +4,6 @@ import { uiActions } from "../../store/ui-slice";
 import { loginAction } from "../../store/user-slice";
 
 import { Dialog } from "primereact/dialog";
-import { isRejectedWithValue } from "@reduxjs/toolkit";
 export default function Login() {
   const displayLoginModal = useSelector(
     (state) => state.uiReducer.displayLoginModal

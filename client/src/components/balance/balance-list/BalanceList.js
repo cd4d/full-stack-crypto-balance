@@ -1,9 +1,8 @@
 import { React } from "react";
 import BalanceTable from "./BalanceTable";
 import "./balance-list.css";
-import { useSelector, useDispatch } from "react-redux";
-import { balanceActions } from "../../../store/balance-slice";
-import { updateRemoteBalanceAction } from "../../../store/balance-async-thunks";
+import { useSelector} from "react-redux";
+
 import EmptyBalance from "../EmptyBalance";
 
 export default function BalanceList() {
@@ -12,25 +11,7 @@ export default function BalanceList() {
   );
   const error = useSelector((state) => state.uiReducer.error.rates);
   const balance = useSelector((state) => state.balanceReducer.balance);
-  const user = useSelector((state) => state.userReducer);
-  const dispatch = useDispatch();
 
-  // updatedBalance, entryId,quantity
-  function onUpdateBalance(args) {
-    console.log("args updatedBalance", args);
-    console.log("updatedBalance", args.updatedBalance);
-    console.log("entryId", args.entryId);
-    dispatch(balanceActions.updateLocalBalance(args.updatedBalance));
-    if (user.id)
-      dispatch(
-        updateRemoteBalanceAction({
-          entryId: args.entryId,
-          quantity: args.quantity,
-        })
-      );
-    console.log("updating balance");
-    dispatch(balanceActions.calculateLocalBalance());
-  }
 
   return (
     <>
@@ -46,15 +27,7 @@ export default function BalanceList() {
         </div>
       )}
 
-      {balance.length ? (
-        <BalanceTable
-          onUpdateBalance={(newBalance, entryId) =>
-            onUpdateBalance(newBalance, entryId)
-          }
-        />
-      ) : (
-        <EmptyBalance />
-      )}
+      {balance.length ? <BalanceTable /> : <EmptyBalance />}
     </>
   );
 }

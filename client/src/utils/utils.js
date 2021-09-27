@@ -1,4 +1,4 @@
-import coinsList from "../coins-list-sorted.json";
+import coinsListFile from "../coins-list-sorted-with-id.json";
 export function formatCurrency(value, inputCurrency) {
   if (value) {
     return value.toLocaleString("en-US", {
@@ -29,18 +29,18 @@ export function getIcons(balance) {
   // get images
 
   balance = sortBalanceById(balance);
-  if (coinsList && coinsList.length) {
+  if (coinsListFile && coinsListFile.length) {
     //let count = 0;
     let i = 0;
     //console.log(balance);
 
-    for (let coin of coinsList) {
+    for (let coin of coinsListFile) {
       // loop through all coins supported
       while (i < balance.length) {
         // check local balance
         if (
-          coin.id &&
-          balance[i].name.toLowerCase() === coin.id.toLowerCase()
+          coin.slug &&
+          balance[i].name.toLowerCase() === coin.slug.toLowerCase()
         ) {
           balance[i].image = coin.image;
           // increment both coins list and local balance loops

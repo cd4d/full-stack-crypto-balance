@@ -151,7 +151,30 @@ export async function updateQuantity(entryId, quantity) {
     );
 
     if (response.status >= 200 && response.status <= 299) {
-      console.log("updated balance", response);
+      console.log("updated quantity", response);
+      return response;
+    } else {
+      throw new Error({ message: `An error has occurred: ${response.data}`, status: response.status })
+
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+// add coin, must be: {coinId: int, quantity: int}
+export async function addCoin(coin) {
+  try {
+    const response = await axiosApiInstance.post(
+      `${DB_URL}balances/`,
+     coin,
+      {
+        headers: { Authorization: "Bearer " + accessToken },
+      }
+    );
+
+    if (response.status >= 200 && response.status <= 299) {
+      console.log("added coin", response);
       return response;
     } else {
       throw new Error({ message: `An error has occurred: ${response.data}`, status: response.status })
@@ -173,7 +196,7 @@ export async function deleteCoin(entryId) {
       }
     );
     if (response.status >= 200 && response.status <= 299) {
-      console.log("updated balance", response);
+      console.log("deleted coin", response);
       return response;
     } else {
       throw new Error({ message: `An error has occurred: ${response.data}`, status: response.status })

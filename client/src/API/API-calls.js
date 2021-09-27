@@ -1,7 +1,7 @@
 // fetch rates from list of coins
 import axios from "axios";
-export async function fetchRates(coinsList, currency = "usd") {
-  const formattedCoinListForAPI = coinsList.join("%2C");
+export async function fetchRates(coinsNames, currency = "usd") {
+  const formattedCoinListForAPI = coinsNames.join("%2C");
   // console.log('fetching rates for: ', coinsList);
   try {
     const response = await axios.get(
@@ -26,10 +26,10 @@ export async function fetchRates(coinsList, currency = "usd") {
   }
 }
 
-export async function fetchNews(coinsList) {
-  console.log(coinsList);
-  const coinsListFormatted = coinsList.join("%2C");
-  const newsDataURL = `https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q=${coinsListFormatted}&pageNumber=1&pageSize=10&autoCorrect=true&fromPublishedDate=null&toPublishedDate=null`;
+export async function fetchNews(coinsNames) {
+  console.log(coinsNames);
+  const coinsNamesFormatted = coinsNames.join("%2C");
+  const newsDataURL = `https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q=${coinsNamesFormatted}&pageNumber=1&pageSize=10&autoCorrect=true&fromPublishedDate=null&toPublishedDate=null`;
   try {
     const response = await axios.get(newsDataURL, {
       headers: {

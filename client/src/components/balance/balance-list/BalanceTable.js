@@ -1,21 +1,25 @@
 import { React, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { cloneDeep } from "lodash";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import CurrencyContext from "../../../store/currency-context";
 import { formatCurrency } from "../../../utils/utils";
-import { DELETE_COIN } from "../../../store/balance-functions";
-import {balanceActions} from "../../../store/balance-slice"
+import { DELETE_COIN, UPDATE_QUANTITY } from "../../../store/balance-functions";
+import { balanceActions } from "../../../store/balance-slice";
+import {
+  updateQuantityRemoteAction,
+  deleteCoinRemoteAction,
+} from "../../../store/balance-async-thunks";
 export default function BalanceTable(props) {
   const pageSize = 5;
   const balance = useSelector((state) => state.balanceReducer.balance);
+  const user = useSelector((state) => state.userReducer);
   const isBalanceLoading = useSelector(
     (state) => state.uiReducer.isLoading.rates
   );
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const currencyCtx = useContext(CurrencyContext);
   const error = useSelector((state) => state.uiReducer.error.rates);
   function deleteButton(coinClicked) {
@@ -25,21 +29,42 @@ export default function BalanceTable(props) {
   }
 
   function onDeleteCoin(coin) {
-    dispatch(balanceActions.updateLocalBalance({
-      data: { entryId: coin.entryId },
-      changeRequested: DELETE_COIN,
-    }))
+    if (user.id) {
+      dispatch(
+        deleteCoinRemoteAction({
+          entryId: coin.entryId,
+        })
+      );
+    } else {
+      dispatch(
+        balanceActions.updateLocalBalance({
+          entryId: coin.entryId,
+          changeRequested: DELETE_COIN,
+        })
+      );
+    }
   }
   function onEditorQuantityChange(tableProps, event) {
-    // let updatedBalance = [...tableProps.value] does NOT work, need deep cloning
-    let updatedBalance = cloneDeep(tableProps.value);
-    updatedBalance[tableProps.rowIndex][tableProps.field] = +event.target.value;
-    // onUpdateBalance({
-    //   updatedBalance: updatedBalance,
-    //   entryId: tableProps.rowData?.entryId,
-    //   quantity: +event.target.value,
-    // });
+    console.log("tableProps", tableProps);
+
+    if (user.id) {
+      dispatch(
+        updateQuantityRemoteAction({
+          entryId: tableProps.rowData.entryId,
+          quantity: +event.target.value,
+        })
+      );
+    } else {
+      dispatch(
+        balanceActions.updateLocalBalance({
+          entryId: tableProps.rowData.entryId,
+          quantity: +event.target.value,
+          changeRequested: UPDATE_QUANTITY,
+        })
+      );
+    }
   }
+
   const quantityEditor = (tableProps) => {
     return (
       <input

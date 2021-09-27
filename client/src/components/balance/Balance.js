@@ -10,27 +10,28 @@ import CurrencyContext from "../../store/currency-context";
 import { balanceActions, fetchAndCalculate } from "../../store/balance-slice";
 import { fetchRemoteBalanceAction } from "../../store/balance-async-thunks";
 import AddCoin from "./balance-list/add-coin/AddCoin";
+import { ADD_COIN } from "../../store/balance-functions";
 export default function Balance() {
   const balance = useSelector((state) => state.balanceReducer.balance);
   const user = useSelector((state) => state.userReducer);
-  const coinsList = balance.map((coin) => coin.name);
+  const coinsNames = balance.map((coin) => coin.name);
   const currencyCtx = useContext(CurrencyContext);
 
   // refs to avoid including dependencies in useEffect
   const currencyRef = useRef(currencyCtx);
-  const coinsListRef = useRef(coinsList);
+  const coinsNamesRef = useRef(coinsNames);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(balanceActions.calculateLocalBalance());
-  }, [dispatch]);
+  }, [balance,dispatch]);
 
   // recalculate balance when currency changes
   useEffect(() => {
     dispatch(
       fetchAndCalculate({
-        coinsList: coinsListRef.current,
+        coinsNames: coinsNamesRef.current,
         currency: currencyCtx,
       })
     );
@@ -44,10 +45,10 @@ export default function Balance() {
     if (user.accessToken) {
       fetchUserBalance()
         .then((userBalance) => userBalance.payload.map((coin) => coin.name))
-        .then((coinsList) =>
+        .then((coinsNames) =>
           dispatch(
             fetchAndCalculate({
-              coinsList,
+              coinsNames,
               currency: currencyRef.current,
             })
           )
@@ -58,19 +59,24 @@ export default function Balance() {
     }
   }, [user.accessToken, dispatch]);
 
-  function addCoin(payload) {
-    console.log("newBalance", payload);
-    dispatch(balanceActions.updateLocalBalance(payload));
+  function addCoinLocal(newBalance) {
+    console.log("newBalance", newBalance);
+    dispatch(
+      balanceActions.updateLocalBalance({
+        newBalance,
+        changeRequested: ADD_COIN,
+      })
+    );
 
-    console.log("Updating balance...");
-    dispatch(balanceActions.calculateLocalBalance());
+    console.log("Start updating local balance...");
+    dispatch(balanceActions.calculateLocalBalance(newBalance));
   }
 
   return (
     <div className="container">
       <Login />
       <div className="row">
-        <AddCoin balance={balance} addCoin={addCoin} />
+        <AddCoin balance={balance} addCoinLocal={addCoinLocal} />
         {balance.length ? (
           <>
             <div className="col-md-8 col-sm-12">

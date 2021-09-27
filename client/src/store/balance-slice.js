@@ -1,9 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import {
   fetchRatesAction,
   fetchRemoteBalanceAction,
 } from "./balance-async-thunks";
-import {updateBalanceSwitch, calculateBalance, formatData,formatResponse } from "./balance-functions";
+import {
+  updateLocalBalanceSwitch,
+  calculateBalance,
+  formatData,
+  formatResponse,
+} from "./balance-functions";
 const initialChartData = {
   labels: ["a", "b", "c"],
   datasets: [
@@ -57,11 +62,8 @@ const balanceSlice = createSlice({
 
   initialState: initialBalance,
   reducers: {
-    // updateLocalBalance(state, action) {
-    //   return { ...state, balance: action.payload };
-    // },
-    updateLocalBalance(state,action){
-      return updateBalanceSwitch(state,action)
+    updateLocalBalance(state, action) {
+      return updateLocalBalanceSwitch(state, action);
     },
     calculateLocalBalance(state) {
       return calculateBalance(state);
@@ -72,7 +74,7 @@ const balanceSlice = createSlice({
   },
   extraReducers: {
     [fetchRatesAction.fulfilled]: (state, action) => {
-      return formatResponse(state,action)
+      return formatResponse(state, action);
     },
     [fetchRemoteBalanceAction.fulfilled]: (state, action) => {
       console.log("got balance fulfilled:", action);

@@ -2,16 +2,23 @@ export const DELETE_COIN = "DELETE_COIN";
 export const ADD_COIN = "ADD_COIN";
 export const UPDATE_QUANTITY = "UPDATE_QUANTITY";
 
-export function updateBalanceSwitch(state, action) {
+export function updateLocalBalanceSwitch(state, action) {
+  console.log("in switch state", state);
   console.log("in switch action", action);
+  let updatedBalance = {}
   switch (action.payload.changeRequested) {
     case UPDATE_QUANTITY:
-      return;
+       updatedBalance = state.balance.map((el) =>
+        el.entryId === action.payload.entryId
+          ? { ...el, quantity: action.payload.quantity }
+          : el
+      );
+      return { ...state, balance: updatedBalance };
     case ADD_COIN:
-      return;
+      return { ...state, balance: action.payload.newBalance };
     case DELETE_COIN:
-      const updatedBalance = state.balance.filter(
-        (el) => el.entryId !== action.payload.data.entryId
+       updatedBalance = state.balance.filter(
+        (el) => el.entryId !== action.payload.entryId
       );
       return { ...state, balance: updatedBalance };
     default:
@@ -19,19 +26,20 @@ export function updateBalanceSwitch(state, action) {
   }
 }
 
-export function calculateBalance(state) {
-  state.total = 0;
-  state.balance.map((coin) => {
+export function calculateBalance(currentBalance) {
+  console.log("calculating balance", currentBalance);
+  currentBalance.total = 0;
+  currentBalance.balance.map((coin) => {
     if (coin.rate && coin.quantity) {
       coin.value = +coin.rate * +coin.quantity;
     }
     if (coin.value) {
-      state.total += coin.value;
+      currentBalance.total += coin.value;
     }
     // get the weight of each
-    if (state.total && state.total > 0) {
+    if (currentBalance.total && currentBalance.total > 0) {
       if (coin.value) {
-        coin.weight = coin.value / state.total;
+        coin.weight = coin.value / currentBalance.total;
       }
     }
     return coin;

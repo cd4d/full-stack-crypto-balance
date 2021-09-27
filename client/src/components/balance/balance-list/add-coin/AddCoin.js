@@ -2,7 +2,7 @@ import { React, useEffect, useRef, useCallback, useContext } from "react";
 import { InputText } from "primereact/inputtext";
 
 // coins list for adding coin search function
-import coinsList from "../../../../coins-list-sorted.json";
+import coinsListFile from "../../../../coins-list-sorted-with-id.json";
 import { fetchRates } from "../../../../API/API-calls";
 import CurrencyContext from "../../../../store/currency-context";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,7 +11,7 @@ import { uiActions } from "../../../../store/ui-slice";
 import { fetchAndCalculate } from "../../../../store/balance-slice";
 import RefreshRatesBtn from "./RefreshRatesBtn";
 
-export default function AddCoin({ balance, addCoin }) {
+export default function AddCoin({ balance, addCoinLocal }) {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const currencyCtx = useContext(CurrencyContext);
@@ -32,8 +32,8 @@ export default function AddCoin({ balance, addCoin }) {
   };
   function onRefreshRates() {
     // triggerRatesUpdate();
-    const coinsList = balance.map((coin) => coin.name);
-    dispatch(fetchAndCalculate({ coinsList, currency: currencyCtx }));
+    const coinsNames = balance.map((coin) => coin.name);
+    dispatch(fetchAndCalculate({ coinsNames, currency: currencyCtx }));
   }
   const searchCoin = useCallback((enteredInput) => {
     // console.log('searchCoin input: ', enteredInput);
@@ -41,9 +41,9 @@ export default function AddCoin({ balance, addCoin }) {
     if (!enteredInput.trim()) {
       return [];
     }
-    coinsList.map((coin) => {
+    coinsListFile.map((coin) => {
       if (coin && enteredInput.trim().length > 1) {
-        if (coin.id && coin.id.includes(enteredInput.toLowerCase())) {
+        if (coin.slug && coin.slug.includes(enteredInput.toLowerCase())) {
           result.push(coin);
         }
         if (coin.symbol && coin.symbol.includes(enteredInput.toLowerCase())) {
@@ -56,10 +56,10 @@ export default function AddCoin({ balance, addCoin }) {
   }, []);
   const inputCoin = useCallback(
     (input, property) => {
-      // convert id to lowercase and update input field
-      if (property === "id") {
+      // Update input field
+      if (property === "slug") {
         // filling the input with selected value using ref so debounce hook not triggered
-        inputRef.current.value = input.id;
+        inputRef.current.value = input.slug;
         dispatch(
           addCoinActions.setStateReducer({
             type: "replaceState",
@@ -141,11 +141,18 @@ export default function AddCoin({ balance, addCoin }) {
   }
 
   function onAddCoin(coin) {
-    if (coin && coin.id && coin.amount) {
+    if (coin && coin.slug && coin.quantity) {
       // Need to destructure balance to update list
-      const updatedBalance = [...balance, coin];
+      let newCoin = {
+        name: coin.name,
+        quantity: coin.quantity,
+        rate: coin.rate,
+        ticker: coin.symbol.toUpperCase(),
+        slug:coin.slug
+      };
+      const updatedBalance = [...balance, newCoin];
       console.log("updating balance: ", updatedBalance);
-      addCoin(updatedBalance);
+      addCoinLocal(updatedBalance);
       closeInput();
     }
   }
@@ -169,12 +176,12 @@ export default function AddCoin({ balance, addCoin }) {
         data: "",
       })
     );
-    // setSelectedCoin({ id: '', amount: 0 });
+    // setSelectedCoin({ id: '', quantity: 0 });
     dispatch(
       addCoinActions.setStateReducer({
         type: "replaceState",
         field: "selectedCoin",
-        data: { id: "", amount: 0 },
+        data: { id: "", quantity: 0 },
       })
     );
     dispatch(
@@ -192,21 +199,21 @@ export default function AddCoin({ balance, addCoin }) {
         <div className="row mt-2 mb-2">
           <h6>
             Add coin: {!error && addCoinState.selectedCoin.name}{" "}
-            {addCoinState.selectedCoin.amount > 0 &&
+            {addCoinState.selectedCoin.quantity > 0 &&
               addCoinState.selectedCoin.rate &&
               formatCurrency(
                 addCoinState.selectedCoin.rate *
-                  +addCoinState.selectedCoin.amount
+                  +addCoinState.selectedCoin.quantity
               )}
             {error && <span className="text-danger">{error}</span>}
           </h6>
           <div className="col">
             <div>
-              {/* Add coin id input */}
+              {/* Input name of coin */}
               <InputText
                 ref={inputRef}
                 id="search-box"
-                placeholder="Coin name"
+                placeholder="Type a coin name"
                 onChange={(e) => {
                   setSearchCoin(e.target.value);
                 }}
@@ -221,8 +228,8 @@ export default function AddCoin({ balance, addCoin }) {
                         className="list-group-item list-group-item-action"
                       >
                         {/* omitting arrow notation causes render bug */}
-                        <span onClick={() => inputCoin(coin, "id")}>
-                          {coin.id}
+                        <span onClick={() => inputCoin(coin, "slug")}>
+                          {coin.slug}
                         </span>
                       </li>
                     ))}
@@ -230,30 +237,31 @@ export default function AddCoin({ balance, addCoin }) {
                 )}
             </div>
           </div>
-          {/* Input amount of coin, disabled if no coin selected */}
+          {/* Input quantity of coin, disabled if no coin selected */}
           <div className="col ps-0">
             <div>
               <InputText
                 disabled={!addCoinState.selectedCoin.id}
                 type="number"
                 min={0}
-                id="add-coin-input-amount"
-                placeholder="Coin amount"
-                onChange={(e) => inputCoin(e.target.value, "amount")}
+                id="add-coin-input-quantity"
+                placeholder="Coin quantity"
+                onChange={(e) => inputCoin(e.target.value, "quantity")}
               />
             </div>
           </div>
 
           <div className="col pt-2">
             {/* confirm and add coin */}
-            {addCoinState.selectedCoin.id && addCoinState.selectedCoin.amount && (
-              <span
-                style={{ cursor: "pointer" }}
-                onClick={() => onAddCoin(addCoinState.selectedCoin)}
-              >
-                <span className="pi pi-check"></span>
-              </span>
-            )}
+            {addCoinState.selectedCoin.id &&
+              addCoinState.selectedCoin.quantity && (
+                <span
+                  style={{ cursor: "pointer" }}
+                  onClick={() => onAddCoin(addCoinState.selectedCoin)}
+                >
+                  <span className="pi pi-check"></span>
+                </span>
+              )}
             {/* close and cancel */}
             <span style={{ cursor: "pointer" }} onClick={closeInput}>
               <span className="pi pi-times"></span>
