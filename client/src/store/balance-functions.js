@@ -27,20 +27,19 @@ export function updateLocalBalanceSwitch(state, action) {
 }
 
 export function calculateBalance(state) {
-  let currentBalance = state.balance
   console.log("calculating balance:", state);
   state.total = 0;
-  [...state.balance].map((coin) => {
+  state.balance.map((coin) => {
     if (coin.rate && coin.quantity) {
       coin.value = +coin.rate * +coin.quantity;
     }
     if (coin.value) {
-      currentBalance.total += coin.value;
+      state.total += coin.value;
     }
     // get the weight of each
-    if (currentBalance.total && currentBalance.total > 0) {
+    if (state.total && state.total > 0) {
       if (coin.value) {
-        coin.weight = coin.value / currentBalance.total;
+        coin.weight = coin.value / state.total;
       }
     }
     return coin;

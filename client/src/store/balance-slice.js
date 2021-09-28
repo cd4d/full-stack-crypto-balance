@@ -68,9 +68,8 @@ const balanceSlice = createSlice({
     updateLocalBalance(state, action) {
       return updateLocalBalanceSwitch(state, action);
     },
-    calculateLocalBalance(state, action) {
-      console.log('in dispatch calc balance', state);
-      return  calculateBalance({...state});
+    calculateLocalBalance(state) {
+      return  calculateBalance(state);
     },
     formatLocalData(state) {
       return formatData(state);
@@ -109,7 +108,6 @@ export const fetchAndCalculate = (params) => async (dispatch) => {
 
 };
 
-export const o = 0
 
 export const balanceActions = balanceSlice.actions;
 

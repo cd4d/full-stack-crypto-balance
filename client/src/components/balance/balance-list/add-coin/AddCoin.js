@@ -43,9 +43,6 @@ export default function AddCoin({ balance }) {
         changeRequested: ADD_COIN,
       })
     );
-
-    console.log("Start updating local balance...");
-    dispatch(balanceActions.calculateLocalBalance(newBalance));
   }
     function onRefreshRates() {
       // triggerRatesUpdate();

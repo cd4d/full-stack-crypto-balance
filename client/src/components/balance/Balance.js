@@ -25,7 +25,7 @@ export default function Balance() {
 
   useEffect(() => {
     dispatch(balanceActions.calculateLocalBalance());
-  }, [remoteChanges, dispatch]);
+  }, [balance, dispatch]);
 
   // recalculate balance when currency changes
   useEffect(() => {
