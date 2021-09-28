@@ -12,6 +12,7 @@ import {
   formatData,
   formatResponse,
 } from "./balance-functions";
+import { logoutAction } from "./user-slice";
 const initialChartData = {
   labels: ["a", "b", "c"],
   datasets: [
@@ -22,8 +23,7 @@ const initialChartData = {
     },
   ],
 };
-const initialBalance = {
-  remoteChanges: 0,
+const initialBalanceState = {
   total: 0,
   balance: [
     {
@@ -63,13 +63,13 @@ const initialBalance = {
 const balanceSlice = createSlice({
   name: "balance",
 
-  initialState: initialBalance,
+  initialState: initialBalanceState,
   reducers: {
     updateLocalBalance(state, action) {
       return updateLocalBalanceSwitch(state, action);
     },
     calculateLocalBalance(state) {
-      return  calculateBalance(state);
+      return calculateBalance(state);
     },
     formatLocalData(state) {
       return formatData(state);
@@ -80,20 +80,10 @@ const balanceSlice = createSlice({
       return formatResponse(state, action);
     },
     [fetchRemoteBalanceAction.fulfilled]: (state, action) => {
-      console.log("got balance fulfilled:", action);
       state.balance = action.payload;
     },
-    [fetchRemoteBalanceAction.rejected]: (state, action) => {
-      console.log("error fetching balance:", action);
-    },
-    [deleteCoinRemoteAction.fulfilled]: (state) => {
-      state.remoteChanges++
-    },
-    [addCoinRemoteAction.fulfilled]: (state) => {
-      state.remoteChanges++
-    },
-    [updateQuantityRemoteAction.fulfilled]: (state) => {
-      state.remoteChanges++
+    [logoutAction.fulfilled]: () => {
+      return initialBalanceState
     }
 
   },
@@ -102,8 +92,10 @@ const balanceSlice = createSlice({
 /* Thunk that combines fetching rates and calculateLocalBalance so that calculate balance is loaded right after fetching rates
 https://stackoverflow.com/questions/63516716/redux-toolkit-is-it-possible-to-dispatch-other-actions-from-the-same-slice-in-o
 https://blog.jscrambler.com/async-dispatch-chaining-with-redux-thunk/  */
-export const fetchAndCalculate = (params) => async (dispatch) => {
-  await Promise.all([dispatch(fetchRatesAction(params)),
+export const fetchAndCalculate = (currency) => async (dispatch, getState) => {
+  const curState = getState()
+  const coinsNames = curState.balanceReducer.balance.map(coin => coin.name)
+  await Promise.all([dispatch(fetchRatesAction({ coinsNames, currency })),
   dispatch(balanceActions.calculateLocalBalance())])
 
 };

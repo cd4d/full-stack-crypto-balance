@@ -3,10 +3,8 @@ import { login, logout, callRefreshToken } from "../API/user";
 export const loginAction = createAsyncThunk(
   "user/loginUser",
   async (payload, thunkAPI) => {
-    console.log("login user");
     try {
       const response = await login(payload);
-      console.log("login response:", response);
       if (response instanceof Error) throw new Error(response);
       const data = await response.data;
       return data;
@@ -73,7 +71,6 @@ const userSlice = createSlice({
       );
     },
     [loginAction.rejected]: () => {
-      console.log("loginaction rejected");
     },
     [refreshAction.fulfilled]: (state, action) => {
       state.accessToken = action.payload.access_token;

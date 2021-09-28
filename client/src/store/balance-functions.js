@@ -3,8 +3,7 @@ export const ADD_COIN = "ADD_COIN";
 export const UPDATE_QUANTITY = "UPDATE_QUANTITY";
 
 export function updateLocalBalanceSwitch(state, action) {
-  console.log("in switch state", state);
-  console.log("in switch action", action);
+
   let updatedBalance = {}
   switch (action.payload.changeRequested) {
     case UPDATE_QUANTITY:
@@ -27,7 +26,6 @@ export function updateLocalBalanceSwitch(state, action) {
 }
 
 export function calculateBalance(state) {
-  console.log("calculating balance:", state);
   state.total = 0;
   state.balance.map((coin) => {
     if (coin.rate && coin.quantity) {
@@ -37,10 +35,8 @@ export function calculateBalance(state) {
       state.total += coin.value;
     }
     // get the weight of each
-    if (state.total && state.total > 0) {
-      if (coin.value) {
+    if (state.total && state.total > 0 && coin.value) {
         coin.weight = coin.value / state.total;
-      }
     }
     return coin;
   });

@@ -7,35 +7,29 @@ import BalanceNews from "./balance-news/BalanceNews";
 import Login from "../user/Login";
 import { useSelector, useDispatch } from "react-redux";
 import CurrencyContext from "../../store/currency-context";
-import { balanceActions, fetchAndCalculate } from "../../store/balance-slice";
+import {  fetchAndCalculate } from "../../store/balance-slice";
 import { fetchRemoteBalanceAction } from "../../store/balance-async-thunks";
 import AddCoin from "./balance-list/add-coin/AddCoin";
 export default function Balance() {
   const balance = useSelector((state) => state.balanceReducer.balance);
-  const remoteChanges = useSelector((state) => state.balanceReducer.remoteChanges);
   const user = useSelector((state) => state.userReducer);
-  const coinsNames = balance ? balance.map((coin) => coin.name) : []
   const currencyCtx = useContext(CurrencyContext);
 
   // refs to avoid including dependencies in useEffect
   const currencyRef = useRef(currencyCtx);
-  const coinsNamesRef = useRef(coinsNames);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(balanceActions.calculateLocalBalance());
-  }, [balance, dispatch]);
-
-  // recalculate balance when currency changes
+  // recalculate values when balance or currency changes
   useEffect(() => {
     dispatch(
-      fetchAndCalculate({
-        coinsNames: coinsNamesRef.current,
-        currency: currencyCtx,
-      })
+      fetchAndCalculate(
+         currencyCtx
+      )
     );
-  }, [currencyCtx, dispatch]);
+  }, [balance,currencyCtx, dispatch]);
+
+
 
   // fetch user balance and calculate when user logs in
   useEffect(() => {
@@ -47,25 +41,24 @@ export default function Balance() {
         .then((userBalance) => userBalance.payload.map((coin) => coin.name))
         .then((coinsNames) =>
           dispatch(
-            fetchAndCalculate({
-              coinsNames,
-              currency: currencyRef.current,
-            })
+            fetchAndCalculate(
+               currencyRef.current
+            )
           )
         )
         .catch((err) => {
-          console.log(err);
+          return(err)
         });
     }
   }, [user.accessToken, dispatch]);
 
-  
+
 
   return (
     <div className="container">
       <Login />
       <div className="row">
-        <AddCoin balance={balance}  />
+        <AddCoin balance={balance} />
         {balance.length ? (
           <>
             <div className="col-md-8 col-sm-12">

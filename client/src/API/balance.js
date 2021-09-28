@@ -129,11 +129,9 @@ export async function fetchBalance() {
       throw err;
     }
     if (response.status >= 200 && response.status <= 299) {
-      console.log("got balance", response);
       return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 }
@@ -151,14 +149,12 @@ export async function updateQuantity(entryId, quantity) {
     );
 
     if (response.status >= 200 && response.status <= 299) {
-      console.log("updated quantity", response);
       return response;
     } else {
       throw new Error({ message: `An error has occurred: ${response.data}`, status: response.status })
 
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 }
@@ -174,14 +170,12 @@ export async function addCoin(coin) {
     );
 
     if (response.status >= 200 && response.status <= 299) {
-      console.log("added coin", response);
       return response;
     } else {
       throw new Error({ message: `An error has occurred: ${response.data}`, status: response.status })
 
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 }
@@ -196,14 +190,12 @@ export async function deleteCoin(entryId) {
       }
     );
     if (response.status >= 200 && response.status <= 299) {
-      console.log("deleted coin", response);
       return response;
     } else {
       throw new Error({ message: `An error has occurred: ${response.data}`, status: response.status })
 
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 }

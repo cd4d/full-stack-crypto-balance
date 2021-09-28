@@ -4,10 +4,17 @@ import { fetchNews } from "../API/API-calls";
 
 export const fetchNewsAction = createAsyncThunk(
   "news/fetchNews",
-  async (coinsNames) => {
-    console.log("fetching news:", coinsNames);
-    const newsData = await fetchNews(coinsNames);
-    return { newsData };
+  async (coinsNames, thunkAPI) => {
+    try {
+      const response = await fetchNews(coinsNames);
+      if (response.status >= 200 && response.status <= 299) {
+        return response.newsData;
+      } else {
+        throw new Error(response && response.message ? response.message : 'Error fetching news')
+      }
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.message)
+    }
   }
 );
 const newsSlice = createSlice({
@@ -18,10 +25,7 @@ const newsSlice = createSlice({
     [fetchNewsAction.fulfilled]: (state, action) => {
       console.log("fetchnews fulfilled", action);
       state.newsData = action.payload.newsData;
-    },
-    [fetchNewsAction.rejected]: (state, action) => {
-      console.log("fetchnews rejected", action);
-    },
+    }
   },
 });
 

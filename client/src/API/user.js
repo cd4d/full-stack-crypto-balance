@@ -25,13 +25,11 @@ export async function login(credentials) {
       throw err;
     }
     if (response.status >= 200 && response.status <= 299) {
-      console.log("connected", response);
       return response;
     } else {
 
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 }
@@ -40,11 +38,9 @@ export async function logout() {
   try {
     const response = await instance.post(DB_AUTH + "logout/");
     if (response.status >= 200 && response.status <= 299) {
-      console.log("logged out", response);
       return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 }
@@ -59,7 +55,6 @@ export async function callRefreshToken(refreshToken) {
       return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 }

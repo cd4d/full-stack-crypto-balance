@@ -45,7 +45,6 @@ export default function BalanceTable(props) {
     }
   }
   function onEditorQuantityChange(tableProps, event) {
-    console.log("tableProps", tableProps);
 
     if (user.id) {
       dispatch(

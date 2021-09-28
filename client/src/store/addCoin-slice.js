@@ -9,7 +9,6 @@ const addCoinSlice = createSlice({
   },
   reducers: {
     setStateReducer(state, action) {
-      //console.log(state, action);
       if (action.payload.type === 'replaceState') {
         state[action.payload.field] = action.payload.data;
       }

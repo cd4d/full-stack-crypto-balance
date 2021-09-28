@@ -32,7 +32,6 @@ export function getIcons(balance) {
   if (coinsListFile && coinsListFile.length) {
     //let count = 0;
     let i = 0;
-    //console.log(balance);
 
     for (let coin of coinsListFile) {
       // loop through all coins supported
@@ -46,7 +45,6 @@ export function getIcons(balance) {
           // increment both coins list and local balance loops
           //count++;
           i++;
-          //console.log(count, i, coin.id);
           break;
         } else {
           // increment only coins list
