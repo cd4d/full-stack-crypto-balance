@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from users.models import User
-from rest_framework import generics, permissions,status
+from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from users.serializers import UserSerializer # UserRegistrationSerializer
+from users.serializers import UserSerializer  # UserRegistrationSerializer
+
+
 # Create your views here.
 
 
@@ -15,6 +17,9 @@ class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+
+# class Register(RegisterView):
+#     serializer_class = RegisterSerializer
 
 # class Register(generics.GenericAPIView):
 #     serializer_class = UserRegistrationSerializer

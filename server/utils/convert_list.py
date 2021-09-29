@@ -4,7 +4,7 @@ import json
 import psycopg2
 load_dotenv()
 
-
+# create table coins with this script, not manually
 connection = None
 
 
@@ -41,7 +41,7 @@ def connect():
             coin['id'] = position
             position = position + 1
             cursor.execute(
-                "INSERT INTO coins_coin (name,slug,ticker,rateusd,image) VALUES (%s,%s, %s, %s,%s)", (coin['name'], coin['slug'],  coin['symbol'], coin['current_price'], coin['image']))
+                "INSERT INTO coins_coin (id,name,slug,ticker,rateusd,image) VALUES (%s,%s,%s, %s, %s,%s)", (coin['id'], coin['name'], coin['slug'],  coin['symbol'], coin['current_price'], coin['image']))
 
         # save changes to local file with id, to be used
         out_file = open('coins-list-sorted-with-id.json', 'w')

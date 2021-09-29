@@ -157,30 +157,37 @@ AUTH_USER_MODEL = 'users.User'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+        # had to remove rest_framework_simplejwt first and add it back to allow registrations
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+
     ),
-    'DEFAULT_SCHEMA_CLASS':
-    'rest_framework.schemas.coreapi.AutoSchema',
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated'
-    ],
+
     'EXCEPTION_HANDLER': 'cryptobalanceapi.exceptions.custom_exception_handler',
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
     ]
 }
+
+
+
+
 REST_SESSION_LOGIN = False
 REST_USE_JWT = True
 JWT_AUTH_COOKIE = 'access-token'
 JWT_AUTH_REFRESH_COOKIE = 'refresh-token'
 JWT_AUTH_SECURE = False
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
+# CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
+CORS_ALLOW_ALL_ORIGINS = True
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
 }
 JWT_AUTH_COOKIE_USE_CSRF = False
 CSRF_TRUSTED_ORIGINS = [
-    'localhost:3000', '127.0.0.1:3000'
+    'localhost:3000', '127.0.0.1:3000', 'localhost:8000'
 ]
+REST_AUTH_REGISTER_PERMISSION_CLASSES = (
+    'rest_framework.permissions.AllowAny',
+)
 SITE_ID = 1
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
