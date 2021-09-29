@@ -25,9 +25,8 @@ export default function BalanceNews() {
   function onCloseError() {
     // setError(null);
     dispatch(
-      uiActions.changeError({
-        type: 'news',
-        value: null,
+      uiActions.clearError({
+        type: 'news'
       })
     );
   }

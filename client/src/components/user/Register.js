@@ -12,7 +12,7 @@ export default function Register() {
 
     const closeModal = () => {
         dispatch(uiActions.displayRegisterModal(false))
-        dispatch(uiActions.changeError({type:'register', value:null}))
+        dispatch(uiActions.clearError({type:'register'}))
     }
     const handleLogout = (e) => {
         e.preventDefault()

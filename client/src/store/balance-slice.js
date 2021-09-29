@@ -36,9 +36,11 @@ const initialBalanceState = {
       subUnitToUnit: 100000000,
       value: 0,
       coinId: 1,
+      slug: "bitcoin",
     },
     {
       name: "Ethereum",
+      slug: "ethereum",
       entryId: 2,
       ticker: "ETH",
       rate: 2000,
@@ -50,6 +52,7 @@ const initialBalanceState = {
     },
     {
       name: "Tether",
+      slug: "tether",
       entryId: 3,
       ticker: "USDT",
       rate: 1,
@@ -83,9 +86,8 @@ const balanceSlice = createSlice({
       state.balance = action.payload;
     },
     [logoutAction.fulfilled]: () => {
-      return initialBalanceState
-    }
-
+      return initialBalanceState;
+    },
   },
 });
 
@@ -93,13 +95,13 @@ const balanceSlice = createSlice({
 https://stackoverflow.com/questions/63516716/redux-toolkit-is-it-possible-to-dispatch-other-actions-from-the-same-slice-in-o
 https://blog.jscrambler.com/async-dispatch-chaining-with-redux-thunk/  */
 export const fetchAndCalculate = (currency) => async (dispatch, getState) => {
-  const curState = getState()
-  const coinsNames = curState.balanceReducer.balance.map(coin => coin.name)
-  await Promise.all([dispatch(fetchRatesAction({ coinsNames, currency })),
-  dispatch(balanceActions.calculateLocalBalance())])
-
+  const curState = getState();
+  const coinsNames = curState.balanceReducer.balance.map((coin) => coin.name);
+  await Promise.all([
+    dispatch(fetchRatesAction({ coinsNames, currency })),
+    dispatch(balanceActions.calculateLocalBalance()),
+  ]);
 };
-
 
 export const balanceActions = balanceSlice.actions;
 

@@ -8,6 +8,7 @@ from users.models import User
 class Coin(models.Model):
     # pass
     name = models.TextField(unique=True, blank=True, null=True)
+    slug = models.TextField(unique=True, blank=True, null=True)
     ticker = models.TextField(unique=True, blank=True, null=True)
     image = models.TextField(blank=True, null=True)
     rateusd = models.DecimalField(decimal_places=2, max_digits=8, default=1)

@@ -69,28 +69,45 @@ export default function AddCoin({ balance }) {
     (input, property) => {
       // Update input field
       if (property === "slug") {
-        // filling the input with selected value using ref so debounce hook not triggered
-        inputRef.current.value = input.slug;
-        dispatch(
-          addCoinActions.setStateReducer({
-            type: "replaceState",
-            field: "selectedCoin",
-            data: input,
-          })
+        const coinAlreadyInBalance = balance.find(
+          (coin) => coin.slug === input.slug
         );
+        if (!coinAlreadyInBalance) {
+          // filling the input with selected value using ref so debounce hook not triggered
+          inputRef.current.value = input.slug;
+          dispatch(
+            addCoinActions.setStateReducer({
+              type: "replaceData",
+              field: "selectedCoin",
+              data: input,
+            })
+          );
 
-        // empty result array
-        dispatch(
-          addCoinActions.setStateReducer({
-            type: "replaceState",
-            field: "resultSearch",
-            data: [],
-          })
-        );
+          // empty result array
+          dispatch(
+            addCoinActions.setStateReducer({
+              type: "replaceData",
+              field: "resultSearch",
+              data: [],
+            })
+          );
+          dispatch(
+            uiActions.clearError({
+              type: "addCoin",
+            })
+          );
+        } else {
+          dispatch(
+            uiActions.changeError({
+              type: "addCoin",
+              value: "Coin already in balance.",
+            })
+          );
+        }
       } else {
         dispatch(
           addCoinActions.setStateReducer({
-            type: "replaceProperty",
+            type: "changeProperty",
             field: "selectedCoin",
             property: property,
             data: input,
@@ -98,7 +115,7 @@ export default function AddCoin({ balance }) {
         );
       }
     },
-    [dispatch]
+    [dispatch, balance]
   );
 
   // searching coin name from local coin list
@@ -109,7 +126,7 @@ export default function AddCoin({ balance }) {
       const results = searchCoin(addCoinState.searchInput);
       dispatch(
         addCoinActions.setStateReducer({
-          type: "replaceState",
+          type: "replaceData",
           field: "resultSearch",
           data: results,
         })
@@ -125,7 +142,7 @@ export default function AddCoin({ balance }) {
   useEffect(() => {
     async function getRates() {
       let currentRate = 1;
-      const coinSearched = addCoinState.selectedCoin.name.toLowerCase();
+      const coinSearched = addCoinState.selectedCoin.slug.toLowerCase();
       const response = await fetchRates([coinSearched], currencyCtx);
 
       //ex. {'cardano': {'usd': 1.31 }}
@@ -142,10 +159,10 @@ export default function AddCoin({ balance }) {
       inputCoin(+currentRate, "rate");
     }
     // prevents launching at first render
-    if (addCoinState.selectedCoin.name) {
+    if (addCoinState.selectedCoin.slug) {
       getRates();
     }
-  }, [addCoinState.selectedCoin.name, currencyCtx, dispatch, inputCoin]);
+  }, [addCoinState.selectedCoin.slug, currencyCtx, dispatch, inputCoin]);
 
   function toggleAddCoin() {
     dispatch(uiActions.toggleAddCoinDisplayed());
@@ -154,7 +171,9 @@ export default function AddCoin({ balance }) {
   function onAddCoin(coin) {
     if (coin && coin.slug && coin.quantity && coin.id) {
       if (user.id) {
-        dispatch(addCoinRemoteAction({ quantity: coin.quantity, coinId: coin.id, }))
+        dispatch(
+          addCoinRemoteAction({ quantity: coin.quantity, coinId: coin.id })
+        );
       } else {
         let newCoin = {
           coinId: coin.id,
@@ -162,7 +181,7 @@ export default function AddCoin({ balance }) {
           quantity: coin.quantity,
           rate: coin.rate,
           ticker: coin.symbol.toUpperCase(),
-          slug: coin.slug
+          slug: coin.slug,
         };
         const updatedBalance = [...balance, newCoin];
         addCoinLocal(updatedBalance);
@@ -175,7 +194,7 @@ export default function AddCoin({ balance }) {
     //setSearchInput(e);
     dispatch(
       addCoinActions.setStateReducer({
-        type: "replaceState",
+        type: "replaceData",
         field: "searchInput",
         data: e,
       })
@@ -185,7 +204,7 @@ export default function AddCoin({ balance }) {
     //setSearchInput('');
     dispatch(
       addCoinActions.setStateReducer({
-        type: "replaceState",
+        type: "replaceData",
         field: "searchInput",
         data: "",
       })
@@ -193,15 +212,14 @@ export default function AddCoin({ balance }) {
     // setSelectedCoin({ id: '', quantity: 0 });
     dispatch(
       addCoinActions.setStateReducer({
-        type: "replaceState",
+        type: "replaceData",
         field: "selectedCoin",
         data: { id: "", quantity: 0 },
       })
     );
     dispatch(
-      uiActions.changeError({
+      uiActions.clearError({
         type: "addCoin",
-        value: null,
       })
     );
     toggleAddCoin();
@@ -212,12 +230,12 @@ export default function AddCoin({ balance }) {
       {addCoinInputDisplayed ? (
         <div className="row mt-2 mb-2">
           <h6>
-            Add coin: {!error && addCoinState.selectedCoin.name}{" "}
+            Add coin: {!error && addCoinState.selectedCoin.slug}{" "}
             {addCoinState.selectedCoin.quantity > 0 &&
               addCoinState.selectedCoin.rate &&
               formatCurrency(
                 addCoinState.selectedCoin.rate *
-                +addCoinState.selectedCoin.quantity
+                  +addCoinState.selectedCoin.quantity
               )}
             {error && <span className="text-danger">{error}</span>}
           </h6>

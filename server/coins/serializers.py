@@ -5,9 +5,8 @@ from coins.models import Coin
 class CoinSerializer(serializers.ModelSerializer):
     class Meta:
         model = Coin
-        fields = ['id','name','ticker','image','rateusd']
+        fields = ['id', 'name', 'slug', 'ticker', 'image', 'rateusd']
 
-    
 
 # class CoinSerializer(serializers.Serializer):
 #     id = serializers.IntegerField(read_only=True)

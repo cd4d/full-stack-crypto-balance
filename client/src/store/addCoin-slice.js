@@ -5,14 +5,14 @@ const addCoinSlice = createSlice({
   initialState: {
     searchInput: '',
     resultSearch: [],
-    selectedCoin: { id: '', amount: 0 },
+    selectedCoin: { id: 1, amount: 0,slug: '' },
   },
   reducers: {
     setStateReducer(state, action) {
-      if (action.payload.type === 'replaceState') {
+      if (action.payload.type === 'replaceData') {
         state[action.payload.field] = action.payload.data;
       }
-      if (action.payload.type === 'replaceProperty') {
+      if (action.payload.type === 'changeProperty') {
         state[action.payload.field][action.payload.property] =
           action.payload.data;
       }

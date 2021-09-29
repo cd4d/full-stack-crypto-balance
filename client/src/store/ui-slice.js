@@ -18,6 +18,9 @@ const uiSlice = createSlice({
     changeError(state, action) {
       state.error[action.payload.type] = action.payload.value;
     },
+    clearError(state, action) {
+      state.error[action.payload.type] = null;
+    },
     toggleAddCoinDisplayed(state) {
       state.addCoinDisplayed = !state.addCoinDisplayed;
     },
