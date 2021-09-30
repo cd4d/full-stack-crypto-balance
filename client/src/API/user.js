@@ -3,6 +3,11 @@ import axios from "axios";
 const DB_URL = process.env.REACT_APP_DB_URL;
 const DB_AUTH = DB_URL + "dj-rest-auth/";
 
+let accessToken = null;
+export function setAccessTokenUser(token) {
+  accessToken = token;
+}
+
 const instance = axios.create({
   headers: {
     "Content-Type": "application/json",
@@ -28,9 +33,6 @@ export async function login(credentials) {
       throw err;
     }
   } catch (error) {
-    console.log(error.message);
-    console.log(error.status);
-    console.log(error);
     return error;
   }
 }
@@ -53,6 +55,19 @@ export async function callRefreshToken(refreshToken) {
     });
     if (response.status >= 200 && response.status <= 299) {
       console.log("refreshed", response);
+      return response;
+    }
+  } catch (error) {
+    return error;
+  }
+}
+
+export async function getUser(id) {
+  try {
+    const response = await axios.get(DB_URL + "users/" + id, {
+      headers: { 'Authorization': `Bearer ${accessToken}` },
+    });
+    if (response.status >= 200 && response.status <= 299) {
       return response;
     }
   } catch (error) {

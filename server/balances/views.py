@@ -50,8 +50,7 @@ class BalanceDetail(generics.RetrieveUpdateDestroyAPIView):
             if user is not None:
                 queryset = queryset.filter(owner=user)
             return queryset
-        except:
-            return None
-        # except Exception as error:
-        #     return Response({'detail': 'Error querying balance detail'},
-        #                     status=status.HTTP_400_BAD_REQUEST)
+  
+        except Exception as error:
+            return Response({'detail': 'Error querying balance detail'},
+                            status=status.HTTP_400_BAD_REQUEST)
