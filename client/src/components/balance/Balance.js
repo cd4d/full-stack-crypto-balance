@@ -22,8 +22,10 @@ export default function Balance() {
 
   // recalculate values when balance or currency changes
   useEffect(() => {
+    const coinsSlugs = balance.map(coin => coin.slug)
     dispatch(
       fetchAndCalculate(
+        coinsSlugs,
          currencyCtx
       )
     );
@@ -38,10 +40,10 @@ export default function Balance() {
     }
     if (user.accessToken) {
       fetchUserBalance()
-        .then((userBalance) => userBalance.payload.map((coin) => coin.name))
-        .then((coinsNames) =>
+        .then((userBalance) => userBalance.payload.map((coin) => coin.slug))
+        .then((coinsSlugs) =>
           dispatch(
-            fetchAndCalculate(
+            fetchAndCalculate(coinsSlugs,
                currencyRef.current
             )
           )

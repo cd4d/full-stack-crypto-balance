@@ -23,6 +23,7 @@ export async function fetchRates(coinsNames, currency = "usd") {
 }
 
 export async function fetchNews(coinsNames) {
+  console.log("fetch news for", coinsNames);
   const coinsNamesFormatted = coinsNames.join("%2C");
   const newsDataURL = `https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI?q=${coinsNamesFormatted}&pageNumber=1&pageSize=10&autoCorrect=true&fromPublishedDate=null&toPublishedDate=null`;
   try {
@@ -33,9 +34,13 @@ export async function fetchNews(coinsNames) {
       },
     });
 
+    console.log("fetch news response", await response);
     if (response.status >= 200 && response.status <= 299) {
+      console.log("got news");
       return response.data;
     } else {
+      console.log("error in news");
+
       const message = `An error has occured: ${response.status}`;
       throw new Error(message);
     }

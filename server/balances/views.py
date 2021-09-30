@@ -31,11 +31,7 @@ class BalanceList(generics.ListCreateAPIView):
         newCoin = Coin.objects.all().filter(
             id=self.request.data['coinId']).first()
         print("request data", self.request.data)
-        if newCoin:
-            print("newcoin found")
-            print(newCoin.id)
         if serializer.is_valid():
-            # serializer.validated_data['id'] = self.id
             serializer.save(coin=newCoin, owner=self.request.user)
         else:
             print(serializer.errors)

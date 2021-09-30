@@ -10,22 +10,21 @@ import {
 export const fetchRatesAction = createAsyncThunk(
   "balance/fetchRates",
   async (action) => {
-    const response = await fetchRates(action.coinsNames, action.currency);
-    const data = await response;
-    return { rates: data, currency: action.currency };
+    const response = await fetchRates(action.coinsSlugs, action.currency);
+    return { rates: response, currency: action.currency };
   }
 );
 
 export const fetchRemoteBalanceAction = createAsyncThunk(
-  "balance/fetchBalance",
-  async (action) => {
+  "balance/fetchRemoteBalance",
+  async () => {
     const response = await fetchBalance();
     return response.data;
   }
 );
 
 export const updateQuantityRemoteAction = createAsyncThunk(
-  "balance/updateBalance",
+  "balance/updateRemoteBalance",
   async (payload, thunkAPI) => {
     const response = await updateQuantity(payload.entryId, payload.quantity);
     if (response.status >= 200 && response.status <= 299) {
@@ -35,7 +34,7 @@ export const updateQuantityRemoteAction = createAsyncThunk(
   }
 );
 export const addCoinRemoteAction = createAsyncThunk(
-  "balance/updateBalance",
+  "balance/addRemoteCoin",
   async (payload, thunkAPI) => {
     const response = await addCoin(payload);
     console.log("addCoinRemoteAction", response);
@@ -47,7 +46,7 @@ export const addCoinRemoteAction = createAsyncThunk(
   }
 );
 export const deleteCoinRemoteAction = createAsyncThunk(
-  "balance/updateBalance",
+  "balance/deleteRemoteCoin",
   async (payload, thunkAPI) => {
     await deleteCoin(payload.entryId);
     return await thunkAPI.dispatch(fetchRemoteBalanceAction());

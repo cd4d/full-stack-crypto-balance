@@ -17,4 +17,4 @@ class BalanceSerializer(serializers.ModelSerializer):
         model = Balance
         owner = serializers.ReadOnlyField(source='owner.id')
         fields = ['entryId', 'owner',
-                  'quantity', 'added_on', 'updated_on', 'coinId', 'name', 'slug', 'ticker', 'image']
+                  'quantity', 'coinId', 'name', 'slug', 'ticker', 'image']

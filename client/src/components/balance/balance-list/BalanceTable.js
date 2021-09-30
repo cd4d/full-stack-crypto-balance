@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
+import { InputNumber } from "primereact/inputnumber";
 import CurrencyContext from "../../../store/currency-context";
 import { formatCurrency } from "../../../utils/utils";
 import { DELETE_COIN, UPDATE_QUANTITY } from "../../../store/balance-functions";
@@ -27,7 +28,9 @@ export default function BalanceTable(props) {
       <Button onClick={() => onDeleteCoin(coinClicked)} icon="pi pi-times" />
     );
   }
-
+function sortBalanceByValue(){
+  return [...balance].sort((a,b) => b.value - a.value)
+}
   function onDeleteCoin(coin) {
     if (user.id) {
       dispatch(
@@ -45,7 +48,7 @@ export default function BalanceTable(props) {
     }
   }
   function onEditorQuantityChange(tableProps, event) {
-
+    console.log("qtity changed triggered");
     if (user.id) {
       dispatch(
         updateQuantityRemoteAction({
@@ -66,12 +69,15 @@ export default function BalanceTable(props) {
 
   const quantityEditor = (tableProps) => {
     return (
-      <input
-        type="number"
+      <InputNumber
         value={tableProps.rowData["quantity"]}
-        onChange={(event) => onEditorQuantityChange(tableProps, event)}
+        onValueChange={(event) => onEditorQuantityChange(tableProps, event)}
         min={0}
         className="quantity-input"
+        showButtons
+        mode="decimal"
+        minFractionDigits={1}
+        maxFractionDigits={2}
       />
     );
   };
@@ -81,20 +87,21 @@ export default function BalanceTable(props) {
         <DataTable
           lazy={false}
           loading={isBalanceLoading}
-          value={balance}
+          value={sortBalanceByValue()}
           autoLayout={false}
-          paginator={false}
+          paginator={true}
           rows={pageSize}
-          sortField="value"
-          sortOrder={-1}
+          // bugged when logged in
+          // sortField="value"
+          // sortOrder={-1}
           className="balance-list-table"
           editing={true}
         >
-          <Column field="name" header="Name" sortable></Column>
+          <Column field="name" header="Name" sortable={false}></Column>
           <Column
             field="ticker"
-            header="ticker"
-            sortable
+            header="Ticker"
+            sortable={false}
             className="d-none d-sm-none d-lg-table-cell"
           ></Column>
           <Column
@@ -103,19 +110,19 @@ export default function BalanceTable(props) {
             body={(coin) =>
               formatCurrency(coin.rate, currencyCtx ? currencyCtx : "usd")
             }
-            sortable
+            sortable={false}
             className={error ? "table-text-error" : ""}
           ></Column>
           <Column
             field="quantity"
-            header="quantity"
-            sortable
+            header="Quantity"
+            sortable={false}
             editor={(props) => quantityEditor(props)}
           ></Column>
           <Column
             field="value"
             header="Value"
-            sortable
+            sortable={false}
             body={(coin) =>
               formatCurrency(coin.value, currencyCtx ? currencyCtx : "usd")
             }
@@ -129,3 +136,5 @@ export default function BalanceTable(props) {
     </div>
   );
 }
+
+

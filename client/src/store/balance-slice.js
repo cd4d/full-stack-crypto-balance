@@ -1,16 +1,14 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 import {
-  addCoinRemoteAction,
-  deleteCoinRemoteAction,
   fetchRatesAction,
   fetchRemoteBalanceAction,
-  updateQuantityRemoteAction,
 } from "./balance-async-thunks";
 import {
   updateLocalBalanceSwitch,
   calculateBalance,
   formatData,
   formatResponse,
+  convertQuantityToNum,
 } from "./balance-functions";
 import { logoutAction } from "./user-slice";
 const initialChartData = {
@@ -60,6 +58,19 @@ const initialBalanceState = {
       value: 0,
       coinId: 79,
     },
+    {
+      entryId: 34,
+      owner: 1,
+      quantity: 4,
+      coinId: 7,
+      name: "Basic Attention Token",
+      slug: "basic-attention-token",
+      ticker: "bat",
+      value: 0,
+      rate: 0.1,
+      image:
+        "https://assets.coingecko.com/coins/images/677/large/basic-attention-token.png?1547034427",
+    },
   ],
   formattedData: initialChartData,
 };
@@ -84,6 +95,7 @@ const balanceSlice = createSlice({
     },
     [fetchRemoteBalanceAction.fulfilled]: (state, action) => {
       state.balance = action.payload;
+      convertQuantityToNum(state);
     },
     [logoutAction.fulfilled]: () => {
       return initialBalanceState;
@@ -94,11 +106,9 @@ const balanceSlice = createSlice({
 /* Thunk that combines fetching rates and calculateLocalBalance so that calculate balance is loaded right after fetching rates
 https://stackoverflow.com/questions/63516716/redux-toolkit-is-it-possible-to-dispatch-other-actions-from-the-same-slice-in-o
 https://blog.jscrambler.com/async-dispatch-chaining-with-redux-thunk/  */
-export const fetchAndCalculate = (currency) => async (dispatch, getState) => {
-  const curState = getState();
-  const coinsNames = curState.balanceReducer.balance.map((coin) => coin.name);
+export const fetchAndCalculate = (coinsSlugs, currency) => async (dispatch) => {
   await Promise.all([
-    dispatch(fetchRatesAction({ coinsNames, currency })),
+    dispatch(fetchRatesAction({ coinsSlugs, currency })),
     dispatch(balanceActions.calculateLocalBalance()),
   ]);
 };

@@ -45,7 +45,8 @@ export default function AddCoin({ balance }) {
   }
   function onRefreshRates() {
     // triggerRatesUpdate();
-    dispatch(fetchAndCalculate(currencyCtx));
+    const coinsSlugs = balance.map(coin => coin.slug)
+    dispatch(fetchAndCalculate(coinsSlugs,currencyCtx));
   }
   const searchCoin = useCallback((enteredInput) => {
     let result = [];
@@ -172,7 +173,9 @@ export default function AddCoin({ balance }) {
     if (coin && coin.slug && coin.quantity && coin.id) {
       if (user.id) {
         dispatch(
-          addCoinRemoteAction({ quantity: coin.quantity, coinId: coin.id })
+          addCoinRemoteAction({ quantity: coin.quantity, coinId: coin.id }),
+          fetchAndCalculate(currencyCtx)
+
         );
       } else {
         let newCoin = {

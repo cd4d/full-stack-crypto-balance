@@ -30,7 +30,8 @@ SECRET_KEY = 'django-insecure-1fs4b#=g5341&0swmd@x3#o24n^%r29n659n8l@2cr&7%%y-4r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'api.example.com', 'example.com']
+# ALLOWED_HOSTS = ['127.0.0.1', 'api.example.com', 'example.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -61,11 +62,11 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'cryptobalanceapi.tokenmiddleware.MoveJWTRefreshCookieIntoTheBody',
@@ -165,10 +166,9 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'cryptobalanceapi.exceptions.custom_exception_handler',
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
-    ]
+    ],
+    
 }
-
-
 
 
 REST_SESSION_LOGIN = False
@@ -177,8 +177,8 @@ JWT_AUTH_COOKIE = 'access-token'
 JWT_AUTH_REFRESH_COOKIE = 'refresh-token'
 JWT_AUTH_SECURE = False
 CORS_ALLOW_CREDENTIALS = True
-# CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
+# CORS_ALLOW_ALL_ORIGINS = True
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
 }

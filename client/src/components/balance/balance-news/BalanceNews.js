@@ -13,13 +13,13 @@ export default function BalanceNews() {
   const newsData = useSelector((state) => state.newsReducer.newsData);
   const error = useSelector((state) => state.uiReducer.error.news);
   const isNewsLoading = useSelector((state) => state.uiReducer.isLoading.news);
-  let coinsNames = balance.map((coin) => coin.name);
+  let coinsSlugs = balance.map((coin) => coin.slug);
   const dispatch = useDispatch();
   async function refreshNews() {
     // setIsNewsLoading(true);
-    if (coinsNames) {
+    if (coinsSlugs) {
 
-      dispatch(fetchNewsAction(coinsNames));
+      dispatch(fetchNewsAction(coinsSlugs));
     }
   }
   function onCloseError() {

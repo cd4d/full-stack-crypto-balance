@@ -3,8 +3,7 @@ export const ADD_COIN = "ADD_COIN";
 export const UPDATE_QUANTITY = "UPDATE_QUANTITY";
 
 export function updateLocalBalanceSwitch(state, action) {
-
-  let updatedBalance = {}
+  let updatedBalance = {};
   switch (action.payload.changeRequested) {
     case UPDATE_QUANTITY:
       updatedBalance = state.balance.map((el) =>
@@ -36,7 +35,7 @@ export function calculateBalance(state) {
     }
     // get the weight of each
     if (state.total && state.total > 0 && coin.value) {
-        coin.weight = coin.value / state.total;
+      coin.weight = coin.value / state.total;
     }
     return coin;
   });
@@ -60,14 +59,18 @@ export function formatResponse(state, action) {
     const responseKeys = Object.keys(formattedResponse);
     for (let i = 0; i < responseKeys.length; i++) {
       let key = responseKeys[i];
-      if (key === coin.name.toLowerCase()) {
+      if (key === coin.slug.toLowerCase()) {
         coin.rate =
           formattedResponse[key][
-          action.payload.currency ? action.payload.currency : "usd"
+            action.payload.currency ? action.payload.currency : "usd"
           ];
         break;
       }
     }
     return coin;
   });
+}
+
+export function convertQuantityToNum(state) {
+  state.balance.map((coin) => (coin.quantity = +coin.quantity));
 }
