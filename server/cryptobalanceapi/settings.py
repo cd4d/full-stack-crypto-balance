@@ -14,9 +14,10 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 from datetime import timedelta
+import django_heroku
 # take environment variables from .env.
 load_dotenv()
-
+django_heroku.settings(locals())
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -167,7 +168,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
     ],
-    
+
 }
 
 
