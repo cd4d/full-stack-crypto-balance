@@ -38,8 +38,9 @@ DEBUG = False
 # ALLOWED_HOSTS = ['*']
 if dotenv_file:
     ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+    SECRET_KEY = os.getenv('SECRET_KEY')
 else:
-    ALLOWED_HOSTS = [f'https://{APP_NAME}.herokuapp.com/']
+    ALLOWED_HOSTS = ['https://intense-bayou-22244.herokuapp.com/']
 
 # Application definition
 
