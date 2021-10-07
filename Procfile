@@ -1,1 +1,1 @@
-web: gunicorn server/cryptobalanceapi/wsgi:application --log-file -
+web: gunicorn --chdir server/cryptobalanceapi wsgi.py --log-file -
