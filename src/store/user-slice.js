@@ -1,5 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { login, logout, callRefreshToken, getUser } from "../API/user";
+import {
+  login,
+  logout,
+  callRefreshToken,
+  getUser,
+  register,
+} from "../API/user";
 export const loginAction = createAsyncThunk(
   "user/loginUser",
   async (payload, thunkAPI) => {
@@ -8,6 +14,25 @@ export const loginAction = createAsyncThunk(
       if (response instanceof Error) throw new Error(response);
       const data = await response.data;
       return data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
+export const registerAction = createAsyncThunk(
+  "user/registerUser",
+  async (payload, thunkAPI) => {
+    try {
+      console.log("payload register", payload);
+      const response = await register(payload);
+      if (response instanceof Error) throw new Error(response);
+      if (response.status >= 200 && response.status <= 299) {
+        const loginCredentials = {
+          username: payload.username,
+          password: payload.password1,
+        };
+        return await thunkAPI.dispatch(loginAction(loginCredentials));
+      }
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
     }

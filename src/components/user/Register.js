@@ -14,7 +14,7 @@ export default function Register() {
         dispatch(uiActions.displayRegisterModal(false))
         dispatch(uiActions.clearError({type:'register'}))
     }
-    const handleLogout = (e) => {
+    const handleRegister = (e) => {
         e.preventDefault()
         dispatch(registerAction({ "username": e.target[0].value, "password1": e.target[1].value,"password2": e.target[2].value }))
     }
@@ -22,7 +22,7 @@ export default function Register() {
 
         <Dialog visible={displayRegisterModal} onHide={closeModal} dismissableMask={true}>
             {error && <p className='alert-danger mt-0'>{error}</p>}
-            <form onSubmit={(e) => handleLogout(e)}>
+            <form onSubmit={(e) => handleRegister(e)}>
                 <div className="mb-3">
                     <label htmlFor="inputUsername" className="form-label">User name</label>
                     <input type="text" className="form-control" id="inputUsername" />

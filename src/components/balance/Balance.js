@@ -6,6 +6,7 @@ import EmptyBalance from "../balance/EmptyBalance";
 import BalanceChart from "./balance-chart/BalanceChart";
 import BalanceNews from "./balance-news/BalanceNews";
 import Login from "../user/Login";
+import Register from "../user/Register"
 import { useSelector, useDispatch } from "react-redux";
 import CurrencyContext from "../../store/currency-context";
 import {  fetchAndCalculate } from "../../store/balance-slice";
@@ -77,6 +78,7 @@ useEffect(()=>{
   return (
     <div className="container">
       <Login />
+      <Register />
       <div className="row">
         <AddCoin balance={balance} />
         {balance.length ? (

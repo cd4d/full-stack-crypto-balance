@@ -1,15 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchRatesAction } from './balance-async-thunks';
-import { fetchNewsAction } from './news-slice';
-import { loginAction } from './user-slice';
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchRatesAction } from "./balance-async-thunks";
+import { fetchNewsAction } from "./news-slice";
+import { loginAction, registerAction } from "./user-slice";
 
 const uiSlice = createSlice({
-  name: 'uiSlice',
+  name: "uiSlice",
   initialState: {
-    error: { rates: null, news: null, addCoin: null,login:null },
-    isLoading: { rates: false, news: false,login:false },
+    error: {
+      rates: null,
+      news: null,
+      addCoin: null,
+      login: null,
+      register: null,
+    },
+    isLoading: { rates: false, news: false, login: false, register: false },
     addCoinDisplayed: false,
-    displayLoginModal:false
+    displayLoginModal: false,
+    displayRegisterModal: false,
   },
   reducers: {
     changeIsLoading(state, action) {
@@ -27,6 +34,9 @@ const uiSlice = createSlice({
     displayLoginModal(state, action) {
       state.displayLoginModal = action.payload;
     },
+    displayRegisterModal(state, action) {
+      state.displayRegisterModal = action.payload;
+    },
   },
   extraReducers: {
     [fetchRatesAction.pending]: (state) => {
@@ -39,7 +49,7 @@ const uiSlice = createSlice({
     },
     [fetchRatesAction.rejected]: (state) => {
       state.isLoading.rates = false;
-      state.error.rates = 'Error fetching rates!';
+      state.error.rates = "Error fetching rates!";
     },
     [fetchNewsAction.pending]: (state) => {
       state.isLoading.news = true;
@@ -51,7 +61,7 @@ const uiSlice = createSlice({
     },
     [fetchNewsAction.rejected]: (state) => {
       state.isLoading.news = false;
-      state.error.news = 'Error fetching news.';
+      state.error.news = "Error fetching news.";
     },
     [loginAction.pending]: (state) => {
       state.isLoading.login = true;
@@ -60,11 +70,24 @@ const uiSlice = createSlice({
     [loginAction.fulfilled]: (state) => {
       state.isLoading.login = false;
       state.error.login = null;
-      state.displayLoginModal = false
+      state.displayLoginModal = false;
     },
-    [loginAction.rejected]: (state,action) => {
+    [loginAction.rejected]: (state, action) => {
       state.isLoading.login = false;
-      state.error.login = 'Error at login';
+      state.error.login = "Error at login";
+    },
+    [registerAction.pending]: (state) => {
+      state.isLoading.register = true;
+      state.error.register = null;
+    },
+    [registerAction.fulfilled]: (state) => {
+      state.isLoading.register = false;
+      state.error.register = null;
+      state.displayRegisterModal = false;
+    },
+    [registerAction.rejected]: (state, action) => {
+      state.isLoading.register = false;
+      state.error.register = "Error at registration";
     },
   },
 });

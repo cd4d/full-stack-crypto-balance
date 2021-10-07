@@ -36,6 +36,27 @@ export async function login(credentials) {
     return error;
   }
 }
+export async function register(credentials) {
+  try {
+    const response = await instance.post(DB_AUTH + "registration/", {
+      username: credentials.username,
+      password1: credentials.password1,
+      password2: credentials.password2,
+    });
+    console.log("register response", await response);
+
+    if (response.status >= 200 && response.status <= 299) {
+      return response;
+    } else {
+      let err = new Error();
+      err.message = `An error has occurred: ${response.status}`;
+      err.status = response.status;
+      throw err;
+    }
+  } catch (error) {
+    return error;
+  }
+}
 
 export async function logout() {
   try {
@@ -65,7 +86,7 @@ export async function callRefreshToken(refreshToken) {
 export async function getUser(id) {
   try {
     const response = await axios.get(DB_URL + "users/" + id, {
-      headers: { 'Authorization': `Bearer ${accessToken}` },
+      headers: { Authorization: `Bearer ${accessToken}` },
     });
     if (response.status >= 200 && response.status <= 299) {
       return response;

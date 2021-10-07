@@ -21,6 +21,9 @@ export default function Header(props) {
   function toggleLogin() {
     dispatch(uiActions.displayLoginModal(true));
   }
+  function toggleRegister() {
+    dispatch(uiActions.displayRegisterModal(true));
+  }
   function handleLogout() {
     dispatch(logoutAction());
   }
@@ -80,6 +83,7 @@ export default function Header(props) {
                     Login
                   </button>
                   <button
+                    onClick={toggleRegister}
                     type="button"
                     className="btn btn-outline-primary btn-sm"
                   >
