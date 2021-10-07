@@ -1,7 +1,7 @@
 import axios from "axios";
 import { callRefreshToken } from "./user";
 
-const DB_URL = process.env.REACT_APP_DB_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 let refreshToken = null;
 let accessToken = null;
 // used by tokenMiddleware to set token
@@ -118,7 +118,7 @@ axiosApiInstance.interceptors.request.use(
 // );
 export async function fetchBalance() {
   try {
-    const response = await axiosApiInstance.get(`${DB_URL}balances/`, {
+    const response = await axiosApiInstance.get(`${BACKEND_URL}balances/`, {
       headers: { Authorization: "Bearer " + accessToken },
     });
     if (response.statusText !== "OK") {
@@ -139,7 +139,7 @@ export async function updateQuantity(entryId, quantity) {
   try {
     if (isNaN(entryId) || isNaN(quantity)) throw new Error("Invalid data");
     const response = await axiosApiInstance.put(
-      `${DB_URL}balances/${entryId}/`,
+      `${BACKEND_URL}balances/${entryId}/`,
       {
         quantity,
       },
@@ -162,7 +162,7 @@ export async function updateQuantity(entryId, quantity) {
 export async function addCoin(coin) {
   try {
     const response = await axiosApiInstance.post(
-      `${DB_URL}balances/`,
+      `${BACKEND_URL}balances/`,
      coin,
       {
         headers: { Authorization: "Bearer " + accessToken },
@@ -184,7 +184,7 @@ export async function deleteCoin(entryId) {
   try {
     if (isNaN(entryId)) throw new Error("Invalid data");
     const response = await axiosApiInstance.delete(
-      `${DB_URL}balances/${entryId}/`,
+      `${BACKEND_URL}balances/${entryId}/`,
 
       {
         headers: { Authorization: "Bearer " + accessToken },

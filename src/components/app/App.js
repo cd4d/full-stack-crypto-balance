@@ -11,7 +11,6 @@ function App() {
     setSelectedCurrency(newCurrency);
   }
   useEffect(() => {
-    // TODO cehcl localstorage for reffresh toeken then if any fetch access token
     if (localStorage.getItem("refreshToken")) {
     }
   },[]);
