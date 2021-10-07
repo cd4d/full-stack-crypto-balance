@@ -39,7 +39,7 @@ DEBUG = False
 if dotenv_file:
     ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 else:
-    ALLOWED_HOSTS = [f"https://{os.getenv('APP_NAME')}.herokuapp.com/"]
+    ALLOWED_HOSTS = [f"{os.getenv('APP_NAME')}.herokuapp.com"]
 
 # Application definition
 
