@@ -202,14 +202,14 @@ REST_AUTH_REGISTER_PERMISSION_CLASSES = (
 SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Configure Django App for Heroku.
-django_on_heroku.settings(locals())
+# # Configure Django App for Heroku.
+# django_on_heroku.settings(locals())
 
-# For deployment on heroku
-STATIC_URL = '/static/'
+# # For deployment on heroku
+# STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, '/client/build/static')
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, '/client/build/static')
+# ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
