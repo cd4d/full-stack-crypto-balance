@@ -30,6 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-1fs4b#=g5341&0swmd@x3#o24n^%r29n659n8l@2cr&7%%y-4r'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -38,7 +39,6 @@ DEBUG = False
 # ALLOWED_HOSTS = ['*']
 if dotenv_file:
     ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
-    SECRET_KEY = os.getenv('SECRET_KEY')
 else:
     ALLOWED_HOSTS = ['https://intense-bayou-22244.herokuapp.com/']
 
@@ -86,7 +86,7 @@ ROOT_URLCONF = 'cryptobalanceapi.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, '/client/build')],
+        'DIRS': [os.path.join(BASE_DIR, '/build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -204,13 +204,13 @@ SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # # Configure Django App for Heroku.
-# django_on_heroku.settings(locals())
+django_on_heroku.settings(locals())
 
-# # For deployment on heroku
-# STATIC_URL = '/static/'
+# For deployment on heroku
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_URL = '/static/'
 
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, '/client/build/static')
-# ]
-
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, '/build/static')
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
