@@ -10,14 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import django_on_heroku
 from pathlib import Path
 import os
 from dotenv import load_dotenv
 from datetime import timedelta
-import django_heroku
 # take environment variables from .env.
 load_dotenv()
-django_heroku.settings(locals())
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1fs4b#=g5341&0swmd@x3#o24n^%r29n659n8l@2cr&7%%y-4r'
+# SECRET_KEY = 'django-insecure-1fs4b#=g5341&0swmd@x3#o24n^%r29n659n8l@2cr&7%%y-4r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -192,3 +192,6 @@ REST_AUTH_REGISTER_PERMISSION_CLASSES = (
 )
 SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Configure Django App for Heroku.
+django_on_heroku.settings(locals())
