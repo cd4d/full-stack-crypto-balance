@@ -13,10 +13,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import django_on_heroku
 from pathlib import Path
 import os
-from dotenv import load_dotenv
+import dj_database_url
+from dotenv import load_dotenv, find_dotenv
 from datetime import timedelta
 # take environment variables from .env.
-load_dotenv()
+dotenv_file = find_dotenv()
+if dotenv_file:
+    load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,11 +32,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = 'django-insecure-1fs4b#=g5341&0swmd@x3#o24n^%r29n659n8l@2cr&7%%y-4r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = ['127.0.0.1', 'api.example.com', 'example.com']
-ALLOWED_HOSTS = ['*']
-
+# ALLOWED_HOSTS = ['*']
+if dotenv_file:
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+else:
+    ALLOWED_HOSTS = [f'https://{APP_NAME}.herokuapp.com/']
 
 # Application definition
 
@@ -63,14 +69,15 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'cryptobalanceapi.tokenmiddleware.MoveJWTRefreshCookieIntoTheBody',
+
 ]
 
 ROOT_URLCONF = 'cryptobalanceapi.urls'
@@ -78,7 +85,7 @@ ROOT_URLCONF = 'cryptobalanceapi.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, '/client/build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -97,17 +104,19 @@ WSGI_APPLICATION = 'cryptobalanceapi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('DB_NAME'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': '',
-        'USER': os.getenv('ADMIN_NAME'),
-        'PASSWORD': os.getenv('ADMIN_PASSWORD')
-    }
-}
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.getenv('DB_NAME'),
+#         'HOST': os.getenv('DB_HOST'),
+#         'PORT': '',
+#         'USER': os.getenv('ADMIN_NAME'),
+#         'PASSWORD': os.getenv('ADMIN_PASSWORD')
+#     }
+# }
+DATABASES = {}
+# uses DATABASE_URL env variable
+DATABASES['default'] = dj_database_url.config()
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -195,3 +204,12 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Configure Django App for Heroku.
 django_on_heroku.settings(locals())
+
+# For deployment on heroku
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, '/client/build/static')
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

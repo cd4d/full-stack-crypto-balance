@@ -1,6 +1,7 @@
 {
   "name": "react-redux-crypto-balance",
   "version": "0.1.0",
+  "homepage":".",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.0",
