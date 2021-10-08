@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import Header from "../header/Header";
 import Balance from "../balance/Balance";
@@ -7,6 +8,7 @@ import "./App.css";
 
 function App() {
   const [selectedCurrency, setSelectedCurrency] = useState("usd");
+
   function changeCurrency(newCurrency) {
     setSelectedCurrency(newCurrency);
   }
@@ -20,7 +22,9 @@ function App() {
       <Header
         changeCurrency={(newCurrency) => changeCurrency(newCurrency)}
       ></Header>
-      <Balance/>
+     
+        <Balance/>
+
     </CurrencyContext.Provider>
   );
 }

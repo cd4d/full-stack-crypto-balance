@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchRatesAction } from "./balance-async-thunks";
 import { fetchNewsAction } from "./news-slice";
-import { loginAction, registerAction } from "./user-slice";
+import { loginAction, registerAction ,getUserAction} from "./user-slice";
 
 const uiSlice = createSlice({
   name: "uiSlice",
@@ -12,8 +12,9 @@ const uiSlice = createSlice({
       addCoin: null,
       login: null,
       register: null,
+      user:null
     },
-    isLoading: { rates: false, news: false, login: false, register: false },
+    isLoading: { rates: false, news: false, login: false, register: false,user:false },
     addCoinDisplayed: false,
     displayLoginModal: false,
     displayRegisterModal: false,
@@ -89,6 +90,19 @@ const uiSlice = createSlice({
       state.isLoading.register = false;
       state.error.register = "Error at registration";
     },
+    [getUserAction.pending]: (state) => {
+      state.isLoading.user = true;
+      state.error.user = null;
+
+    },
+    [getUserAction.fulfilled]: (state) => {
+      state.isLoading.user = false;
+      state.error.user = null;
+    },
+    [getUserAction.rejected]: (state, action) => {
+      state.isLoading.user = false;
+      state.error.user = "Error getting user";
+    }
   },
 });
 export const uiActions = uiSlice.actions;

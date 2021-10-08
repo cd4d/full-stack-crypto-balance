@@ -20,8 +20,3 @@ class Balance(models.Model):
     class Meta:
         constraints = [models.UniqueConstraint(
             fields=['owner', 'coin'], name='coinId_ownerId')]
-
-    # # : test it
-    # def save(self, *args, **kwargs):
-    #     quantity = self.quantity if self.quantity else 0
-    #     super(Balance, self).save(*args, **kwargs)
