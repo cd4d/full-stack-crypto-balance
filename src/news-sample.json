@@ -1,10 +1,5 @@
 
-{
-    "_type": "news",
-    "didUMean": "",
-    "totalCount": 920,
-    "relatedSearch": [],
-    "value": [
+ [
         {
             "id": "5196282685055439546",
             "title": "From cyberspace to marketplace",
@@ -356,4 +351,4 @@
             }
         }
     ]
-  }
+  

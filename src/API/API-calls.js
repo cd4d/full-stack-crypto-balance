@@ -36,8 +36,8 @@ export async function fetchNews(coinsNames) {
 
     console.log("fetch news response", await response);
     if (response.status >= 200 && response.status <= 299) {
-      console.log("got news");
-      return response.data;
+      console.log("got news API: ", response);
+      return response;
     } else {
       console.log("error in news");
 

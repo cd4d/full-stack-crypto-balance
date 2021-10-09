@@ -1,13 +1,9 @@
 import axios from "axios";
-import { callRefreshToken } from "./user";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-let refreshToken = null;
 let accessToken = null;
 // used by tokenMiddleware to set token
-export function setRefreshToken(token) {
-  refreshToken = token;
-}
+
 export function setAccessToken(token) {
   accessToken = token;
 }

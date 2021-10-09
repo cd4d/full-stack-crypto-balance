@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 
 import Header from "../header/Header";
 import Balance from "../balance/Balance";

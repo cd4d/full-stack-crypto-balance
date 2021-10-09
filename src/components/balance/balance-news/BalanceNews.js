@@ -10,7 +10,7 @@ export default function BalanceNews() {
   const [indexFirstNews, setIndexFirstNews] = useState(0);
   const [indexLastNews, setIndexLastNews] = useState(newsPerPage);
   const balance = useSelector((state) => state.balanceReducer.balance);
-  const newsData = useSelector((state) => state.newsReducer.newsData);
+  const newsList = useSelector((state) => state.newsReducer);
   const error = useSelector((state) => state.uiReducer.error.news);
   const isNewsLoading = useSelector((state) => state.uiReducer.isLoading.news);
   let coinsSlugs = balance.map((coin) => coin.slug);
@@ -65,9 +65,9 @@ export default function BalanceNews() {
           </button>
         </div>
       )}
-      {!isNewsLoading && !error && (
+      {!isNewsLoading && !error  &&  (
         <div>
-          {newsData.value
+          {newsList
             .slice(indexFirstNews, indexLastNews)
             .map((element, idx) => (
               <div key={idx} className='list-group'>
@@ -78,7 +78,7 @@ export default function BalanceNews() {
           <Paginator
             first={indexFirstNews}
             rows={newsPerPage}
-            totalRecords={newsData.value.length}
+            totalRecords={newsList.length}
             onPageChange={paginate}
           ></Paginator>
         </div>

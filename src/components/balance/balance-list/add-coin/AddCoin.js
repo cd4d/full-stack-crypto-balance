@@ -45,8 +45,8 @@ export default function AddCoin({ balance }) {
   }
   function onRefreshRates() {
     // triggerRatesUpdate();
-    const coinsSlugs = balance.map(coin => coin.slug)
-    dispatch(fetchAndCalculate(coinsSlugs,currencyCtx));
+    const coinsSlugs = balance.map((coin) => coin.slug);
+    dispatch(fetchAndCalculate(coinsSlugs, currencyCtx));
   }
   const searchCoin = useCallback((enteredInput) => {
     let result = [];
@@ -175,7 +175,6 @@ export default function AddCoin({ balance }) {
         dispatch(
           addCoinRemoteAction({ quantity: coin.quantity, coinId: coin.id }),
           fetchAndCalculate(currencyCtx)
-
         );
       } else {
         let newCoin = {
@@ -231,7 +230,7 @@ export default function AddCoin({ balance }) {
   return (
     <>
       {addCoinInputDisplayed ? (
-        <div className="row mt-2 mb-2">
+        <div className="row mb-2">
           <h6>
             Add coin: {!error && addCoinState.selectedCoin.slug}{" "}
             {addCoinState.selectedCoin.quantity > 0 &&
@@ -242,13 +241,13 @@ export default function AddCoin({ balance }) {
               )}
             {error && <span className="text-danger">{error}</span>}
           </h6>
-          <div className="col">
+          <div className="col-md-2">
             <div>
               {/* Input name of coin */}
               <InputText
                 ref={inputRef}
                 id="search-box"
-                placeholder="Type a coin name"
+                placeholder="Start typing (3 letters)"
                 onChange={(e) => {
                   setSearchCoin(e.target.value);
                 }}
@@ -273,7 +272,7 @@ export default function AddCoin({ balance }) {
             </div>
           </div>
           {/* Input quantity of coin, disabled if no coin selected */}
-          <div className="col ps-0">
+          <div className="col-md-2 ps-0">
             <div>
               <InputText
                 disabled={!addCoinState.selectedCoin.id}

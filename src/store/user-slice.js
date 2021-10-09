@@ -125,6 +125,7 @@ const userSlice = createSlice({
       return emptyUser;
     },
     [getUserAction.fulfilled]: (state, action) => {
+      console.log("getuser fulfilled");
       state.id = action.payload.id;
       state.username = action.payload.username;
     },

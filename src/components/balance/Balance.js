@@ -1,8 +1,6 @@
 import { React, useEffect, useContext, useRef } from "react";
 import jwt_decode from "jwt-decode";
 import BalanceList from "./balance-list/BalanceList";
-import EmptyBalance from "../balance/EmptyBalance";
-
 import BalanceChart from "./balance-chart/BalanceChart";
 import BalanceNews from "./balance-news/BalanceNews";
 import Login from "../user/Login";
@@ -17,6 +15,7 @@ import AddCoin from "./balance-list/add-coin/AddCoin";
 export default function Balance() {
   const balance = useSelector((state) => state.balanceReducer.balance);
   const user = useSelector((state) => state.userReducer);
+  const userIsLoading = useSelector((state) => state.uiReducer.isLoading.user);
   const currencyCtx = useContext(CurrencyContext);
 
   // refs to avoid including dependencies in useEffect
@@ -37,11 +36,7 @@ export default function Balance() {
         );
         dispatch(getUserAction(decoded.user_id));
       }
-
-      // dispatch(fetchRemoteBalanceAction())
     }
-    console.log("base url", process.env.REACT_APP_BASE_URL);
-    console.log("backend url", process.env.REACT_APP_BACKEND_URL);
   }, [dispatch]);
 
   // recalculate values when balance or currency changes
@@ -72,20 +67,29 @@ export default function Balance() {
       <Login />
       <Register />
       <div className="row">
-        <AddCoin balance={balance} />
-        {balance.length ? (
+        {userIsLoading ? (
+          <div>
+            <i
+              className="pi pi-spin pi-spinner"
+              style={{ fontSize: "2rem" }}
+            ></i>
+          </div>
+        ) : (
           <>
+            <AddCoin balance={balance} />
             <div className="col-md-8 col-sm-12">
               <BalanceList></BalanceList>
             </div>
             <div className="col-md-4 col-sm-12 ">
-              <BalanceChart></BalanceChart>
+              {balance.length > 0 && (
+                <>
+                  <BalanceChart></BalanceChart>
 
-              <BalanceNews></BalanceNews>
+                  <BalanceNews></BalanceNews>
+                </>
+              )}
             </div>
           </>
-        ) : (
-          <EmptyBalance />
         )}
       </div>
     </div>

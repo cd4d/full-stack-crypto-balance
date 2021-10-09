@@ -7,8 +7,9 @@ export const fetchNewsAction = createAsyncThunk(
   async (coinsNames, thunkAPI) => {
     try {
       const response = await fetchNews(coinsNames);
+      console.log("response thunk", response);
       if (response.status >= 200 && response.status <= 299) {
-        return response.newsData;
+        return response.data.value;
       } else {
         throw new Error(response && response.message ? response.message : 'Error fetching news')
       }
@@ -19,12 +20,12 @@ export const fetchNewsAction = createAsyncThunk(
 );
 const newsSlice = createSlice({
   name: "newsSlice",
-  initialState: { newsData: newsSample },
+  initialState:  newsSample ,
   reducers: {},
   extraReducers: {
     [fetchNewsAction.fulfilled]: (state, action) => {
       console.log("fetchnews fulfilled", action);
-      state.newsData = action.payload.newsData;
+      return action.payload;
     }
   },
 });

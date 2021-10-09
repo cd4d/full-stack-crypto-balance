@@ -48,7 +48,6 @@ function sortBalanceByValue(){
     }
   }
   function onEditorQuantityChange(tableProps, event) {
-    console.log("qtity changed triggered");
     if (user.id) {
       dispatch(
         updateQuantityRemoteAction({

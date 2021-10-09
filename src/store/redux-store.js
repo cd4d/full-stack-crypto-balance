@@ -8,8 +8,7 @@ import logger from 'redux-logger'
 import tokenMiddleware from './token-middleware';
 const store = configureStore({
   reducer: { balanceReducer, uiReducer, addCoinReducer, newsReducer, userReducer },
-  // middleware  : (getDefaultMiddleware) => getDefaultMiddleware().concat(logger)
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tokenMiddleware //, logger
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tokenMiddleware , logger
   )
 });
 

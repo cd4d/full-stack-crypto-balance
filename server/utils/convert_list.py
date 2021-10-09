@@ -12,7 +12,14 @@ def connect():
     try:
         with open('coins-list-sorted.json') as f:
             json_data = json.load(f)
-
+        # Seed Heroku db
+        # connection = psycopg2.connect(
+        #     dbname=os.getenv('DB_NAME_REMOTE'),
+        #     user=os.getenv('ADMIN_NAME_REMOTE'),
+        #     host=os.getenv('DB_HOST_REMOTE'),
+        #     password=os.getenv('ADMIN_PASSWORD_REMOTE')
+        # )
+        # Local db
         connection = psycopg2.connect(
             dbname=os.getenv('DB_NAME'),
             user=os.getenv('ADMIN_NAME'),
