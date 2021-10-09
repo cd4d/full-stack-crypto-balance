@@ -32,7 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = ['127.0.0.1', 'api.example.com', 'example.com']
 # ALLOWED_HOSTS = ['*']
@@ -105,16 +105,6 @@ WSGI_APPLICATION = 'cryptobalanceapi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': os.getenv('DB_NAME'),
-#         'HOST': os.getenv('DB_HOST'),
-#         'PORT': '',
-#         'USER': os.getenv('ADMIN_NAME'),
-#         'PASSWORD': os.getenv('ADMIN_PASSWORD')
-#     }
-# }
 DATABASES = {}
 # uses DATABASE_URL env variable
 DATABASES['default'] = dj_database_url.config()
@@ -188,14 +178,14 @@ JWT_AUTH_COOKIE = 'access-token'
 JWT_AUTH_REFRESH_COOKIE = 'refresh-token'
 JWT_AUTH_SECURE = False
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = ['http://localhost:3000',
+                        'http://127.0.0.1:3000', f"{os.getenv('APP_NAME')}.herokuapp.com"]
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
 }
 JWT_AUTH_COOKIE_USE_CSRF = False
 CSRF_TRUSTED_ORIGINS = [
-    'localhost:3000', '127.0.0.1:3000', 'localhost:8000'
+    'localhost:3000', '127.0.0.1:3000', 'localhost:8000', f"{os.getenv('APP_NAME')}.herokuapp.com"
 ]
 REST_AUTH_REGISTER_PERMISSION_CLASSES = (
     'rest_framework.permissions.AllowAny',
