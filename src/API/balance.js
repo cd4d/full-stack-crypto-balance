@@ -168,7 +168,6 @@ export async function addCoin(coin) {
     if (response.status >= 200 && response.status <= 299) {
       return response;
     } else {
-      console.log("api addcoin error", response);
       throw new Error({ message: `An error has occurred: ${response.data}`, status: response.status })
 
     }

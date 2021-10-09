@@ -7,7 +7,6 @@ export const fetchNewsAction = createAsyncThunk(
   async (coinsNames, thunkAPI) => {
     try {
       const response = await fetchNews(coinsNames);
-      console.log("response thunk", response);
       if (response.status >= 200 && response.status <= 299) {
         return response.data.value;
       } else {
@@ -24,7 +23,6 @@ const newsSlice = createSlice({
   reducers: {},
   extraReducers: {
     [fetchNewsAction.fulfilled]: (state, action) => {
-      console.log("fetchnews fulfilled", action);
       return action.payload;
     }
   },

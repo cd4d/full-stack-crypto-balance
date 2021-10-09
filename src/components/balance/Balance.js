@@ -26,7 +26,6 @@ export default function Balance() {
     let token = localStorage.getItem("accessToken");
     if (token) {
       let decoded = jwt_decode(token);
-      console.log("token present:", decoded);
       if (decoded && decoded.user_id) {
         dispatch(
           userActions.setUser({

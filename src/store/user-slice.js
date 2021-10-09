@@ -23,7 +23,6 @@ export const registerAction = createAsyncThunk(
   "user/registerUser",
   async (payload, thunkAPI) => {
     try {
-      console.log("payload register", payload);
       const response = await register(payload);
       if (response instanceof Error) throw new Error(response);
       if (response.status >= 200 && response.status <= 299) {
@@ -42,11 +41,9 @@ export const refreshAction = createAsyncThunk(
   "user/refreshUser",
   async (payload, thunkAPI) => {
     try {
-      console.log("refresh user");
       const response = await callRefreshToken(payload);
       if (response instanceof Error) throw response;
       const data = await response.data;
-      console.log("refresh response:", data);
       return data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
@@ -70,7 +67,6 @@ export const getUserAction = createAsyncThunk(
   "user/getUser",
   async (payload, thunkAPI) => {
     try {
-      console.log("getUserAction", payload);
 
       const response = await getUser(payload);
       const data = await response.data;
@@ -125,7 +121,6 @@ const userSlice = createSlice({
       return emptyUser;
     },
     [getUserAction.fulfilled]: (state, action) => {
-      console.log("getuser fulfilled");
       state.id = action.payload.id;
       state.username = action.payload.username;
     },

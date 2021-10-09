@@ -20,7 +20,6 @@ export async function login(credentials) {
       username: credentials.username,
       password: credentials.password,
     });
-    console.log("login response", await response);
 
     if (response.status >= 200 && response.status <= 299) {
       return response;
@@ -41,7 +40,6 @@ export async function register(credentials) {
       password1: credentials.password1,
       password2: credentials.password2,
     });
-    console.log("register response", await response);
 
     if (response.status >= 200 && response.status <= 299) {
       return response;
@@ -67,13 +65,11 @@ export async function logout() {
   }
 }
 export async function callRefreshToken(refreshToken) {
-  console.log("refresh token", refreshToken);
   try {
     const response = await instance.post(DB_AUTH + "token/refresh/", {
       refresh: refreshToken,
     });
     if (response.status >= 200 && response.status <= 299) {
-      console.log("refreshed", response);
       return response;
     }
   } catch (error) {

@@ -37,7 +37,6 @@ export const addCoinRemoteAction = createAsyncThunk(
   "balance/addRemoteCoin",
   async (payload, thunkAPI) => {
     const response = await addCoin(payload);
-    console.log("addCoinRemoteAction", response);
     if (response.status === 201) {
       return await thunkAPI.dispatch(fetchRemoteBalanceAction());
     }
