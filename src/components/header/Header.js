@@ -60,7 +60,7 @@ export default function Header(props) {
                 {user.username ? (
                   <>
                     <span className="me-2">{user.username}</span>
-                    <button
+                    {/* <button
                       onClick={handleFetchBalance}
                       type="button"
                       className="btn btn-outline-dark me-2 btn-sm"
@@ -73,7 +73,7 @@ export default function Header(props) {
                       className="btn btn-outline-dark me-2 btn-sm"
                     >
                       testRefresh
-                    </button>
+                    </button> */}
                     <button
                       onClick={handleLogout}
                       type="button"
