@@ -25,16 +25,16 @@ export default function Register() {
             <form onSubmit={(e) => handleRegister(e)}>
                 <div className="mb-3">
                     <label htmlFor="inputUsername" className="form-label">User name</label>
-                    <input type="text" className="form-control" id="inputUsername" />
+                    <input type="text" className="form-control" id="inputUsername" autoComplete="username"/>
 
                 </div>
                 <div className="mb-3">
                     <label htmlFor="inputPassword1" className="form-label">Password</label>
-                    <input type="password" className="form-control" id="inputPassword1" />
+                    <input type="password" className="form-control" id="inputPassword1" autoComplete="new-password"/>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="inputPassword2" className="form-label">Confirm</label>
-                    <input type="password" className="form-control" id="inputPassword2" />
+                    <input type="password" className="form-control" id="inputPassword2" autoComplete="new-password"/>
                 </div>
                 {isLoading ? <i className='pi pi-spin pi-spinner' style={{ fontSize: '2rem' }}></i> : <button type="submit" className="btn btn-primary">Submit</button>}
             </form>

@@ -1,6 +1,8 @@
 A full-stack Django React version of the [Angular](https://github.com/cd4d/crypto-balance) single page application showing an editable portfolio of cryptocurrencies with a chart representing the balance and related news. Rates and news are fetched from external APIs.
 Django backend is used to register users and save their balances.
 
+To accommodate Heroku hosting, the frontend files are served directly from the root directory, hence the React files are in `./src`.
+
 ### Stack:
 #### React frontend
 - React 17.0.2

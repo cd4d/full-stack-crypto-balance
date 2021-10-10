@@ -37,13 +37,23 @@ export default function Login() {
           <label htmlFor="inputUsername" className="form-label">
             User name
           </label>
-          <input type="text" className="form-control" id="inputUsername" />
+          <input
+            type="text"
+            className="form-control"
+            id="inputUsername"
+            autoComplete="username"
+          />
         </div>
         <div className="mb-3">
           <label htmlFor="inputPassword1" className="form-label">
             Password
           </label>
-          <input type="password" className="form-control" id="inputPassword1" />
+          <input
+            type="password"
+            className="form-control"
+            id="inputPassword1"
+            autoComplete="current-password"
+          />
         </div>
         {isLoading ? (
           <i className="pi pi-spin pi-spinner" style={{ fontSize: "2rem" }}></i>
