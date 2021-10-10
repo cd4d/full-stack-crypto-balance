@@ -241,7 +241,7 @@ export default function AddCoin({ balance }) {
               )}
             {error && <span className="text-danger">{error}</span>}
           </h6>
-          <div className="col-md-2">
+          <div className="col-md-3">
             <div>
               {/* Input name of coin */}
               <InputText
@@ -272,7 +272,7 @@ export default function AddCoin({ balance }) {
             </div>
           </div>
           {/* Input quantity of coin, disabled if no coin selected */}
-          <div className="col-md-2 ps-0">
+          <div className="col-md-2 me-4 ps-0">
             <div>
               <InputText
                 disabled={!addCoinState.selectedCoin.id}
