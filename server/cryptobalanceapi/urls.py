@@ -23,16 +23,13 @@ from rest_framework_simplejwt.views import (
 )
 from django.views.static import serve
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', UserList.as_view()),
     path('users/<int:pk>/', UserDetail.as_view()),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
-    re_path(r'^media/(?P<path>.*)$', serve,
-            {'document_root': settings.MEDIA_ROOT}),
-    re_path(r'^static/(?P<path>.*)$', serve,
-            {'document_root': settings.STATIC_ROOT}),
     path('', TemplateView.as_view(template_name='index.html')),
     path('', include('balances.urls')),
     path('', include('coins.urls')),
