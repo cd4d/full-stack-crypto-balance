@@ -10,13 +10,21 @@
   text-align: center;
 }
 
+
+.image-coin {
+  max-width: 18px;
+  text-align: center;
+}
+
+
 /* Change color of rate if there's an error */
 .table-text-error {
   color: crimson;
 }
-.quantity-input {
-  width: 5rem;
+.quantity-input > input {
+  width: 4rem;
 }
+
 /* Media queries */
 @media screen and (max-width: 500px) {
   .balance-list-table {

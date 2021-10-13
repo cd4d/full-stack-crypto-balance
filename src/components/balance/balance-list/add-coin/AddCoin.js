@@ -184,6 +184,7 @@ export default function AddCoin({ balance }) {
           rate: coin.rate,
           ticker: coin.symbol.toUpperCase(),
           slug: coin.slug,
+          image:coin.image
         };
         const updatedBalance = [...balance, newCoin];
         addCoinLocal(updatedBalance);

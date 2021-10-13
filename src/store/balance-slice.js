@@ -35,6 +35,7 @@ const initialBalanceState = {
       value: 0,
       coinId: 1,
       slug: "bitcoin",
+      image: "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1548822744"
     },
     {
       name: "Ethereum",
@@ -47,6 +48,7 @@ const initialBalanceState = {
       subUnitToUnit: 1000000000,
       value: 0,
       coinId: 4,
+      image: "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880"
     },
     {
       name: "Tether",
@@ -57,6 +59,7 @@ const initialBalanceState = {
       quantity: 3000,
       value: 0,
       coinId: 79,
+      image: "https://assets.coingecko.com/coins/images/325/large/Tether-logo.png?1598003707",
     },
     {
       entryId: 34,

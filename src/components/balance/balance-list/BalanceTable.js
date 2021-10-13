@@ -28,9 +28,9 @@ export default function BalanceTable(props) {
       <Button onClick={() => onDeleteCoin(coinClicked)} icon="pi pi-times" />
     );
   }
-function sortBalanceByValue(){
-  return [...balance].sort((a,b) => b.value - a.value)
-}
+  function sortBalanceByValue() {
+    return [...balance].sort((a, b) => b.value - a.value);
+  }
   function onDeleteCoin(coin) {
     if (user.id) {
       dispatch(
@@ -104,6 +104,19 @@ function sortBalanceByValue(){
             className="d-none d-sm-none d-lg-table-cell"
           ></Column>
           <Column
+            field="image"
+            header="Icon"
+            sortable={false}
+            className="d-none d-sm-none d-lg-table-cell"
+            body={(coin) => (
+              <img
+                className="image-coin"
+                src={coin.image}
+                alt={coin.name}
+              ></img>
+            )}
+          ></Column>
+          <Column
             field="rate"
             header="Rate"
             body={(coin) =>
@@ -135,5 +148,3 @@ function sortBalanceByValue(){
     </div>
   );
 }
-
-
