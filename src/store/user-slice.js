@@ -67,7 +67,6 @@ export const getUserAction = createAsyncThunk(
   "user/getUser",
   async (payload, thunkAPI) => {
     try {
-
       const response = await getUser(payload);
       const data = await response.data;
       if (response instanceof Error) throw response;
@@ -94,6 +93,9 @@ const userSlice = createSlice({
       state.accessToken = action.payload.access_token;
       state.refreshToken = action.payload.refresh_token;
     },
+    updateAccessToken(state, action) {
+      state.accessToken = action.payload.access_token;
+    },
   },
   extraReducers: {
     [loginAction.fulfilled]: (state, action) => {
@@ -112,8 +114,7 @@ const userSlice = createSlice({
     },
     [loginAction.rejected]: () => {},
     [refreshAction.fulfilled]: (state, action) => {
-      state.accessToken = action.payload.access_token;
-      state.refreshToken = action.payload.refresh_token;
+      state.accessToken = action.payload.access;
     },
     [logoutAction.fulfilled]: () => {
       localStorage.removeItem("accessToken");

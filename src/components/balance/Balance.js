@@ -9,8 +9,11 @@ import { useSelector, useDispatch } from "react-redux";
 import CurrencyContext from "../../store/currency-context";
 import { fetchAndCalculate } from "../../store/balance-slice";
 import { fetchRemoteBalanceAction } from "../../store/balance-async-thunks";
-import { getUserAction } from "../../store/user-slice";
-import { userActions } from "../../store/user-slice";
+import {
+  getUserAction,
+  userActions,
+  refreshAction,
+} from "../../store/user-slice";
 import AddCoin from "./balance-list/add-coin/AddCoin";
 export default function Balance() {
   const balance = useSelector((state) => state.balanceReducer.balance);
@@ -23,17 +26,20 @@ export default function Balance() {
   const dispatch = useDispatch();
   // grab token from storage and save it to store
   useEffect(() => {
-    let token = localStorage.getItem("accessToken");
-    if (token) {
-      let decoded = jwt_decode(token);
-      if (decoded && decoded.user_id) {
+    let accessToken = localStorage.getItem("accessToken");
+    let refreshToken = localStorage.getItem("refreshToken");
+    if (accessToken && refreshToken) {
+      let decodedAccessToken = jwt_decode(accessToken);
+      if (decodedAccessToken && decodedAccessToken.user_id) {
         dispatch(
           userActions.setUser({
-            id: decoded.user_id,
-            access_token: JSON.parse(token),
+            id: decodedAccessToken?.user_id,
+            access_token: JSON.parse(accessToken),
+            refresh_token: JSON.parse(refreshToken),
           })
         );
-        dispatch(getUserAction(decoded.user_id));
+        dispatch(refreshAction(JSON.parse(refreshToken)));
+        dispatch(getUserAction(decodedAccessToken?.user_id));
       }
     }
   }, [dispatch]);

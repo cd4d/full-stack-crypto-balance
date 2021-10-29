@@ -1,18 +1,25 @@
-import { setAccessToken } from "../API/balance";
-import { setAccessTokenUser } from "../API/user";
+// import { setAccessToken, setRefreshToken } from "../API/balance";
+import { setAccessToken, setRefreshToken } from "../API/interceptors";
+import { setAccessTokenUser, setRefreshTokenUser } from "../API/user";
+import { callRefreshToken } from "../API/user";
+// import  updateAccessToken  from "./user-slice";
 
 // get the tokens from store and export them to the API files
-const tokenMiddleware = (storeAPI) => (next) => (action) => {
+const tokenMiddleware = (storeAPI) => (next) => async (action) => {
   const state = storeAPI.getState();
-  if (action.type === "balance/fetchRemoteBalance/pending") {
+  if (
+    action.type === "balance/fetchRemoteBalance/pending" ||
+    action.type === "balance/updateRemoteBalance/pending" ||
+    action.type === "balance/addRemoteCoin/pending" ||
+    action.type === "balance/deleteRemoteCoin/pending" ||
+    action.type === "user/getUser/pending"
+  ) {
     const accessToken = state.userReducer.accessToken;
-    setAccessToken(accessToken);
-  }
-  if (action.type === "user/loginUser/fulfilled") {
-  }
-  if (action.type === "user/getUser/pending") {
-    const accessToken = state.userReducer.accessToken;
-    setAccessTokenUser(accessToken);
+    const refreshToken = state.userReducer.refreshToken;
+    if (accessToken) {
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken);
+    }
   }
 
   return next(action);

@@ -1,22 +1,13 @@
 import axios from "axios";
+import axiosApiInstance from "./interceptors";
+
 // https://intense-bayou-22244.herokuapp.com/undefineddj-rest-auth/registration/
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const DB_AUTH = BACKEND_URL + "dj-rest-auth/";
 
-let accessToken = null;
-export function setAccessTokenUser(token) {
-  accessToken = token;
-}
-
-const instance = axios.create({
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
 export async function login(credentials) {
   try {
-    const response = await instance.post(DB_AUTH + "login/", {
+    const response = await axios.post(DB_AUTH + "login/", {
       username: credentials.username,
       password: credentials.password,
     });
@@ -35,7 +26,7 @@ export async function login(credentials) {
 }
 export async function register(credentials) {
   try {
-    const response = await instance.post(DB_AUTH + "registration/", {
+    const response = await axios.post(DB_AUTH + "registration/", {
       username: credentials.username,
       password1: credentials.password1,
       password2: credentials.password2,
@@ -56,7 +47,7 @@ export async function register(credentials) {
 
 export async function logout() {
   try {
-    const response = await instance.post(DB_AUTH + "logout/");
+    const response = await axios.post(DB_AUTH + "logout/");
     if (response.status >= 200 && response.status <= 299) {
       return response;
     }
@@ -66,7 +57,7 @@ export async function logout() {
 }
 export async function callRefreshToken(refreshToken) {
   try {
-    const response = await instance.post(DB_AUTH + "token/refresh/", {
+    const response = await axios.post(DB_AUTH + "token/refresh/", {
       refresh: refreshToken,
     });
     if (response.status >= 200 && response.status <= 299) {
@@ -79,13 +70,14 @@ export async function callRefreshToken(refreshToken) {
 
 export async function getUser(id) {
   try {
-    const response = await axios.get(BACKEND_URL + "users/" + id, {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
+    console.log("getting user", id);
+    const response = await axiosApiInstance.get(BACKEND_URL + "users/" + id);
+    console.log("get user response", response);
     if (response.status >= 200 && response.status <= 299) {
       return response;
     }
   } catch (error) {
+    console.log(error);
     return error;
   }
 }
