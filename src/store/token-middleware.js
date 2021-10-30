@@ -1,8 +1,4 @@
-// import { setAccessToken, setRefreshToken } from "../API/balance";
 import { setAccessToken, setRefreshToken } from "../API/interceptors";
-import { setAccessTokenUser, setRefreshTokenUser } from "../API/user";
-import { callRefreshToken } from "../API/user";
-// import  updateAccessToken  from "./user-slice";
 
 // get the tokens from store and export them to the API files
 const tokenMiddleware = (storeAPI) => (next) => async (action) => {

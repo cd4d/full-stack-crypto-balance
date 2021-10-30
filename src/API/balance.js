@@ -1,5 +1,3 @@
-import axios from "axios";
-import { callRefreshToken } from "./user";
 import axiosApiInstance from "./interceptors";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 

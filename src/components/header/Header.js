@@ -1,8 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
-import { logoutAction, refreshAction } from "../../store/user-slice";
-import { fetchRemoteBalanceAction } from "../../store/balance-async-thunks";
+import { logoutAction } from "../../store/user-slice";
 
 export default function Header(props) {
   const CURRENCIES_LIST = [
@@ -29,15 +28,11 @@ export default function Header(props) {
   function handleLogout() {
     dispatch(logoutAction());
   }
-  function handleFetchBalance() {
-    dispatch(fetchRemoteBalanceAction({ access_token: user.access_token }));
-  }
+
   function handleChange(e) {
     props.changeCurrency(e.target.value.toString());
   }
-  function handleRefresh() {
-    dispatch(refreshAction(JSON.parse(localStorage.getItem("refreshToken"))));
-  }
+
   return (
     <header className="p-3 mb-4 border-bottom">
       <div className="navbar navbar-default">
@@ -60,20 +55,6 @@ export default function Header(props) {
                 {user.username ? (
                   <>
                     <span className="me-2">{user.username}</span>
-                    {/* <button
-                      onClick={handleFetchBalance}
-                      type="button"
-                      className="btn btn-outline-dark me-2 btn-sm"
-                    >
-                      testBalance
-                    </button>
-                    <button
-                      onClick={handleRefresh}
-                      type="button"
-                      className="btn btn-outline-dark me-2 btn-sm"
-                    >
-                      testRefresh
-                    </button> */}
                     <button
                       onClick={handleLogout}
                       type="button"
