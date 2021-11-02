@@ -70,9 +70,7 @@ export async function callRefreshToken(refreshToken) {
 
 export async function getUser(id) {
   try {
-    console.log("getting user", id);
     const response = await axiosApiInstance.get(BACKEND_URL + "users/" + id);
-    console.log("get user response", response);
     if (response.status >= 200 && response.status <= 299) {
       return response;
     }
