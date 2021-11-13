@@ -13,6 +13,7 @@ import {
   getUserAction,
   userActions,
   refreshAction,
+  logoutAction,
 } from "../../store/user-slice";
 import AddCoin from "./balance-list/add-coin/AddCoin";
 export default function Balance() {
@@ -30,6 +31,11 @@ export default function Balance() {
     let refreshToken = localStorage.getItem("refreshToken");
     if (accessToken && refreshToken) {
       let decodedAccessToken = jwt_decode(accessToken);
+      let now = Date.now();
+      // logout if token expired
+      if (decodedAccessToken.exp && decodedAccessToken.exp * 1000 < now) {
+        return dispatch(logoutAction());
+      }
       if (decodedAccessToken && decodedAccessToken.user_id) {
         dispatch(
           userActions.setUser({
