@@ -92,7 +92,8 @@ export default function Balance() {
               <BalanceList></BalanceList>
             </div>
             <div className="col-md-4 col-sm-12 ">
-              {balance.length > 0 && (
+              {/* https://blog.ridmik.com/good-practice-on-conditional-rendering-with-in-react/ */}
+              {!!balance.length && (
                 <>
                   <BalanceChart></BalanceChart>
 

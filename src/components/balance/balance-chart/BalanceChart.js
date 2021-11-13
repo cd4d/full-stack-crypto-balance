@@ -30,18 +30,15 @@ const BalanceChart = React.memo(() => {
 
   return (
     <>
-      {/* {isBalanceLoading && (
-        <div>
-          <i className="pi pi-spin pi-spinner" style={{ fontSize: "2rem" }}></i>
-        </div>
-      )} */}
-      <Chart
-        type="doughnut"
-        // need to pass a copy
-        data={{ ...formattedData }}
-        options={chartOptions}
-        style={isBalanceLoading ? { display: "none" } : {}}
-      />
+      {!!balance.length && (
+        <Chart
+          type="doughnut"
+          // need to pass a copy
+          data={{ ...formattedData }}
+          options={chartOptions}
+          style={isBalanceLoading ? { display: "none" } : {}}
+        />
+      )}
     </>
   );
 });
