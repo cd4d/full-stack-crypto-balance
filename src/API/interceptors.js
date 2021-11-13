@@ -2,20 +2,21 @@ import axios from "axios";
 import { callRefreshToken } from "./user";
 let accessToken = null;
 let refreshToken = null;
+// used by tokenMiddleware to set token
 export function setRefreshToken(token) {
   refreshToken = token;
 }
 export function setAccessToken(token) {
   accessToken = token;
 }
-const axiosApiInstance = axios.create({
+const axiosTokenInterceptorInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
     Authorization: "Bearer " + accessToken,
   },
 });
 // Request interceptor for API calls
-axiosApiInstance.interceptors.request.use(
+axiosTokenInterceptorInstance.interceptors.request.use(
   async (config) => {
     const response = await callRefreshToken(refreshToken);
     config.headers = {
@@ -27,7 +28,7 @@ axiosApiInstance.interceptors.request.use(
     Promise.reject(error);
   }
 );
-axiosApiInstance.interceptors.response.use(
+axiosTokenInterceptorInstance.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -55,4 +56,4 @@ axiosApiInstance.interceptors.response.use(
   }
 );
 
-export default axiosApiInstance;
+export default axiosTokenInterceptorInstance;

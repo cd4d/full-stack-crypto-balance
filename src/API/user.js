@@ -1,5 +1,5 @@
 import axios from "axios";
-import axiosApiInstance from "./interceptors";
+import axiosTokenInterceptorInstance from "./interceptors";
 
 // https://intense-bayou-22244.herokuapp.com/undefineddj-rest-auth/registration/
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -70,7 +70,9 @@ export async function callRefreshToken(refreshToken) {
 
 export async function getUser(id) {
   try {
-    const response = await axiosApiInstance.get(BACKEND_URL + "users/" + id);
+    const response = await axiosTokenInterceptorInstance.get(
+      BACKEND_URL + "users/" + id
+    );
     if (response.status >= 200 && response.status <= 299) {
       return response;
     }

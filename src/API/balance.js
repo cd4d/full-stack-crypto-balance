@@ -1,12 +1,9 @@
-import axiosApiInstance from "./interceptors";
+import axiosTokenInterceptorInstance from "./interceptors";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-
-// used by tokenMiddleware to set token
-
 
 export async function fetchBalance() {
   try {
-    const response = await axiosApiInstance.get(`${BACKEND_URL}balances/`);
+    const response = await axiosTokenInterceptorInstance.get(`${BACKEND_URL}balances/`);
     if (response.statusText !== "OK") {
       let err = new Error();
       err.message = `An error has occurred: ${response.data}`;
@@ -24,7 +21,7 @@ export async function fetchBalance() {
 export async function updateQuantity(entryId, quantity) {
   try {
     if (isNaN(entryId) || isNaN(quantity)) throw new Error("Invalid data");
-    const response = await axiosApiInstance.put(
+    const response = await axiosTokenInterceptorInstance.put(
       `${BACKEND_URL}balances/${entryId}/`,
       {
         quantity,
@@ -47,7 +44,7 @@ export async function updateQuantity(entryId, quantity) {
 // add coin, must be: {coinId: int, quantity: int}
 export async function addCoin(coin) {
   try {
-    const response = await axiosApiInstance.post(
+    const response = await axiosTokenInterceptorInstance.post(
       `${BACKEND_URL}balances/`,
       coin
     );
@@ -67,7 +64,7 @@ export async function addCoin(coin) {
 export async function deleteCoin(entryId) {
   try {
     if (isNaN(entryId)) throw new Error("Invalid data");
-    const response = await axiosApiInstance.delete(
+    const response = await axiosTokenInterceptorInstance.delete(
       `${BACKEND_URL}balances/${entryId}/`
     );
     if (response.status >= 200 && response.status <= 299) {
