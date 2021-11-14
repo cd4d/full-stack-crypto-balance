@@ -33,7 +33,7 @@ export default function Balance() {
       let decodedAccessToken = jwt_decode(accessToken);
       let now = Date.now();
       // logout if token expired
-      if (decodedAccessToken.exp && decodedAccessToken.exp * 1000 < now) {
+      if (decodedAccessToken.exp && now - (decodedAccessToken.exp * 1000) > 0 ) {
         return dispatch(logoutAction());
       }
       if (decodedAccessToken && decodedAccessToken.user_id) {
