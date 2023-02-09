@@ -39,7 +39,7 @@ DEBUG = False
 if dotenv_file:
     ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 else:
-    ALLOWED_HOSTS = [f"{os.getenv('APP_NAME')}.herokuapp.com"]
+    ALLOWED_HOSTS = [f"{os.getenv('APP_NAME')}.{os.getenv('HOST_URL')}"]
 
 # Application definition
 
@@ -179,14 +179,14 @@ JWT_AUTH_REFRESH_COOKIE = 'refresh-token'
 JWT_AUTH_SECURE = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = ['http://localhost:3000',
-                        'http://127.0.0.1:3000', f"{os.getenv('APP_NAME')}.herokuapp.com"]
+                        'http://127.0.0.1:3000', f"{os.getenv('APP_NAME')}.{os.getenv('HOST_URL')}"]
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 JWT_AUTH_COOKIE_USE_CSRF = False
 CSRF_TRUSTED_ORIGINS = [
-    'localhost:3000', '127.0.0.1:3000', 'localhost:8000', f"{os.getenv('APP_NAME')}.herokuapp.com"
+    'localhost:3000', '127.0.0.1:3000', 'localhost:8000', f"{os.getenv('APP_NAME')}.{os.getenv('HOST_URL')}"
 ]
 REST_AUTH_REGISTER_PERMISSION_CLASSES = (
     'rest_framework.permissions.AllowAny',

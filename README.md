@@ -23,5 +23,5 @@ To accommodate Heroku hosting, the frontend files are served directly from the r
 - Psycopg2 2.9
 - Django-Cors-headers 3.9
 
-[App on Heroku](https://intense-bayou-22244.herokuapp.com/). This might take some time to load the Heroku instance.
+[App on Heroku](https://intense-bayou-22244.onrender.com/). This might take some time to load the Heroku instance.
 
