@@ -14,6 +14,8 @@ services:
     dockerfilePath: Dockerfile.render
     plan: free # optional; defaults to starter
     numInstances: 1
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn cryptobalanceapi.wsgi:application"
     envVars:
       - key: ALLOWED_HOSTS # Imported from Heroku app
         value: APP_NAME.herokuapp.com
