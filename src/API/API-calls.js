@@ -28,8 +28,8 @@ export async function fetchNews(coinsNames) {
   try {
     const response = await axios.get(newsDataURL, {
       headers: {
-        "x-rapidapi-key": process.env.REACT_APP_RAPID_API_KEY,
-        "x-rapidapi-host": "contextualwebsearch-websearch-v1.p.rapidapi.com",
+        "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
+        "X-RapidAPI-Host": "contextualwebsearch-websearch-v1.p.rapidapi.com",
       },
     });
 
